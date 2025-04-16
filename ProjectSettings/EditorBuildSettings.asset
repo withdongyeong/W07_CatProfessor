@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: f4d80589ea8a87444aa1fb2835422cbf
+  - enabled: 1
+    path: Assets/Scenes/StageSelect.unity
+    guid: dd78b1c78fc25c948b8b9a4c7f2d3871
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_01.unity
+    guid: 1b6c927b7e9655747883b6e0888da03b
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_02.unity
+    guid: ab00d7c02bc914541b8e6218d50363ed
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_03.unity
+    guid: a3dc489efd8dac54881e333d6cce6726
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_04.unity
+    guid: c4db23dd6b1fc574686a74efc18e8469
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_05.unity
+    guid: b3fc45812e3ca9548a07ad4be051a531
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_06.unity
+    guid: b1595368e5524a74399a8256b57ab3e7
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_07.unity
+    guid: dea694ba0e5c7c0439fda3d613bcf2c8
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_08.unity
+    guid: d5d78ea1d76673a4aa3a1954ae9e527c
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_09.unity
+    guid: 47e54f1c540f82c4cbf6c8b423a80952
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_10.unity
+    guid: 1f07edfb49b810e45945365800e68523
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_11.unity
+    guid: 25de224aab825414aa4092866452e587
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_12.unity
+    guid: 75e7e3b4d91de474d9c7b3c739d69e3d
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_13.unity
+    guid: 7f4421afb28cdbc42abd3480c38eb8c1
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_14.unity
+    guid: d813a49de9a83fb419bb6c573930d29e
+  - enabled: 1
+    path: Assets/Scenes/Stages/1/Stage_01_15.unity
+    guid: 4e2b4e34fbdc847459fcb117b20437a6
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_UseUCBPForAssetBundles: 0
