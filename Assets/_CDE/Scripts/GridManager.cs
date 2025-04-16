@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
 
     private void ChangeGridType(GridType type)
     {
+        // Grid Material 변경
         switch (type)
         {
             case GridType.Cross:
@@ -37,6 +38,7 @@ public class GridManager : MonoBehaviour
 
     private void ActivateGrid(bool isActive)
     {
+        // Grid 활성화
         _renderer.enabled = isActive;
     }
 }
