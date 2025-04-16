@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ManaPool : MonoBehaviour
@@ -9,6 +11,9 @@ public class ManaPool : MonoBehaviour
     public float poolCleanupInterval = 10f;
 
     private Queue<Mana> manaPool = new Queue<Mana>();
+    private HashSet<Mana> activeManas = new HashSet<Mana>();
+
+    public Action OnResetAction; 
 
     void Awake()
     {
@@ -24,7 +29,31 @@ public class ManaPool : MonoBehaviour
 
         InitializePool();
         InvokeRepeating(nameof(TrimPool), poolCleanupInterval, poolCleanupInterval);
+        
+        OnResetAction += ResetManaPool;
     }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnResetAction?.Invoke();
+        }
+    }
+
+    private void ResetManaPool()
+    {
+        foreach (var mana in activeManas.ToArray())
+        {
+            mana.CancelInvoke(nameof(mana.ReturnToPool));
+            mana.CancelInvoke(nameof(mana.EnableDetection));
+            
+            mana.ReturnToPool();
+        }
+
+        TrimPool();
+    }
+
 
     private void InitializePool()
     {
@@ -50,7 +79,7 @@ public class ManaPool : MonoBehaviour
             return null;
         }
 
-        GameObject manaObject = Instantiate(manaPrefab);
+        GameObject manaObject = Instantiate(manaPrefab, transform);
         if (manaObject == null)
         {
             return null;
@@ -94,6 +123,7 @@ public class ManaPool : MonoBehaviour
         mana.SetColorByType();
         mana.SetOutput(output);
         mana.gameObject.SetActive(true);
+        activeManas.Add(mana);
 
         mana.Invoke(nameof(mana.ReturnToPool), mana.maxLifetime);
         mana.Invoke(nameof(mana.EnableDetection), mana.detectDelay);
@@ -117,6 +147,7 @@ public class ManaPool : MonoBehaviour
 
         mana.ResetMana();
         manaPool.Enqueue(mana);
+        activeManas.Remove(mana);
     }
 
     private void TrimPool()
