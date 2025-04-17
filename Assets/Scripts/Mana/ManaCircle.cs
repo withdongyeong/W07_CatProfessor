@@ -16,6 +16,8 @@ public class ManaCircle : MonoBehaviour
     private GameObject[] orbiters = new GameObject[5];
     private int activeOrbiters = 2;
     private float orbitSpeed = 30f;
+    
+    private HintManager _hintManager;
 
     void Start()
     {
@@ -23,6 +25,8 @@ public class ManaCircle : MonoBehaviour
         SetupCollider();
         SetupOrbiters();
         SetupStageClickable();
+        
+        _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
     }
 
     void SetupStageClickable()
@@ -242,6 +246,9 @@ public class ManaCircle : MonoBehaviour
         
         if (activeOrbiters > 4) activeOrbiters = 2;
         SetupOrbiters();
+
+        // 정답 Circle 개수 체크 
+        _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);
     }
 
 
