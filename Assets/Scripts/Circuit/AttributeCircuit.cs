@@ -23,14 +23,9 @@ public class AttributeCircuit : MonoBehaviour
     private float lastFireTime = 0f;
     private float shootEffectDuration = 0.55f;
 
-    private Vector3 _initialPos;
-
     void Start()
     {
         InitializeComponents();
-
-        _initialPos = transform.position;
-        ManaPool.Instance.OnResetAction += ResetPosition;
     }
 
     void InitializeComponents()
@@ -207,10 +202,5 @@ public class AttributeCircuit : MonoBehaviour
         UpdateRingEffectColor(attributeType);
         UpdateShootEffectColor(attributeType);
 
-    }
-
-    private void ResetPosition()
-    {
-        transform.position = _initialPos;
     }
 }
