@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         Time.timeScale = 1f;
         lastSayTime = Time.time;
-        // ManaPool.Instance.ResetManaPool();
+        ManaPool.Instance.ResetManaPool();
 
         // if (StageDataManager.Instance.IsEnding())
         // {
