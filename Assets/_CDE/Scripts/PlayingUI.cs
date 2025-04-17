@@ -32,4 +32,10 @@ public class PlayingUI : MonoBehaviour
     {
         ManaPool.Instance.ResetManaPool();
     }
+
+    public void ActivateResetBtns(bool isActive)
+    {
+        resetStageBtn.gameObject.SetActive(isActive);
+        resetManaBtn.gameObject.SetActive(isActive);
+    }
 }
