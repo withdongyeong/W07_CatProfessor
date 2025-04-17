@@ -36,7 +36,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void ActivateGrid(bool isActive)
+    public void ActivateGrid(bool isActive)
     {
         // Grid 활성화
         _renderer.enabled = isActive;

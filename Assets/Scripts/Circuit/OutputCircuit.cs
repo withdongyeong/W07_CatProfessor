@@ -99,7 +99,7 @@ public class OutputCircuit : MonoBehaviour
         return currentCount > 0 && Time.time - lastManaTime > resetTime;
     }
 
-    void ResetCounter()
+    public void ResetCounter()
     {
         currentCount = 0;
         isComplete = false;

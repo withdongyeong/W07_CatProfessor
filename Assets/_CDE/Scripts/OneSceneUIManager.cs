@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OneSceneManager : MonoBehaviour
+public class OneSceneUIManager : MonoBehaviour
 {
     private PlayingUI _playingUI;
     private Canvas _playingCanvas;

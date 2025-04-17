@@ -214,8 +214,19 @@ public class ManaCircle : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
         List<AttributeCircuit> currentStageAttributeCircuit =
             GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().AttributeCircuits;
-
+        
         foreach (var circuit in currentStageAttributeCircuit)
+        {
+            if (circuit.attributeType == manaType)
+            {
+                circuit.CycleDirection();
+            }
+        }
+        
+        List<AttributeCircuit> currentStageDragableCircuits =
+            GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().Draggables;
+        
+        foreach (var circuit in currentStageDragableCircuits)
         {
             if (circuit.attributeType == manaType)
             {

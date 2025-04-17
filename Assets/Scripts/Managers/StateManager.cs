@@ -13,7 +13,7 @@ public class StateManager : MonoBehaviour
     private List<AttributeCircuit> _attributeCircuits = new List<AttributeCircuit>();
     private List<OutputCircuit> _outputCircuits = new List<OutputCircuit>();
     private List<NeutralCircuit> _neutralCircuits = new List<NeutralCircuit>();
-    private List<DraggableObject> _draggables = new List<DraggableObject>();
+    private List<AttributeCircuit> _draggables = new List<AttributeCircuit>();
 
     // TODO 클리어 여부에 따라서, 자기 자신의 서클들의 색 표시, 회전을 할지 말지 결정함
     // TODO 클릭 감지 콜라이더 필요함
@@ -56,7 +56,8 @@ public class StateManager : MonoBehaviour
         {
             foreach (Transform child in dragable)
             {
-                var attribute = child.GetComponent<DraggableObject>();
+                // 이미 Dragable 의 자식으로 넣어놨으니 bool check는 안해도 됨
+                var attribute = child.GetComponent<AttributeCircuit>();
                 if (attribute != null) _draggables.Add(attribute);
             }
         }
@@ -104,7 +105,7 @@ public class StateManager : MonoBehaviour
     {
         foreach (var draggable in _draggables)
         {
-            draggable.ResetPosition();
+            draggable.GetComponent<DraggableObject>().ResetPosition();
         }
     }
 
@@ -115,5 +116,5 @@ public class StateManager : MonoBehaviour
     public List<OutputCircuit> OutputCircuits => _outputCircuits;
     public List<NeutralCircuit> NeutralCircuits => _neutralCircuits;
     public List<AttributeCircuit> AttributeCircuits => _attributeCircuits;
-    public List<DraggableObject> Draggables => _draggables;
+    public List<AttributeCircuit> Draggables => _draggables;
 }

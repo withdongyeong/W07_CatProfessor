@@ -1,5 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using System.Linq;using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject currentPlayingStage;
     private OutputCircuit[] outputCircuits;
     public CameraController mainCamera;
+    private GridManager _grid;
+    private OneSceneUIManager _uiManager;
 
     private bool isGameOver = false;
     private float sayInterval = 60f;
@@ -29,7 +32,12 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set => currentGameState = value;
+        set
+        {
+            currentGameState = value;
+            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
+            _uiManager.ActivatePlayingCanvas(currentGameState == gameState.GamePlaying);
+        }
     }
     
     public GameObject CurrentPlayingStage
@@ -52,40 +60,33 @@ public class GameManager : MonoBehaviour
         }
         currentGameState = gameState.StageSelecting;
     }
-    /*
-     * 마우스 클릭을 각 스테이지의 큰 원에 달아놓고, 다른 문제에서도 옆에 스테이지가 보이기 때문에,
-     * 1. 퍼즐 풀이 상태, 스테이지 선택 상태를 구분하고,  Done
-     * 2. 스테이지 선택 상태일때, dONE
-     * 3. 각 스테이지의 원안을 클릭하면, Done 
-     * 4. 퍼즐 풀이 상태로 바꾸고 dONE
-     * 5. 그 스테이지 원에서 게임 매니저를 호출해서 자신을 현재 스테이지에 등록함 Done
-     * 6. 그러면 게임 매니저입장에서는 각종 초기화를 현재 스테이지의 오브젝트들을 가져와서 함
-     * 7. 카메라를 현재 스테이지의 중심으로 이동시키고
-     * 8. 일정 시간 이동시간을 넣어서, 그 이동시간후에 UI를 on 하고
-     * 9. 음 Draggable도 따로 구분해야할듯? 
-     */
-
+    
     void Start()
     {
         if (mainCamera == null)
             mainCamera = Camera.main.GetComponent<CameraController>();
+        
+        _grid = mainCamera.GetComponentInChildren<GridManager>();
+        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
+        
         InitializeGame();
     }
 
     void InitializeGame()
     {
+        // 현재 출력회로들 다 초기화(스테이지갔다가 다시 오면 바로 클리어되기 때문)
+        List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
+        if (currentOutputCircuits.Count == 0) return;
+        foreach (OutputCircuit circuit in currentOutputCircuits)
+        {
+            circuit.ResetCounter();
+        }
+        
         isGameOver = false;
         Time.timeScale = 1f;
-        outputCircuits = FindObjectsByType<OutputCircuit>(FindObjectsSortMode.None);
         lastSayTime = Time.time;
+        ManaPool.Instance.ResetManaPool();
 
-        if (outputCircuits.Length == 0)
-        {
-            Debug.LogWarning("출력 회로가 없음! 게임 클리어 체크를 중단합니다.");
-            return;
-        }
-
-        Debug.Log($"총 출력 회로 개수: {outputCircuits.Length}");
         // if (StageDataManager.Instance.IsEnding())
         // {
         //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart_Ending);
@@ -96,16 +97,26 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    void Update()
+    private void checkGameClear()
     {
-        if (isGameOver || outputCircuits.Length == 0) return;
-
-        if (outputCircuits.All(circuit => circuit.IsComplete()))
+        if (currentPlayingStage != null)
         {
-            GameClear();
+            List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
+            if (isGameOver || currentOutputCircuits.Count == 0) return;
+            
+            if (currentOutputCircuits.All(circuit => circuit.IsComplete()))
+            {
+                GameClear();
+            }    
         }
         
-        // ✅ 60초마다 대사 실행
+        
+    }
+    void Update()
+    {
+        if (CurrentGameState == gameState.GamePlaying) checkGameClear();
+        
+        // 60초마다 교수님 대사 실행
         if (Time.time - lastSayTime >= sayInterval)
         {
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
@@ -131,6 +142,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitStage()
     {
+        InitializeGame();
         if (CurrentPlayingStage != null)
         {
             var stateManager = CurrentPlayingStage.GetComponentInChildren<StateManager>();
@@ -153,19 +165,21 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
-        UIManager.Instance.ShowRestartPanel();
+        // UIManager.Instance.ShowRestartPanel();
         string currentScene = SceneManager.GetActiveScene().name;
-        StageDataManager.Instance.SetStageCleared(currentScene);
-        SoundManager.Instance.PlayClearMusic();
+        // TODO 스테이지 클리어 저장
+        // StageDataManager.Instance.SetStageCleared(currentScene);
+        // TODO 확인하고 다시 켜자
+        // SoundManager.Instance.PlayClearMusic();
 
-        if (StageDataManager.Instance.IsEnding())
-        {
-            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
-        }
-        else
-        {
-            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
-        }
+        // if (StageDataManager.Instance.IsEnding())
+        // {
+        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
+        // }
+        // else
+        // {
+        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
+        // }
         Professor.Instance.SetAnimation(Professor.AnimationType.Victory);
     }
 
