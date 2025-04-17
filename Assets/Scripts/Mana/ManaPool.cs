@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,8 +11,6 @@ public class ManaPool : MonoBehaviour
 
     private Queue<Mana> manaPool = new Queue<Mana>();
     private HashSet<Mana> activeManas = new HashSet<Mana>();
-
-    public Action OnResetAction; 
 
     void Awake()
     {
@@ -29,19 +26,17 @@ public class ManaPool : MonoBehaviour
 
         InitializePool();
         InvokeRepeating(nameof(TrimPool), poolCleanupInterval, poolCleanupInterval);
-        
-        OnResetAction += ResetManaPool;
     }
     
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            OnResetAction?.Invoke();
+            ResetManaPool();
         }
     }
 
-    private void ResetManaPool()
+    public void ResetManaPool()
     {
         foreach (var mana in activeManas.ToArray())
         {
@@ -53,7 +48,6 @@ public class ManaPool : MonoBehaviour
 
         TrimPool();
     }
-
 
     private void InitializePool()
     {

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject currentPlayingStage;
     private OutputCircuit[] outputCircuits;
     public CameraController mainCamera;
+    private GridManager _grid;
+    private OneSceneUIManager _uiManager;
 
     private bool isGameOver = false;
     private float sayInterval = 60f;
@@ -30,7 +32,12 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set => currentGameState = value;
+        set
+        {
+            currentGameState = value;
+            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
+            _uiManager.ActivatePlayingCanvas(currentGameState == gameState.GamePlaying);
+        }
     }
     
     public GameObject CurrentPlayingStage
@@ -58,6 +65,10 @@ public class GameManager : MonoBehaviour
     {
         if (mainCamera == null)
             mainCamera = Camera.main.GetComponent<CameraController>();
+        
+        _grid = mainCamera.GetComponentInChildren<GridManager>();
+        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
+        
         InitializeGame();
     }
 
