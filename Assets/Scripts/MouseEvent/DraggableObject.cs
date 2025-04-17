@@ -14,7 +14,7 @@ public class DraggableObject : MonoBehaviour
     public void Init(ManaProperties.ManaType type)
     {
         grid = FindFirstObjectByType<Grid>();
-        _hintManager = FindAnyObjectByType<HintManager>();
+        _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
 
         isDragable = true;
         _type = type;
