@@ -10,7 +10,7 @@ public class DraggableObject : MonoBehaviour
     private Vector3 originalPosition;
     private ManaProperties.ManaType _type;
     private HintManager _hintManager;
-
+    private Vector3 _initialPos;
     public void Init(ManaProperties.ManaType type)
     {
         grid = FindFirstObjectByType<Grid>();
@@ -18,6 +18,7 @@ public class DraggableObject : MonoBehaviour
 
         isDragable = true;
         _type = type;
+        _initialPos = transform.position;
     }
 
     void OnMouseDown()
@@ -147,5 +148,10 @@ public class DraggableObject : MonoBehaviour
     public bool IsDragging()
     {
         return isDragging;
+    }
+    
+    public void ResetPosition()
+    {
+        transform.position = _initialPos;
     }
 }
