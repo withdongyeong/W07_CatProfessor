@@ -208,36 +208,42 @@ public class ManaCircle : MonoBehaviour
     {
         return FindObjectsByType<Mana>(FindObjectsSortMode.InstanceID).Length > 0;
     }
+    
+    private void ModifyCircuits(List<AttributeCircuit> circuits, bool isReset)
+    {
+        // Circle과 동일한 type일 때 CycleDirection 실행
+        foreach (var circuit in circuits)
+        {
+            if (circuit.attributeType != manaType) continue;
 
-    void FindAndModifyAttributeCircuits()
+            if (isReset)
+                // 리셋 시
+                circuit.CycleDirection(activeOrbiters + 1);
+            else
+                // 클릭 시 
+                circuit.CycleDirection();
+        }
+    }
+    
+    private void FindAndModifyAttributeCircuits(bool isReset = false)
     {
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
-        List<AttributeCircuit> currentStageAttributeCircuit =
-            GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().AttributeCircuits;
-        
-        foreach (var circuit in currentStageAttributeCircuit)
-        {
-            if (circuit.attributeType == manaType)
-            {
-                circuit.CycleDirection();
-            }
-        }
-        
-        List<AttributeCircuit> currentStageDragableCircuits =
-            GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().Draggables;
-        
-        foreach (var circuit in currentStageDragableCircuits)
-        {
-            if (circuit.attributeType == manaType)
-            {
-                circuit.CycleDirection();
-            }
-        }
 
-        activeOrbiters += 1;
+        var stateManager = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>();
+
+        ModifyCircuits(stateManager.AttributeCircuits, isReset);
+        ModifyCircuits(stateManager.Draggables, isReset);
+        
+        if (!isReset)
+        {
+            // 클릭 시 activeOrbiters 증가
+            activeOrbiters += 1;
+        }
+        
         if (activeOrbiters > 4) activeOrbiters = 2;
         SetupOrbiters();
     }
+
 
     bool IsPointOnCircleEdge(Vector2 point)
     {
@@ -292,5 +298,11 @@ public class ManaCircle : MonoBehaviour
             prevOuterPoint = newOuterPoint;
             prevInnerPoint = newInnerPoint;
         }
+    }
+
+    public void ResetManaCircle(int orbitCount)
+    {
+        activeOrbiters = orbitCount;
+        FindAndModifyAttributeCircuits(true);
     }
 }

@@ -32,12 +32,7 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set
-        {
-            currentGameState = value;
-            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
-            _uiManager.ActivatePlayingCanvas(currentGameState == gameState.GamePlaying);
-        }
+        set => currentGameState = value;
     }
     
     public GameObject CurrentPlayingStage
@@ -147,6 +142,14 @@ public class GameManager : MonoBehaviour
         
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
+        
+        // Ui 및 그리드 활성화
+        _uiManager.ActivatePlayingCanvas(true);
+        _grid.ActivateGrid(true);
+
+        // stage 초기화
+        stateManager.ResetManaCircle();
+        stateManager.ResetDraggable();
     }
 
 
@@ -165,6 +168,9 @@ public class GameManager : MonoBehaviour
 
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
+        // UI 및 그리드 비활성화
+        _uiManager.ActivatePlayingCanvas(false);
+        _grid.ActivateGrid(false);
     }
 
     

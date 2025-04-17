@@ -108,6 +108,14 @@ public class StateManager : MonoBehaviour
             draggable.GetComponent<DraggableObject>().ResetPosition();
         }
     }
+    
+    public void ResetManaCircle()
+    {
+        foreach (var circle in _manaCircles)
+        {
+            circle.ResetManaCircle(2);
+        }
+    }
 
     // Getter
     public ManaCircle MainCircle => _mainManaCircle;

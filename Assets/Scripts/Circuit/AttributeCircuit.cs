@@ -121,6 +121,11 @@ public class AttributeCircuit : MonoBehaviour
     {
         currentDirectionIndex = (currentDirectionIndex + 1) % directionConfigs.Count;
     }
+    
+    public void CycleDirection(int count)
+    {
+        currentDirectionIndex = (count) % directionConfigs.Count;
+    }
 
     public void CyclePattern()
     {
