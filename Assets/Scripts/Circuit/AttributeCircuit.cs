@@ -32,7 +32,8 @@ public class AttributeCircuit : MonoBehaviour
     {
         if (isDragable && GetComponent<DraggableObject>() == null)
         {
-            gameObject.AddComponent<DraggableObject>().isDragable = true;
+            var draggable = gameObject.AddComponent<DraggableObject>();
+            draggable.Init(attributeType);
         }
 
         ringEffectInstance = transform.Find("RingEffect")?.gameObject;

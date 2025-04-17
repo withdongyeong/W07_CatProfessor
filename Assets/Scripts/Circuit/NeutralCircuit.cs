@@ -49,7 +49,8 @@ public class NeutralCircuit : MonoBehaviour
     {
         if (isDragable && GetComponent<DraggableObject>() == null)
         {
-            gameObject.AddComponent<DraggableObject>().isDragable = true;
+            var draggable = gameObject.AddComponent<DraggableObject>();
+            draggable.Init(ManaProperties.ManaType.Neutral);
         }
 
         ringEffectInstance = transform.Find("RingEffect")?.gameObject;
