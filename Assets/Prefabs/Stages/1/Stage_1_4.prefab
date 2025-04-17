@@ -86,6 +86,10 @@ PrefabInstance:
       propertyPath: manaType
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 128032064395419456, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: isClickable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3422520333789343715, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: m_Name
       value: Stage_1_4

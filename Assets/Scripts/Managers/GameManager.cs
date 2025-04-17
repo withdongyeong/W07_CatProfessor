@@ -1,16 +1,43 @@
 using UnityEngine;
-using System.Linq;
+using System.Linq;using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum gameState
+    {
+        GamePlaying,
+        StageSelecting
+    }
+
+    private gameState currentGameState;
+    private GameObject currentPlayingStage;
     private OutputCircuit[] outputCircuits;
+    public CameraController mainCamera;
+
     private bool isGameOver = false;
     private float sayInterval = 60f;
     private float lastSayTime = 0f;
 
+    [Header("기본 월드 카메라 설정")]
+    public Vector3 worldViewPosition = Vector3.zero;
+    private int worldViewSize = 40;
+    
     public static GameManager Instance { get; private set; }
-
+    
+    // Getter & Setter
+    public gameState CurrentGameState
+    {
+        get => currentGameState;
+        set => currentGameState = value;
+    }
+    
+    public GameObject CurrentPlayingStage
+    {
+        get => currentPlayingStage;
+        set => currentPlayingStage = value;
+    }
+    
     void Awake()
     {
         if (Instance == null)
@@ -23,10 +50,25 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        currentGameState = gameState.StageSelecting;
     }
+    /*
+     * 마우스 클릭을 각 스테이지의 큰 원에 달아놓고, 다른 문제에서도 옆에 스테이지가 보이기 때문에,
+     * 1. 퍼즐 풀이 상태, 스테이지 선택 상태를 구분하고,  Done
+     * 2. 스테이지 선택 상태일때, dONE
+     * 3. 각 스테이지의 원안을 클릭하면, Done 
+     * 4. 퍼즐 풀이 상태로 바꾸고 dONE
+     * 5. 그 스테이지 원에서 게임 매니저를 호출해서 자신을 현재 스테이지에 등록함 Done
+     * 6. 그러면 게임 매니저입장에서는 각종 초기화를 현재 스테이지의 오브젝트들을 가져와서 함
+     * 7. 카메라를 현재 스테이지의 중심으로 이동시키고
+     * 8. 일정 시간 이동시간을 넣어서, 그 이동시간후에 UI를 on 하고
+     * 9. 음 Draggable도 따로 구분해야할듯? 
+     */
 
     void Start()
     {
+        if (mainCamera == null)
+            mainCamera = Camera.main.GetComponent<CameraController>();
         InitializeGame();
     }
 
@@ -44,14 +86,14 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log($"총 출력 회로 개수: {outputCircuits.Length}");
-        if (StageDataManager.Instance.IsEnding())
-        {
-            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart_Ending);
-        }
-        else
-        {
-            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart);
-        }
+        // if (StageDataManager.Instance.IsEnding())
+        // {
+        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart_Ending);
+        // }
+        // else
+        // {
+        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart);
+        // }
     }
 
     void Update()
@@ -62,15 +104,59 @@ public class GameManager : MonoBehaviour
         {
             GameClear();
         }
-
-        // ✅ 60초마다 대사 실행
-        if (Time.time - lastSayTime >= sayInterval)
+        if (Input.GetMouseButtonDown(0))
         {
-            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
-            lastSayTime = Time.time;
+            Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(mouse, Vector2.zero);
+
+            foreach (var hit in hits)
+            {
+                Debug.Log($"[RaycastHitAll] Hit: {hit.collider.name} (z: {hit.collider.transform.position.z})");
+            }
         }
+        // ✅ 60초마다 대사 실행
+        // if (Time.time - lastSayTime >= sayInterval)
+        // {
+        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
+        //     lastSayTime = Time.time;
+        // }
     }
 
+    public void EnterStage(GameObject stageRoot)
+    {
+        CurrentPlayingStage = stageRoot;
+        CurrentGameState = gameState.GamePlaying;
+
+        StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
+        int currentViewSize = Mathf.RoundToInt(stateManager.MainCircle.diameter / 2f);
+
+        // 카메라 이동
+        mainCamera.MoveToStage(stageRoot.transform.position, currentViewSize);
+
+        // 우선순위 낮추기
+        var line = stateManager.MainCircle.GetComponentInChildren<LineRenderer>();
+        if (line != null)
+            line.sortingOrder = 0;
+    }
+
+
+    public void ExitStage()
+    {
+        if (CurrentPlayingStage != null)
+        {
+            var stateManager = CurrentPlayingStage.GetComponentInChildren<StateManager>();
+            var line = stateManager.MainCircle.GetComponentInChildren<LineRenderer>();
+            if (line != null)
+                line.sortingOrder = 10;
+        }
+
+        CurrentPlayingStage = null;
+        CurrentGameState = gameState.StageSelecting;
+
+        mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
+    }
+
+    
     void GameClear()
     {
         if (isGameOver) return;
