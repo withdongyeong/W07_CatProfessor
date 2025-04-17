@@ -8,10 +8,16 @@ public class DraggableObject : MonoBehaviour
     private Grid grid;
     public static bool isDragging = false;
     private Vector3 originalPosition;
+    private ManaProperties.ManaType _type;
+    private HintManager _hintManager;
 
-    void Start()
+    public void Init(ManaProperties.ManaType type)
     {
         grid = FindFirstObjectByType<Grid>();
+        _hintManager = FindAnyObjectByType<HintManager>();
+
+        isDragable = true;
+        _type = type;
     }
 
     void OnMouseDown()
@@ -56,6 +62,8 @@ public class DraggableObject : MonoBehaviour
 
             float snappedX = (float)Math.Round(objectWorldPosition.x);
             float snappedY = (float)Math.Round(objectWorldPosition.y);
+            
+            _hintManager.OnCheckAnswerAction?.Invoke(_type, new Vector2(snappedX, snappedY));
 
             if (IsPositionOccupied(snappedX, snappedY))
             {
