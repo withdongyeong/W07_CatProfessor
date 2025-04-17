@@ -185,7 +185,7 @@ public class ManaCircle : MonoBehaviour
     void Update()
     {
         UpdateOrbitMotion();
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -197,7 +197,7 @@ public class ManaCircle : MonoBehaviour
                     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.WaitMana); // ✅ 마나가 있을 때만 대사 출력
                     return;
                 }
-
+            
                 FindAndModifyAttributeCircuits();
             }
         }
@@ -211,9 +211,11 @@ public class ManaCircle : MonoBehaviour
 
     void FindAndModifyAttributeCircuits()
     {
-        AttributeCircuit[] circuits = FindObjectsByType<AttributeCircuit>(FindObjectsSortMode.InstanceID);
+        if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
+        List<AttributeCircuit> currentStageAttributeCircuit =
+            GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().AttributeCircuits;
 
-        foreach (var circuit in circuits)
+        foreach (var circuit in currentStageAttributeCircuit)
         {
             if (circuit.attributeType == manaType)
             {

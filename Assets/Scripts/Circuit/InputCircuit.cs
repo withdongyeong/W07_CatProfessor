@@ -67,6 +67,7 @@ public class InputCircuit : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
         isFiring = true;
         if (Time.time >= nextFireTime) 
         {
