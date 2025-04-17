@@ -45,6 +45,16 @@ public class GameManager : MonoBehaviour
         get => currentPlayingStage;
         set => currentPlayingStage = value;
     }
+
+    public bool IsGameOver
+    {
+        get => isGameOver;
+        set
+        {
+            isGameOver = value;
+            _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
+        }
+    }
     
     void Awake()
     {
@@ -82,7 +92,7 @@ public class GameManager : MonoBehaviour
             circuit.ResetCounter();
         }
         
-        isGameOver = false;
+        IsGameOver = false;
         Time.timeScale = 1f;
         lastSayTime = Time.time;
         ManaPool.Instance.ResetManaPool();
@@ -102,7 +112,7 @@ public class GameManager : MonoBehaviour
         if (currentPlayingStage != null)
         {
             List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
-            if (isGameOver || currentOutputCircuits.Count == 0) return;
+            if (IsGameOver || currentOutputCircuits.Count == 0) return;
             
             if (currentOutputCircuits.All(circuit => circuit.IsComplete()))
             {
@@ -160,8 +170,8 @@ public class GameManager : MonoBehaviour
     
     void GameClear()
     {
-        if (isGameOver) return;
-        isGameOver = true;
+        if (IsGameOver) return;
+        IsGameOver = true;
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
@@ -191,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        isGameOver = false;
+        IsGameOver = false;
         InitializeGame();
     }
 }

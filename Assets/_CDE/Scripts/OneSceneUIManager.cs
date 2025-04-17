@@ -1,18 +1,20 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class OneSceneUIManager : MonoBehaviour
 {
-    private PlayingUI _playingUI;
+    public PlayingUI PlayingUI { get; private set; }
     private Canvas _playingCanvas;
 
     private void Start()
     {
-        _playingUI = GetComponentInChildren<PlayingUI>();
-        _playingCanvas = _playingUI.GetComponent<Canvas>();
+        PlayingUI = GetComponentInChildren<PlayingUI>();
+        _playingCanvas = PlayingUI.GetComponent<Canvas>();
     }
 
     public void ActivatePlayingCanvas(bool isActive)
     {
         _playingCanvas.enabled = isActive;
+        PlayingUI.ActivateResetBtns(true);
     }
 }
