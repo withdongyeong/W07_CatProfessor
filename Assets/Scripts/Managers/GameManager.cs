@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     void InitializeGame()
     {
+        if (CurrentPlayingStage == null) return; 
         // 현재 출력회로들 다 초기화(스테이지갔다가 다시 오면 바로 클리어되기 때문)
         List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
         if (currentOutputCircuits.Count == 0) return;
@@ -170,7 +171,7 @@ public class GameManager : MonoBehaviour
         // TODO 스테이지 클리어 저장
         // StageDataManager.Instance.SetStageCleared(currentScene);
         // TODO 확인하고 다시 켜자
-        // SoundManager.Instance.PlayClearMusic();
+        SoundManager.Instance.PlayClearMusic();
 
         // if (StageDataManager.Instance.IsEnding())
         // {
