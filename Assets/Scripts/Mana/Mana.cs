@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Mana : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class Mana : MonoBehaviour
         Invoke(nameof(EnableDetection), detectDelay);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (currentPattern != null)
         {
