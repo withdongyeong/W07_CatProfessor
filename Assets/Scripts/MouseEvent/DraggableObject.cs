@@ -22,6 +22,7 @@ public class DraggableObject : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
         if (!isDragable)
             return;
 

@@ -104,22 +104,13 @@ public class GameManager : MonoBehaviour
         {
             GameClear();
         }
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D[] hits = Physics2D.RaycastAll(mouse, Vector2.zero);
-
-            foreach (var hit in hits)
-            {
-                Debug.Log($"[RaycastHitAll] Hit: {hit.collider.name} (z: {hit.collider.transform.position.z})");
-            }
-        }
+        
         // ✅ 60초마다 대사 실행
-        // if (Time.time - lastSayTime >= sayInterval)
-        // {
-        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
-        //     lastSayTime = Time.time;
-        // }
+        if (Time.time - lastSayTime >= sayInterval)
+        {
+            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
+            lastSayTime = Time.time;
+        }
     }
 
     public void EnterStage(GameObject stageRoot)
@@ -132,11 +123,9 @@ public class GameManager : MonoBehaviour
 
         // 카메라 이동
         mainCamera.MoveToStage(stageRoot.transform.position, currentViewSize);
-
-        // 우선순위 낮추기
-        var line = stateManager.MainCircle.GetComponentInChildren<LineRenderer>();
-        if (line != null)
-            line.sortingOrder = 0;
+        
+        // 클릭 collider 해제
+        stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
     }
 
 
@@ -145,15 +134,15 @@ public class GameManager : MonoBehaviour
         if (CurrentPlayingStage != null)
         {
             var stateManager = CurrentPlayingStage.GetComponentInChildren<StateManager>();
-            var line = stateManager.MainCircle.GetComponentInChildren<LineRenderer>();
-            if (line != null)
-                line.sortingOrder = 10;
+            // 클릭 collider 활성화
+            stateManager.MainCircle.GetComponentInChildren<ClickableCircle>(true).gameObject.SetActive(true);
         }
 
         CurrentPlayingStage = null;
         CurrentGameState = gameState.StageSelecting;
 
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
+        
     }
 
     
