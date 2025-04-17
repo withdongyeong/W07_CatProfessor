@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class ManaCircle : MonoBehaviour
 {
+    public bool isClickable = false;
     public float diameter = 5f;
     public float lineWidth = 0.1f;
     public float clickThreshold = 0.5f; // 클릭 판정 영역 확장
@@ -21,7 +22,35 @@ public class ManaCircle : MonoBehaviour
         SetupCircle();
         SetupCollider();
         SetupOrbiters();
+        SetupStageClickable();
     }
+
+    void SetupStageClickable()
+    {
+        Transform clickableTransform = transform.Find("ClickableCircle");
+        if (clickableTransform == null) return;
+
+        GameObject clickableObject = clickableTransform.gameObject;
+
+        if (isClickable)
+        {
+            clickableObject.SetActive(true);
+
+            ClickableCircle circle = clickableObject.GetComponent<ClickableCircle>();
+            if (circle == null)
+            {
+                circle = clickableObject.AddComponent<ClickableCircle>();
+            }
+
+            circle.SetRadius(diameter / 2f);
+        }
+        else
+        {
+            clickableObject.SetActive(false);
+        }
+    }
+
+
 
     void SetupCircle()
     {
@@ -94,12 +123,18 @@ public class ManaCircle : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            children.Add(child);
+            // ClickableCircle이 있는 자식은 삭제하지 않음
+            if (child.GetComponent<ClickableCircle>() == null)
+            {
+                children.Add(child);
+            }
         }
+
         foreach (Transform child in children)
         {
             DestroyImmediate(child.gameObject);
         }
+
 
         float radius = diameter / 2f;
         float angleStep = 360f / activeOrbiters;
@@ -132,6 +167,10 @@ public class ManaCircle : MonoBehaviour
         {
             if (child.gameObject.activeSelf)
             {
+                if (!child.gameObject.activeSelf) continue;
+                // ClickableCircle를 회전시키지 않음
+                if (child.GetComponent<ClickableCircle>() != null) continue;
+                
                 float angle = (Time.time * orbitSpeed + i * angleStep) * Mathf.Deg2Rad;
                 Vector3 newPos = new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0f) + transform.position;
                 child.position = newPos;
