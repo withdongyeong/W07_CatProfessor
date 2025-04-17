@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
         // TODO 스테이지 클리어 저장
         // StageDataManager.Instance.SetStageCleared(currentScene);
         // TODO 확인하고 다시 켜자
-        SoundManager.Instance.PlayClearMusic();
+        // SoundManager.Instance.PlayClearMusic();
 
         // if (StageDataManager.Instance.IsEnding())
         // {
