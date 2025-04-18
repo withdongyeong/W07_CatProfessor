@@ -90,15 +90,6 @@ public class StateManager : MonoBehaviour
                 _mainManaCircle = _manaCircles.OrderByDescending(c => c.diameter).First();
             }
         }
-
-        Debug.Log($"어 나 {transform.parent.name}인데, ");
-        Debug.Log("_mainManaCircle position: " + _mainManaCircle.transform.position);
-        Debug.Log($"총 마나 서클 개수는 {_manaCircles.Count}이고, ");
-        Debug.Log($"총 입력 회로 개수는 {_inputCircuits.Count}이고, ");
-        Debug.Log($"총 속성 회로 개수는 {_attributeCircuits.Count}이고, ");
-        Debug.Log($"총 중립 회로 개수는 {_neutralCircuits.Count}이고, ");
-        Debug.Log($"총 출력 회로 개수는 {_outputCircuits.Count}이고, ");
-        Debug.Log($"이야 수고해 ---------------------------------");
     }
 
     public void ResetDraggable()
@@ -109,6 +100,10 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    public void ApplyStageVisual(StageStatus status)
+    {
+        
+    }
     // Getter
     public ManaCircle MainCircle => _mainManaCircle;
     public List<ManaCircle> ManaCircles => _manaCircles;

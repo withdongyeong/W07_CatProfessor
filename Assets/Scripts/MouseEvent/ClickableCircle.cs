@@ -33,15 +33,12 @@ public class ClickableCircle : MonoBehaviour
             var stageRoot = FindStageRoot();
             if (stageRoot != null)
             {
-                Debug.Log($"{stageRoot.name} 마우스 클릭됨");
                 GameManager.Instance.EnterStage(stageRoot);
             }
             else
             {
                 Debug.LogWarning("StageRootMarker를 찾지 못함");
             }
-
-            Debug.Log("게임 플레이로 상태 변환");
         }
     }
 }

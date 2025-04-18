@@ -154,11 +154,35 @@ public class GameManager : MonoBehaviour
         CurrentPlayingStage = null;
         CurrentGameState = gameState.StageSelecting;
 
+        ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
     }
 
-    
+    // TODO 클리어 여부에 따라 스테이지의 시각화를 변경
+    private void ApplyStageVisualStates()
+    {
+        var allStages = FindObjectsOfType<StageRootMarker>();
+
+        foreach (var stageMarker in allStages)
+        {
+            string stageName = stageMarker.gameObject.name;
+            StageStatus status = StageDataManager.Instance.GetStageStatus(stageName);
+
+            var stateManager = stageMarker.GetComponentInChildren<StateManager>();
+            if (stateManager != null)
+            {
+                Debug.Log(stageName + " 시각화, 현재 상태 : " + status);
+                stateManager.ApplyStageVisual(status); // ✅ 3가지 상태 중 하나 전달
+            }
+        }
+    }
+
+    // TODO 비주얼 변경과 더불어, 클리어한 스테이지는 모범답안으로 리셋
+    // private void SetAnswer()
+    // {
+    // }
+
     void GameClear()
     {
         if (isGameOver) return;
@@ -167,9 +191,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
         // UIManager.Instance.ShowRestartPanel();
-        string currentScene = SceneManager.GetActiveScene().name;
-        // TODO 스테이지 클리어 저장
-        // StageDataManager.Instance.SetStageCleared(currentScene);
+        string stageName = GameManager.Instance.CurrentPlayingStage.name;
+        StageDataManager.Instance.SetStageCleared(stageName);
         // TODO 확인하고 다시 켜자
         // SoundManager.Instance.PlayClearMusic();
 
@@ -194,5 +217,6 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         InitializeGame();
+        ApplyStageVisualStates();
     }
 }
