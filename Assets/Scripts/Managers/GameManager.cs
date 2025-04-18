@@ -146,6 +146,11 @@ public class GameManager : MonoBehaviour
         StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
         int currentViewSize = Mathf.RoundToInt(stateManager.MainCircle.diameter / 2f);
 
+        // 하이라이트 끔
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            circle.SetHighlight(false); 
+        }
         // 회전 및 색상 복구
         foreach (var circle in stateManager.ManaCircles)
         {
