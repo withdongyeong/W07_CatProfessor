@@ -28,7 +28,7 @@ public class CinemachineCameraController : MonoBehaviour
 
     private Transform virtualCamTransform;
 
-    public CameraTarget[] Targets;
+    CameraTarget[] Targets;
 
     private Vector3 dragOrigin;
     private bool isDragging = false;

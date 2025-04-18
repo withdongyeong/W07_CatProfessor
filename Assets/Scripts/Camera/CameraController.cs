@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,11 +10,15 @@ public class CameraController : MonoBehaviour
 
     private Camera cam;
 
+    private CinemachineCameraController cine;
+
     void Awake()
     {
         cam = GetComponent<Camera>();
         targetPosition = transform.position;
         targetSize = cam.orthographicSize;
+
+        cine = FindAnyObjectByType<CinemachineCameraController>();
     }
 
     void Update()
@@ -34,11 +38,13 @@ public class CameraController : MonoBehaviour
     {
         targetPosition = new Vector3(stageCenter.x, stageCenter.y, transform.position.z);
         targetSize = zoomedInSize;
+        cine.MoveToStage(stageCenter, zoomedInSize);
     }
 
     public void MoveToWorld(Vector3 worldViewCenter, int zoomedOutSize)
     {
         targetPosition = new Vector3(worldViewCenter.x, worldViewCenter.y, transform.position.z);
         targetSize = zoomedOutSize;
+        cine.MoveToWorld(worldViewCenter, zoomedOutSize);
     }
 }
