@@ -69,9 +69,12 @@ public class StateManager : MonoBehaviour
             {
                 var attribute = child.GetComponent<AttributeCircuit>();
                 if (attribute != null) _attributeCircuits.Add(attribute);
+                
+                var neutral = child.GetComponent<NeutralCircuit>();
+                if (neutral != null) _neutralCircuits.Add(neutral);
             }
         }
-
+        
         var circles = gridManager.Find("Circles");
         if (circles != null)
         {
@@ -79,9 +82,6 @@ public class StateManager : MonoBehaviour
             {
                 var mana = child.GetComponent<ManaCircle>();
                 if (mana != null) _manaCircles.Add(mana);
-
-                var neutral = child.GetComponent<NeutralCircuit>();
-                if (neutral != null) _neutralCircuits.Add(neutral);
             }
 
             // 가장 긴 것이 main 마나 서클임
