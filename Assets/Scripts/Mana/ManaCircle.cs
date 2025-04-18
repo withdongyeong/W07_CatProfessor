@@ -17,9 +17,13 @@ public class ManaCircle : MonoBehaviour
     private int activeOrbiters = 2;
     private float orbitSpeed = 30f;
     private bool isRotating = true;
-    
-    private HintManager _hintManager;
+    private bool isHighlighted = false;
+    private float highlightPulseSpeed = 2f;
+    private float highlightIntensity = 0.4f;
+    private Color baseColor;
 
+    private HintManager _hintManager;
+    
     void Start()
     {
         SetupCircle();
@@ -28,6 +32,12 @@ public class ManaCircle : MonoBehaviour
         SetupStageClickable();
         
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
+    }
+
+    public void SetHighlight(bool highlight)
+    {
+        isHighlighted = highlight;
+        baseColor = ManaProperties.GetColor(manaType); // 기존 색 보존
     }
 
     // 회전 제어
@@ -86,8 +96,6 @@ public class ManaCircle : MonoBehaviour
             clickableObject.SetActive(false);
         }
     }
-
-
 
     void SetupCircle()
     {
@@ -220,18 +228,58 @@ public class ManaCircle : MonoBehaviour
             }
         }
     }
-
-    void FixedUpdate()
+    
+    private void Update()
     {
+        // 1. Highlight 관련
+        if (isHighlighted)
+        {
+            float pulse = Mathf.PingPong(Time.time * highlightPulseSpeed, 1f);
+            float lerpFactor = Mathf.Lerp(0f, highlightIntensity, pulse);
+
+            Color pulseColor = Color.Lerp(baseColor, Color.cyan, lerpFactor);
+            Color glowColor = Color.Lerp(pulseColor, Color.white, lerpFactor * 0.7f);
+
+            lineRenderer.startColor = glowColor;
+            lineRenderer.endColor = glowColor;
+
+            float baseWidth = 0.12f;
+            float highlightMaxWidth = 0.35f;
+            float widthPulse = Mathf.Lerp(baseWidth, highlightMaxWidth, pulse);
+            lineRenderer.startWidth = widthPulse;
+            lineRenderer.endWidth = widthPulse;
+        }
+        
+        // 2. 궤도 회전 관련
         if (isRotating)
         {
             UpdateOrbitMotion();
         }
 
+        // 3. 클릭 관련
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (GameManager.Instance.CurrentGameState == GameManager.gameState.StageSelecting)
+            {
+                return;
+            }
 
+            // 다른 스테이지 클릭 방지
+            var isCurrentStageCircle = false;
+            var circles = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().ManaCircles;
+            foreach (var circle in circles)
+            {
+                
+                if (this == circle)
+                {
+                    isCurrentStageCircle = true;
+                    break;
+                }
+            }
+            if (!isCurrentStageCircle) return;
+            
+            // 클릭 범위 체크 후 궤도 업데이트
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (IsPointOnCircleEdge(mousePosition))
             {
                 if (IsManaPresent()) 
@@ -272,7 +320,7 @@ public class ManaCircle : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
 
         var stateManager = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>();
-
+        
         ModifyCircuits(stateManager.AttributeCircuits, isReset);
         ModifyCircuits(stateManager.Draggables, isReset);
         
