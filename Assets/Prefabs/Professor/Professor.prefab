@@ -188,6 +188,8 @@ GameObject:
   - component: {fileID: 1702611767487607125}
   - component: {fileID: 3750441424808134981}
   - component: {fileID: 2381590392706830832}
+  - component: {fileID: 4426868424938589592}
+  - component: {fileID: 316484405923005533}
   m_Layer: 0
   m_Name: Professor
   m_TagString: Untagged
@@ -282,38 +284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1069c04ec1430b41894fba3ab9b9aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleFrames:
-  - {fileID: 1385536060, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: 450784339, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -1162463417, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -585756278, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: 804909665, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -973487105, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -873061431, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -872668722, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -1154435016, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: 474009427, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -1432667284, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: 1949273472, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -1648566983, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: 95367979, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  - {fileID: -1674890448, guid: f11d6390a8a41a744b1954b37f07ae81, type: 3}
-  talkFrames:
-  - {fileID: 775934330, guid: 9fde1984a98fc304ea4dad8be0929f28, type: 3}
-  - {fileID: -1180603667, guid: 9fde1984a98fc304ea4dad8be0929f28, type: 3}
-  - {fileID: -745830885, guid: 9fde1984a98fc304ea4dad8be0929f28, type: 3}
-  - {fileID: 1095385868, guid: 9fde1984a98fc304ea4dad8be0929f28, type: 3}
-  - {fileID: 195373971, guid: 9fde1984a98fc304ea4dad8be0929f28, type: 3}
-  victoryFrames:
-  - {fileID: -868945852, guid: a3ebd715ca5678d488980ecc4cb2c03a, type: 3}
-  - {fileID: 1305542553, guid: a3ebd715ca5678d488980ecc4cb2c03a, type: 3}
-  - {fileID: 52975908, guid: a3ebd715ca5678d488980ecc4cb2c03a, type: 3}
-  - {fileID: 333738826, guid: a3ebd715ca5678d488980ecc4cb2c03a, type: 3}
-  - {fileID: -677363687, guid: a3ebd715ca5678d488980ecc4cb2c03a, type: 3}
-  idleFrameRate: 0.05
-  talkFrameRate: 0.1
-  victoryFrameRate: 0.1
-  loop: 1
+  viewportPos: {x: 0.9, y: 0.1}
+  zOffset: 10
 --- !u!114 &2381590392706830832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,3 +301,61 @@ MonoBehaviour:
   textMesh: {fileID: 7767072185572029958}
   displayDuration: 2
   textSpeed: 0.05
+--- !u!95 &4426868424938589592
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789540169481230104}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6062421852a4fdf469bd69e021ae4ef9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &316484405923005533
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789540169481230104}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.2672398, y: 1.8973851}
+  m_Radius: 7.305375

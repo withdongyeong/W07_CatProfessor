@@ -6,27 +6,27 @@ public class Professor : MonoBehaviour
 {
     public static Professor Instance { get; private set; }
 
-    public enum AnimationType { Idle, Talk, Victory, Surprise, Sleep}
+    public enum AnimationType { Idle, Talk, Victory, Surprise, InSleep, Sleep}
 
-    [Header("애니메이션 프레임")]
-    public List<Sprite> idleFrames;
-    public List<Sprite> talkFrames;
-    public List<Sprite> victoryFrames;
+    // [Header("애니메이션 프레임")]
+    // public List<Sprite> idleFrames;
+    // public List<Sprite> talkFrames;
+    // public List<Sprite> victoryFrames;
 
-    [Header("프레임 속도")]
-    public float idleFrameRate = 0.1f;
-    public float talkFrameRate = 0.07f;
-    public float victoryFrameRate = 0.15f;
+    // [Header("프레임 속도")]
+    // public float idleFrameRate = 0.1f;
+    // public float talkFrameRate = 0.07f;
+    // public float victoryFrameRate = 0.15f;
 
-    public bool loop = true;
+    // public bool loop = true;
 
     private SpriteRenderer spriteRenderer;
-    private List<Sprite> currentFrames;
-    private int currentFrame;
-    private float timer;
-    private bool isPlaying = true;
-    private AnimationType currentAnimation = AnimationType.Idle;
-    private float currentFrameRate;
+    // private List<Sprite> currentFrames;
+    // private int currentFrame;
+    // private float timer;
+    // private bool isPlaying = true;
+    // private AnimationType currentAnimation = AnimationType.Idle;
+    // private float currentFrameRate;
     
     [Header("카메라 설정")]
     [Tooltip("Viewport 좌표")]
@@ -39,6 +39,9 @@ public class Professor : MonoBehaviour
     
     [Header("애니메이션 설정")]
     private Animator animator;
+    
+    //마지막 입력 시간
+    private float lastInputTime;
 
 
     void Awake()
@@ -78,8 +81,8 @@ public class Professor : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        currentFrames = idleFrames;
-        currentFrameRate = idleFrameRate;
+        // currentFrames = idleFrames;
+        // currentFrameRate = idleFrameRate;
         SetAnimation(AnimationType.Idle);
 
         if (spriteRenderer.sprite == null)
@@ -115,6 +118,18 @@ public class Professor : MonoBehaviour
         //
         //     spriteRenderer.sprite = currentFrames[currentFrame];
         // }
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastInputTime = Time.time;
+        }
+        // 10초간 입력이 없으면 애니메이션 변경
+        if (Time.time - lastInputTime > 10f && GameManager.Instance.resetCount >= 10)
+        {
+            IsCurrentAnimation(AnimationType.Idle);
+            {
+                SetAnimation(AnimationType.InSleep);
+            }
+        }
     }
 
     private void LateUpdate()
@@ -136,17 +151,17 @@ public class Professor : MonoBehaviour
     {
         // if (currentAnimation == animationType) return;
         
-        currentAnimation = animationType;
-        isPlaying = true;
-        currentFrame = 0;
-        timer = 0f;
+        // currentAnimation = animationType;
+        // isPlaying = true;
+        // currentFrame = 0;
+        // timer = 0f;
 
         switch (animationType)
         {
             case AnimationType.Idle:
                 // currentFrames = idleFrames;
                 // currentFrameRate = idleFrameRate;
-                animator.Play("Idle");
+                animator.SetInteger("State", 0);
                 break;
             case AnimationType.Talk:
                 // currentFrames = talkFrames;
@@ -161,29 +176,32 @@ public class Professor : MonoBehaviour
             case AnimationType.Surprise:
                 animator.Play("Surprised");
                 break;
+            case AnimationType.InSleep:
+                animator.SetInteger("State", 1);
+                break;
             case AnimationType.Sleep:
                 animator.Play("Sleep");
                 break;
         }
 
-        if (currentFrames == null || currentFrames.Count == 0)
-        {
-            Debug.LogError($"{animationType} 애니메이션 프레임이 없습니다.");
-            return;
-        }
-
-        spriteRenderer.sprite = currentFrames[0];
+        // if (currentFrames == null || currentFrames.Count == 0)
+        // {
+        //     Debug.LogError($"{animationType} 애니메이션 프레임이 없습니다.");
+        //     return;
+        // }
+        //
+        // spriteRenderer.sprite = currentFrames[0];
     }
 
-    public void Play()
-    {
-        isPlaying = true;
-    }
+    // public void Play()
+    // {
+        // isPlaying = true;
+    // }
 
-    public void Stop()
-    {
-        isPlaying = false;
-    }
+    // public void Stop()
+    // {
+        // isPlaying = false;
+    // }
     public void Say(string message)
     {
         TalkBox.Instance.Talk(message);
@@ -197,6 +215,37 @@ public class Professor : MonoBehaviour
 
     private void OnMouseDown()
     {
-        SetAnimation(AnimationType.Surprise);
+        if (IsCurrentAnimation(AnimationType.Sleep))
+        {
+            SetAnimation(AnimationType.Idle);
+            lastInputTime = Time.time;
+            Debug.Log("힌트 호출");
+        }
+    }
+    
+    //현재 애니메이션 체크
+    public bool IsCurrentAnimation(AnimationType animationType)
+    {
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName(animationType.ToString()))
+        {
+            // 원하는 애니메이션이라면 플레이 중인지 체크
+            float animTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if(animTime == 0)
+            {
+                // 플레이 중이 아님
+            }
+            if(animTime > 0 && animTime < 1.0f)
+            {
+                // 애니메이션 플레이 중
+            }
+            else if(animTime >= 1.0f)
+            {
+                // 애니메이션 종료
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }
