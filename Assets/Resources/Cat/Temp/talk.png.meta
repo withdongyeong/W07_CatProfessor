@@ -1,52 +1,61 @@
 fileFormatVersion: 2
-guid: 9fde1984a98fc304ea4dad8be0929f28
+guid: 9cb1aa63634d65147a4334ae9f2b9221
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8451926566866254080
-    second: "\uB9D0\uD558\uAE30_0"
+      213: -1448427241372007323
+    second: talk_0
   - first:
-      213: -1892020511144957074
-    second: "\uB9D0\uD558\uAE30_1"
+      213: 6631804873353466193
+    second: talk_1
   - first:
-      213: -6498528732310889501
-    second: "\uB9D0\uD558\uAE30_2"
+      213: 7860509012912954692
+    second: talk_2
   - first:
-      213: 1192254469973274277
-    second: "\uB9D0\uD558\uAE30_3"
+      213: -44324108811587735
+    second: talk_3
   - first:
-      213: -3973840872206501994
-    second: "\uB9D0\uD558\uAE30_4"
+      213: 4061177465640785244
+    second: talk_4
   - first:
-      213: 6542541407617612103
-    second: "\uB9D0\uD558\uAE30_5"
+      213: 7036752810973532432
+    second: talk_5
   - first:
-      213: 4834961599272839258
-    second: "\uB9D0\uD558\uAE30_6"
+      213: 2940954926778383178
+    second: talk_6
   - first:
-      213: -1349108922348135698
-    second: "\uB9D0\uD558\uAE30_7"
+      213: 6022365957334032478
+    second: talk_7
   - first:
-      213: 6365361757918070716
-    second: "\uB9D0\uD558\uAE30_8"
+      213: -7184156248626947830
+    second: talk_8
   - first:
-      213: 4767779063380843025
-    second: "\uB9D0\uD558\uAE30_9"
+      213: -3406688125671805655
+    second: talk_9
   - first:
-      213: -1639333251817802654
-    second: "\uB9D0\uD558\uAE30_10"
+      213: 8181687006949189846
+    second: talk_10
   - first:
-      213: -2976214189937339768
-    second: "\uB9D0\uD558\uAE30_11"
+      213: 1719247713647101665
+    second: talk_11
   - first:
-      213: -6965980478439057756
-    second: "\uB9D0\uD558\uAE30_12"
+      213: 2904164092163334373
+    second: talk_12
   - first:
-      213: -3951474632383513638
-    second: "\uB9D0\uD558\uAE30_13"
+      213: 4611819324051924538
+    second: talk_13
   - first:
-      213: -2950152734532110210
-    second: "\uB9D0\uD558\uAE30_14"
+      213: 8897430172178265154
+    second: talk_14
+  - first:
+      213: -8523497240711104669
+    second: talk_15
+  - first:
+      213: 3910277040455836791
+    second: talk_16
+  - first:
+      213: -2365077759716249915
+    second: talk_17
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,7 +151,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_0"
+      name: talk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -157,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4df9b2d3df903ae4eb12ab325eb4f6b1
-      internalID: 775934330
+      spriteID: 24e23103bc4e98f489a352825c2a2a1a
+      internalID: -252196924
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_1"
+      name: talk_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -179,14 +188,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e93e6d1173ad8748bcd9d164d36bf49
-      internalID: -1180603667
+      spriteID: f5f6b3b13eae20043be234e6441f5b5b
+      internalID: -936894301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_2"
+      name: talk_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -201,14 +210,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a68dd337e17ace5439164ca78c99c5ea
-      internalID: -745830885
+      spriteID: ae81293fcd62a7f44a465f961ff0880f
+      internalID: -53971349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_3"
+      name: talk_3
       rect:
         serializedVersion: 2
         x: 0
@@ -223,14 +232,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a890d5dfd80e96e478e29cda870e1416
-      internalID: 1095385868
+      spriteID: ed84dfc40a70aca4187426f7cfecd9ea
+      internalID: -288510433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_4"
+      name: talk_4
       rect:
         serializedVersion: 2
         x: 1800
@@ -245,8 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f06e0398fcc56734b91e09418cf61426
-      internalID: 195373971
+      spriteID: e92551ff589439e489a03b58acbc0e0f
+      internalID: 432973049
       vertices: []
       indices: 
       edges: []
@@ -255,7 +264,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6be5539b4e9559e4a97a6b3bcb81d4bd
+    spriteID: d85e838462dbda34582e03a7934334d7
     internalID: 0
     vertices: []
     indices: 
@@ -265,11 +274,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uB9D0\uD558\uAE30_0": 775934330
-      "\uB9D0\uD558\uAE30_1": -1180603667
-      "\uB9D0\uD558\uAE30_2": -745830885
-      "\uB9D0\uD558\uAE30_3": 1095385868
-      "\uB9D0\uD558\uAE30_4": 195373971
+      talk_0: -252196924
+      talk_1: -936894301
+      talk_2: -53971349
+      talk_3: -288510433
+      talk_4: 432973049
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

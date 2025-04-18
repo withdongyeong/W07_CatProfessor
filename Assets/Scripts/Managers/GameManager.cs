@@ -32,12 +32,7 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set
-        {
-            currentGameState = value;
-            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
-            _uiManager.ActivatePlayingCanvas(currentGameState == gameState.GamePlaying);
-        }
+        set => currentGameState = value;
     }
     
     public GameObject CurrentPlayingStage
@@ -49,11 +44,7 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver
     {
         get => isGameOver;
-        set
-        {
-            isGameOver = value;
-            _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
-        }
+        set => isGameOver = value;
     }
     
     void Awake()
@@ -68,6 +59,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         currentGameState = gameState.StageSelecting;
     }
     
@@ -77,13 +70,13 @@ public class GameManager : MonoBehaviour
             mainCamera = Camera.main.GetComponent<CameraController>();
         
         _grid = mainCamera.GetComponentInChildren<GridManager>();
-        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         
         InitializeGame();
     }
 
     void InitializeGame()
     {
+        if (CurrentPlayingStage == null) return; 
         // 현재 출력회로들 다 초기화(스테이지갔다가 다시 오면 바로 클리어되기 때문)
         List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
         if (currentOutputCircuits.Count == 0) return;
@@ -93,6 +86,8 @@ public class GameManager : MonoBehaviour
         }
         
         IsGameOver = false;
+        _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
+        
         Time.timeScale = 1f;
         lastSayTime = Time.time;
         ManaPool.Instance.ResetManaPool();
@@ -147,6 +142,14 @@ public class GameManager : MonoBehaviour
         
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
+        
+        // Ui 및 그리드 활성화
+        _uiManager.ActivatePlayingCanvas(true);
+        _grid.ActivateGrid(true);
+
+        // stage 초기화
+        stateManager.ResetManaCircle();
+        stateManager.ResetDraggable();
     }
 
 
@@ -165,6 +168,9 @@ public class GameManager : MonoBehaviour
 
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
+        // UI 및 그리드 비활성화
+        _uiManager.ActivatePlayingCanvas(false);
+        _grid.ActivateGrid(false);
     }
 
     
@@ -172,6 +178,7 @@ public class GameManager : MonoBehaviour
     {
         if (IsGameOver) return;
         IsGameOver = true;
+        _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
