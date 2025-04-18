@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OutputCircuit : MonoBehaviour
+public class OutputCircuit : MonoBehaviour, IColorable
 {
     public ManaProperties.ManaType targetType;
     public int targetCount = 5;
@@ -27,7 +27,31 @@ public class OutputCircuit : MonoBehaviour
     {
         InitializeComponents();
     }
+    public void SetColor(Color c)
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.color = c;
 
+        if (effectSpriteRenderer != null)
+            effectSpriteRenderer.color = c;
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = c;
+    }
+
+    public void SetDefaultColor()
+    {
+        Color defaultColor = ManaProperties.GetColor(targetType);
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = defaultColor;
+
+        if (effectSpriteRenderer != null)
+            effectSpriteRenderer.color = defaultColor;
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = defaultColor;
+    }
     void InitializeComponents()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();

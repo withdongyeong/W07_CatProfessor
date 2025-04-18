@@ -69,9 +69,12 @@ public class StateManager : MonoBehaviour
             {
                 var attribute = child.GetComponent<AttributeCircuit>();
                 if (attribute != null) _attributeCircuits.Add(attribute);
+                
+                var neutral = child.GetComponent<NeutralCircuit>();
+                if (neutral != null) _neutralCircuits.Add(neutral);
             }
         }
-
+        
         var circles = gridManager.Find("Circles");
         if (circles != null)
         {
@@ -79,9 +82,6 @@ public class StateManager : MonoBehaviour
             {
                 var mana = child.GetComponent<ManaCircle>();
                 if (mana != null) _manaCircles.Add(mana);
-
-                var neutral = child.GetComponent<NeutralCircuit>();
-                if (neutral != null) _neutralCircuits.Add(neutral);
             }
 
             // 가장 긴 것이 main 마나 서클임
@@ -90,15 +90,6 @@ public class StateManager : MonoBehaviour
                 _mainManaCircle = _manaCircles.OrderByDescending(c => c.diameter).First();
             }
         }
-
-        Debug.Log($"어 나 {transform.parent.name}인데, ");
-        Debug.Log("_mainManaCircle position: " + _mainManaCircle.transform.position);
-        Debug.Log($"총 마나 서클 개수는 {_manaCircles.Count}이고, ");
-        Debug.Log($"총 입력 회로 개수는 {_inputCircuits.Count}이고, ");
-        Debug.Log($"총 속성 회로 개수는 {_attributeCircuits.Count}이고, ");
-        Debug.Log($"총 중립 회로 개수는 {_neutralCircuits.Count}이고, ");
-        Debug.Log($"총 출력 회로 개수는 {_outputCircuits.Count}이고, ");
-        Debug.Log($"이야 수고해 ---------------------------------");
     }
 
     public void ResetDraggable()
@@ -116,6 +107,52 @@ public class StateManager : MonoBehaviour
             circle.ResetManaCircle(2);
         }
     }
+
+    public void ApplyStageVisual(StageStatus status)
+    {
+        Color lockedColor = Color.gray;
+
+        // 마나 서클 처리
+        foreach (var circle in _manaCircles)
+        {
+            switch (status)
+            {
+                case StageStatus.Locked:
+                    circle.StopRotation();
+                    circle.SetColor(lockedColor);
+                    break;
+
+                case StageStatus.Available:
+                    circle.StopRotation();
+                    circle.SetDefaultColor();
+                    break;
+
+                case StageStatus.Cleared:
+                    circle.StartRotation();
+                    circle.SetDefaultColor();
+                    break;
+            }
+        }
+
+        // 모든 회로 공통 처리
+        void ApplyColorToCircuits<T>(List<T> list) where T : MonoBehaviour
+        {
+            foreach (var item in list)
+            {
+                if (status == StageStatus.Locked && item is IColorable ic1)
+                    ic1.SetColor(lockedColor);
+                else if (item is IColorable ic2)
+                    ic2.SetDefaultColor();
+            }
+        }
+
+        ApplyColorToCircuits(_inputCircuits);
+        ApplyColorToCircuits(_outputCircuits);
+        ApplyColorToCircuits(_attributeCircuits);
+        ApplyColorToCircuits(_draggables);
+        ApplyColorToCircuits(_neutralCircuits);
+    }
+
 
     // Getter
     public ManaCircle MainCircle => _mainManaCircle;

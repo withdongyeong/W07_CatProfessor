@@ -16,6 +16,7 @@ public class ManaCircle : MonoBehaviour
     private GameObject[] orbiters = new GameObject[5];
     private int activeOrbiters = 2;
     private float orbitSpeed = 30f;
+    private bool isRotating = true;
     
     private HintManager _hintManager;
 
@@ -23,12 +24,44 @@ public class ManaCircle : MonoBehaviour
     {
         SetupCircle();
         SetupCollider();
-        SetupOrbiters();
+        SetupOrbiters(activeOrbiters);
         SetupStageClickable();
         
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
     }
 
+    // 회전 제어
+    public void StopRotation()
+    {
+        isRotating = false;
+    }
+
+    public void StartRotation()
+    {
+        isRotating = true;
+    }
+
+    // 색상 제어
+    public void SetColor(Color c)
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.startColor = c;
+            lineRenderer.endColor = c;
+        }
+
+        foreach (Transform child in transform)
+        {
+            var sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.color = c;
+        }
+    }
+
+    public void SetDefaultColor()
+    {
+        SetColor(ManaProperties.GetColor(manaType));
+    }
     void SetupStageClickable()
     {
         Transform clickableTransform = transform.Find("ClickableCircle");
@@ -120,9 +153,11 @@ public class ManaCircle : MonoBehaviour
         edgeCollider.points = colliderPoints;
     }
 
-    void SetupOrbiters()
+    public void SetupOrbiters(int activeOrbiterCount)
     {
         int beforeCount = transform.childCount;
+        activeOrbiters = activeOrbiterCount;
+        
         List<Transform> children = new List<Transform>();
 
         foreach (Transform child in transform)
@@ -141,9 +176,9 @@ public class ManaCircle : MonoBehaviour
 
 
         float radius = diameter / 2f;
-        float angleStep = 360f / activeOrbiters;
+        float angleStep = 360f / activeOrbiterCount;
 
-        for (int i = 0; i < activeOrbiters; i++)
+        for (int i = 0; i < activeOrbiterCount; i++)
         {
             GameObject orbiter = Instantiate(orbitingPrefab, transform);
             orbiter.hideFlags = HideFlags.DontSave;
@@ -186,10 +221,13 @@ public class ManaCircle : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        UpdateOrbitMotion();
-        
+        if (isRotating)
+        {
+            UpdateOrbitMotion();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -198,10 +236,10 @@ public class ManaCircle : MonoBehaviour
             {
                 if (IsManaPresent()) 
                 {
-                    Professor.Instance.SayRandom(ScriptManager.ScriptCategory.WaitMana); // ✅ 마나가 있을 때만 대사 출력
+                    Professor.Instance.SayRandom(ScriptManager.ScriptCategory.WaitMana);
                     return;
                 }
-            
+
                 FindAndModifyAttributeCircuits();
             }
         }
@@ -245,7 +283,15 @@ public class ManaCircle : MonoBehaviour
         }
         
         if (activeOrbiters > 4) activeOrbiters = 2;
-        SetupOrbiters();
+
+        // 같은 타입의 ManaCircle 동기화
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            if (circle.manaType == manaType)
+            {
+                circle.SetupOrbiters(activeOrbiters);
+            }
+        }
 
         // 정답 Circle 개수 체크 
         _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);

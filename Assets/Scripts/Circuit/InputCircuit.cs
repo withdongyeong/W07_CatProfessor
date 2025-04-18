@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InputCircuit : MonoBehaviour
+public class InputCircuit : MonoBehaviour, IColorable
 {
     public GameObject manaPrefab;
     public float fireRate = 0.2f;
@@ -22,7 +22,23 @@ public class InputCircuit : MonoBehaviour
     {
         InitializeComponents();
     }
+    public void SetColor(Color color)
+    {
+        if (attributeSpriteRenderer != null)
+            attributeSpriteRenderer.color = color;
 
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = color;
+    }
+
+    public void SetDefaultColor()
+    {
+        if (attributeSpriteRenderer != null)
+            attributeSpriteRenderer.color = ManaProperties.GetColor(attributeType);
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = ManaProperties.GetColor(attributeType);
+    }
     void InitializeComponents()
     {
         shootEffectInstance = transform.Find("ShootEffect")?.gameObject;

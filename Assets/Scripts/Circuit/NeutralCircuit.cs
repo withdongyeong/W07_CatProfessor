@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class NeutralCircuit : MonoBehaviour
+public class NeutralCircuit : MonoBehaviour, IColorable
 {
     public bool isDragable = false;
 
@@ -44,7 +44,27 @@ public class NeutralCircuit : MonoBehaviour
             }
         }
     }
+    public void SetColor(Color color)
+    {
+        var mainRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (mainRenderer != null)
+            mainRenderer.color = color;
 
+        if (ringEffectInstance != null)
+        {
+            var ringRenderer = ringEffectInstance.GetComponentInChildren<SpriteRenderer>();
+            if (ringRenderer != null)
+                ringRenderer.color = color;
+        }
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = color;
+    }
+
+    public void SetDefaultColor()
+    {
+        SetColor(ManaProperties.GetColor(ManaProperties.ManaType.Neutral));
+    }
     void InitializeComponents()
     {
         if (isDragable && GetComponent<DraggableObject>() == null)

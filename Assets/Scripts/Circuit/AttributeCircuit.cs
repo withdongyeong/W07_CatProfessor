@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class AttributeCircuit : MonoBehaviour
+public class AttributeCircuit : MonoBehaviour, IColorable
 {
     public ManaProperties.ManaType attributeType;
     public bool isDragable = false;
@@ -27,6 +27,32 @@ public class AttributeCircuit : MonoBehaviour
     {
         InitializeComponents();
     }
+    public void SetColor(Color color)
+    {
+        if (attributeSpriteRenderer != null)
+            attributeSpriteRenderer.color = color;
+
+        if (effectSpriteRenderer != null)
+            effectSpriteRenderer.color = color;
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = color;
+    }
+
+    public void SetDefaultColor()
+    {
+        Color defaultColor = ManaProperties.GetColor(attributeType);
+
+        if (attributeSpriteRenderer != null)
+            attributeSpriteRenderer.color = defaultColor;
+
+        if (effectSpriteRenderer != null)
+            effectSpriteRenderer.color = defaultColor;
+
+        if (shootEffectRenderer != null)
+            shootEffectRenderer.color = defaultColor;
+    }
+
 
     void InitializeComponents()
     {

@@ -28,20 +28,25 @@ public class ClickableCircle : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameManager.Instance.CurrentGameState == GameManager.gameState.StageSelecting)
-        {
-            var stageRoot = FindStageRoot();
-            if (stageRoot != null)
-            {
-                Debug.Log($"{stageRoot.name} 마우스 클릭됨");
-                GameManager.Instance.EnterStage(stageRoot);
-            }
-            else
-            {
-                Debug.LogWarning("StageRootMarker를 찾지 못함");
-            }
+        if (GameManager.Instance.CurrentGameState != GameManager.gameState.StageSelecting) return;
 
-            Debug.Log("게임 플레이로 상태 변환");
+        var stageRoot = FindStageRoot();
+        if (stageRoot == null)
+        {
+            Debug.LogWarning("StageRootMarker를 찾지 못함");
+            return;
         }
+
+        string stageName = stageRoot.name;
+        var status = StageDataManager.Instance.GetStageStatus(stageName);
+
+        if (status == StageStatus.Locked)
+        {
+            Debug.Log($"[{stageName}] 스테이지는 아직 잠겨있습니다.");
+            return;
+        }
+
+        GameManager.Instance.EnterStage(stageRoot);
     }
+
 }

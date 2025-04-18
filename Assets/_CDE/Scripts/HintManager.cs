@@ -18,6 +18,10 @@ public class HintManager : MonoBehaviour
 
     public Action<ManaProperties.ManaType, int> OnCheckCircleAction;
     [SerializeField] private List<ManaCircleAnswser> manaCircleAnswserList;
+    
+    // Getter
+    public List<AnswerCircuit> AnswerCircuits => _answerCircuits;
+    public List<ManaCircleAnswser> ManaCircleAnswsers => manaCircleAnswserList;
 
     private void Start()
     {

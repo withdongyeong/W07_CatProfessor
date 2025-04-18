@@ -16,6 +16,14 @@ public class StageClearEntry
     }
 }
 
+public enum StageStatus
+{
+    Locked,
+    Available,
+    Cleared
+}
+
+
 [Serializable]
 public class StageClearData
 {
@@ -30,8 +38,31 @@ public class StageDataManager : MonoBehaviour
 
     private int endingThreshold = 10;
     private StageClearData stageData;
-    private bool isEndingCached = false; // ✅ 캐싱된 isEnding 값
-    private bool isFirstCheck = true; // ✅ 최초 체크 여부
+    private bool isEndingCached = false; // 캐싱된 isEnding 값
+    private bool isFirstCheck = true; // 최초 체크 여부
+
+    private string[] orderedStageNames = new string[]
+    {
+        "Stage_1_1", "Stage_1_2", "Stage_1_3", "Stage_1_4", "Stage_1_Sub1", "Stage_1_Sub2",
+        "Stage_2_1", "Stage_2_2", "Stage_2_3", "Stage_2_Sub1", "Stage_2_Sub2", "Stage_3_1",
+        "Stage_3_2", "Stage_3_3", "Stage_3_Sub1", "Stage_3_Sub2", "Stage_4_1", "Stage_4_2",
+        "Stage_4_3", "Stage_4_4", "Stage_Final"
+    };
+
+    public StageStatus GetStageStatus(string stageName)
+    {
+        int index = Array.IndexOf(orderedStageNames, stageName);
+        if (index == -1) return StageStatus.Locked;
+
+        if (IsStageCleared(stageName))
+            return StageStatus.Cleared;
+
+        if (index == 0)
+            return StageStatus.Available;
+
+        string prevStage = orderedStageNames[index - 1];
+        return IsStageCleared(prevStage) ? StageStatus.Available : StageStatus.Locked;
+    }
 
     void Awake()
     {

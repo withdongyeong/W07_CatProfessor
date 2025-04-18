@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     [Header("기본 월드 카메라 설정")]
     public Vector3 worldViewPosition = Vector3.zero;
-    private int worldViewSize = 40;
+    private int worldViewSize = 110;
     
     public static GameManager Instance { get; private set; }
     
@@ -78,7 +78,9 @@ public class GameManager : MonoBehaviour
         
         _grid = mainCamera.GetComponentInChildren<GridManager>();
         
+        IsGameOver = false;
         InitializeGame();
+        ApplyStageVisualStates();
     }
 
     void InitializeGame()
@@ -144,23 +146,48 @@ public class GameManager : MonoBehaviour
         StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
         int currentViewSize = Mathf.RoundToInt(stateManager.MainCircle.diameter / 2f);
 
+        // 회전 및 색상 복구
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            circle.StartRotation();
+            circle.SetDefaultColor();
+        }
+
+        void ApplyDefaultToCircuits<T>(List<T> list) where T : MonoBehaviour
+        {
+            foreach (var item in list)
+            {
+                if (item is IColorable colorable)
+                {
+                    colorable.SetDefaultColor();
+                }
+            }
+        }
+
+        ApplyDefaultToCircuits(stateManager.InputCircuits);
+        ApplyDefaultToCircuits(stateManager.OutputCircuits);
+        ApplyDefaultToCircuits(stateManager.AttributeCircuits);
+        ApplyDefaultToCircuits(stateManager.Draggables);
+        ApplyDefaultToCircuits(stateManager.NeutralCircuits);
+
         // 카메라 이동
         mainCamera.MoveToStage(stageRoot.transform.position, currentViewSize);
-        
+
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
-        
-        // Ui 및 그리드 활성화
+
+        // UI 및 그리드 활성화
         _uiManager.ActivatePlayingCanvas(true);
         _grid.ActivateGrid(true);
 
-        // stage 초기화
+        // 스테이지 초기화
         stateManager.ResetManaCircle();
         stateManager.ResetDraggable();
         
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
     }
+
 
 
     public void ExitStage()
@@ -176,6 +203,7 @@ public class GameManager : MonoBehaviour
         CurrentPlayingStage = null;
         CurrentGameState = gameState.StageSelecting;
 
+        ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
         // UI 및 그리드 비활성화
@@ -186,7 +214,121 @@ public class GameManager : MonoBehaviour
         resetCount = 0;
     }
 
+    private void ApplyStageVisualStates()
+    {
+        var allStages = FindObjectsOfType<StageRootMarker>();
+
+        foreach (var stageMarker in allStages)
+        {
+            string stageName = stageMarker.gameObject.name;
+            StageStatus status = StageDataManager.Instance.GetStageStatus(stageName);
+
+            var stateManager = stageMarker.GetComponentInChildren<StateManager>();
+            if (stateManager == null) continue;
+
+            // 비주얼 반영
+            Debug.Log(stageName + " 시각화, 현재 상태 : " + status);
+            stateManager.ApplyStageVisual(status);
+
+            // 모범답안 초기화 처리
+            var hintManager = stageMarker.GetComponentInChildren<HintManager>();
+            if (hintManager == null) continue;
+
+            if (status == StageStatus.Cleared)
+            {
+                ApplyAnswerDraggables(stateManager, hintManager);
+                ApplyAnswerCircles(stateManager, hintManager);
+            }
+            else
+            {
+                // 배치 초기화
+                stateManager.ResetDraggable();
+                stateManager.ResetManaCircle();
+            }
+        }
+    }
     
+    // 드래그 가능한 속성 회로들을 HintManager의 정답 위치에 맞춰 재배치
+// 드래그 가능한 속성 회로들을 HintManager의 정답 위치에 맞춰 재배치
+    private void ApplyAnswerDraggables(StateManager stateManager, HintManager hintManager)
+    {
+        // 1. 현재 스테이지의 드래그 가능한 속성 회로들을 속성 타입별로 그룹화
+        var draggablesByType = stateManager.Draggables
+            .GroupBy(d => d.attributeType)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        // 2. HintManager 내부의 정답 회로들(AnswerCircuit)도 속성 타입별로 그룹화
+        var answerByType = hintManager.AnswerCircuits
+            .GroupBy(a => a.AnswerType)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        // 3. 타입별로 순회하며 일치하는 속성 회로 위치를 정답 포지션으로 배치
+        foreach (var kvp in answerByType)
+        {
+            var type = kvp.Key;
+            var answerList = kvp.Value;
+
+            // None 타입은 무효이므로 스킵
+            if (type == ManaProperties.ManaType.None) continue;
+
+            // 해당 타입의 드래그 회로가 존재하지 않을 경우 스킵 (정답과 무관)
+            if (!draggablesByType.ContainsKey(type))
+            {
+                Debug.LogWarning($"[HintSync] 속성 {type}에 대한 드래그 가능한 회로가 존재하지 않습니다.");
+                continue;
+            }
+
+            var dragList = draggablesByType[type];
+
+            // 드래그 회로 수 ≠ 정답 회로 수 → 데이터가 불일치함을 경고
+            if (dragList.Count != answerList.Count)
+            {
+                Debug.LogWarning($"[HintSync] 속성 {type} 회로 개수 불일치: 정답 {answerList.Count}개 / 현재 {dragList.Count}개");
+                continue;
+            }
+
+            // 개수 일치 시 순서대로 정답 위치에 배치 (정렬은 없음)
+            for (int i = 0; i < dragList.Count; i++)
+            {
+                dragList[i].transform.position = answerList[i].AnswerPos;
+            }
+        }
+    }
+
+
+
+    // 마나 서클의 활성 개수를 HintManager의 정답 개수에 맞춰 재설정 (동일 타입 서클 모두 적용)
+    private void ApplyAnswerCircles(StateManager stateManager, HintManager hintManager)
+    {
+        // 1. HintManager에 정의된 정답 마나 서클 목록 순회
+        foreach (var answer in hintManager.ManaCircleAnswsers)
+        {
+            // None 타입은 무효이므로 스킵
+            if (answer.type == ManaProperties.ManaType.None) continue;
+
+            // 2. 해당 타입의 마나 서클을 전부 가져옴 (복수 가능)
+            var targets = stateManager.ManaCircles
+                .Where(c => c.manaType == answer.type)
+                .ToList();
+
+            if (targets.Count == 0)
+            {
+                Debug.LogWarning($"[HintSync] 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
+                continue;
+            }
+
+            // 3. 해당 타입의 모든 마나 서클에 동일한 정답 개수 적용
+            foreach (var circle in targets)
+            {
+                circle.ResetManaCircle(answer.answerCount);
+            }
+        }
+    }
+
+
+
+
+
     void GameClear()
     {
         if (IsGameOver) return;
@@ -196,9 +338,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
         // UIManager.Instance.ShowRestartPanel();
-        string currentScene = SceneManager.GetActiveScene().name;
-        // TODO 스테이지 클리어 저장
-        // StageDataManager.Instance.SetStageCleared(currentScene);
+        string stageName = GameManager.Instance.CurrentPlayingStage.name;
+        StageDataManager.Instance.SetStageCleared(stageName);
         // TODO 확인하고 다시 켜자
         // SoundManager.Instance.PlayClearMusic();
 
@@ -223,6 +364,7 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
+        ApplyStageVisualStates();
     }    
     
     // 내부에서만 호출하도록
