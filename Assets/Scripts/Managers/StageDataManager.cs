@@ -43,8 +43,8 @@ public class StageDataManager : MonoBehaviour
 
     private string[] orderedStageNames = new string[]
     {
-        "Stage_1_01", "Stage_1_02", "Stage_1_03", "Stage_1_04", "Stage_1_05", "Stage_1_06",
-        "Stage_1_07", "Stage_1_08", "Stage_1_09", "Stage_1_10", "Stage_1_11", "Stage_1_12",
+        "Stage_1_1", "Stage_1_2", "Stage_1_3", "Stage_1_4", "Stage_1_5", "Stage_1_6",
+        "Stage_1_7", "Stage_1_8", "Stage_1_9", "Stage_1_10", "Stage_1_11", "Stage_1_12",
         "Stage_1_13", "Stage_1_14", "Stage_1_15", "Stage_1_16", "Stage_1_17", "Stage_1_18",
         "Stage_1_19", "Stage_1_20", "Stage_1_21", "Stage_1_22"
     };

@@ -110,8 +110,28 @@ public class StateManager : MonoBehaviour
 
     public void ApplyStageVisual(StageStatus status)
     {
-        
+        foreach (var circle in _manaCircles)
+        {
+            switch (status)
+            {
+                case StageStatus.Locked:
+                    circle.StopRotation();
+                    circle.SetColor(Color.gray); // 예시
+                    break;
+
+                case StageStatus.Available:
+                    circle.StopRotation();
+                    circle.SetDefaultColor();
+                    break;
+
+                case StageStatus.Cleared:
+                    circle.StartRotation();
+                    circle.SetDefaultColor();
+                    break;
+            }
+        }
     }
+
     // Getter
     public ManaCircle MainCircle => _mainManaCircle;
     public List<ManaCircle> ManaCircles => _manaCircles;

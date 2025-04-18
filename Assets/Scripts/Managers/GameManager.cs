@@ -74,7 +74,9 @@ public class GameManager : MonoBehaviour
         _grid = mainCamera.GetComponentInChildren<GridManager>();
         _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         
+        IsGameOver = false;
         InitializeGame();
+        ApplyStageVisualStates();
     }
 
     void InitializeGame()

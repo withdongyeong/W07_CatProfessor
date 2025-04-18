@@ -16,6 +16,7 @@ public class ManaCircle : MonoBehaviour
     private GameObject[] orbiters = new GameObject[5];
     private int activeOrbiters = 2;
     private float orbitSpeed = 30f;
+    private bool isRotating = true;
     
     private HintManager _hintManager;
 
@@ -29,6 +30,38 @@ public class ManaCircle : MonoBehaviour
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
     }
 
+    // 회전 제어
+    public void StopRotation()
+    {
+        isRotating = false;
+    }
+
+    public void StartRotation()
+    {
+        isRotating = true;
+    }
+
+    // 색상 제어
+    public void SetColor(Color c)
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.startColor = c;
+            lineRenderer.endColor = c;
+        }
+
+        foreach (Transform child in transform)
+        {
+            var sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+                sr.color = c;
+        }
+    }
+
+    public void SetDefaultColor()
+    {
+        SetColor(ManaProperties.GetColor(manaType));
+    }
     void SetupStageClickable()
     {
         Transform clickableTransform = transform.Find("ClickableCircle");
@@ -186,10 +219,13 @@ public class ManaCircle : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        UpdateOrbitMotion();
-        
+        if (isRotating)
+        {
+            UpdateOrbitMotion();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -198,10 +234,10 @@ public class ManaCircle : MonoBehaviour
             {
                 if (IsManaPresent()) 
                 {
-                    Professor.Instance.SayRandom(ScriptManager.ScriptCategory.WaitMana); // ✅ 마나가 있을 때만 대사 출력
+                    Professor.Instance.SayRandom(ScriptManager.ScriptCategory.WaitMana);
                     return;
                 }
-            
+
                 FindAndModifyAttributeCircuits();
             }
         }
