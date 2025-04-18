@@ -23,7 +23,7 @@ public class ManaCircle : MonoBehaviour
     private Color baseColor;
 
     private HintManager _hintManager;
-
+    
     void Start()
     {
         SetupCircle();
@@ -231,6 +231,7 @@ public class ManaCircle : MonoBehaviour
     
     private void Update()
     {
+        // 1. Highlight 관련
         if (isHighlighted)
         {
             float pulse = Mathf.PingPong(Time.time * highlightPulseSpeed, 1f);
@@ -249,15 +250,36 @@ public class ManaCircle : MonoBehaviour
             lineRenderer.endWidth = widthPulse;
         }
         
+        // 2. 궤도 회전 관련
         if (isRotating)
         {
             UpdateOrbitMotion();
         }
-        
+
+        // 3. 클릭 관련
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (GameManager.Instance.CurrentGameState == GameManager.gameState.StageSelecting)
+            {
+                return;
+            }
 
+            // 다른 스테이지 클릭 방지
+            var isCurrentStageCircle = false;
+            var circles = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>().ManaCircles;
+            foreach (var circle in circles)
+            {
+                
+                if (this == circle)
+                {
+                    isCurrentStageCircle = true;
+                    break;
+                }
+            }
+            if (!isCurrentStageCircle) return;
+            
+            // 클릭 범위 체크 후 궤도 업데이트
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (IsPointOnCircleEdge(mousePosition))
             {
                 if (IsManaPresent()) 
@@ -298,14 +320,7 @@ public class ManaCircle : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
 
         var stateManager = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>();
-        foreach (var circle in stateManager.ManaCircles)
-        {
-            // 다른 스테이지의 circle 클릭 방지
-            if (this != circle)
-            {
-                return;
-            }
-        }
+        
         ModifyCircuits(stateManager.AttributeCircuits, isReset);
         ModifyCircuits(stateManager.Draggables, isReset);
         
