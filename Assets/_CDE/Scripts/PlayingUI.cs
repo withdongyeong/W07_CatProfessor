@@ -26,10 +26,18 @@ public class PlayingUI : MonoBehaviour
     private void OnClickResetStageBtn()
     {
         _gameManager.CurrentPlayingStage.GetComponentInChildren<StateManager>().ResetDraggable();
+        _gameManager.CurrentPlayingStage.GetComponentInChildren<StateManager>().ResetManaCircle();
+        ManaPool.Instance.ResetManaPool();
     }
     
     private void OnClickResetManaBtn()
     {
         ManaPool.Instance.ResetManaPool();
+    }
+
+    public void ActivateResetBtns(bool isActive)
+    {
+        resetStageBtn.gameObject.SetActive(isActive);
+        resetManaBtn.gameObject.SetActive(isActive);
     }
 }

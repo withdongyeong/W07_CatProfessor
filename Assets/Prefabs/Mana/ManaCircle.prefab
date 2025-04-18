@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClickable: 0
-  diameter: 5
+  diameter: 18
   lineWidth: 0.3
   clickThreshold: 1
-  manaType: 0
+  manaType: 1
   orbitingPrefab: {fileID: 6442101351430570810, guid: 8e72074b3975eb442807dcf02e4a7fc6, type: 3}
 --- !u!1 &3840240367033802115
 GameObject:

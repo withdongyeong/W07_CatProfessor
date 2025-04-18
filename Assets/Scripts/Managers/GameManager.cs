@@ -32,18 +32,23 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set
-        {
-            currentGameState = value;
-            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
-            _uiManager.ActivatePlayingCanvas(currentGameState == gameState.GamePlaying);
-        }
+        set => currentGameState = value;
     }
     
     public GameObject CurrentPlayingStage
     {
         get => currentPlayingStage;
         set => currentPlayingStage = value;
+    }
+
+    public bool IsGameOver
+    {
+        get => isGameOver;
+        set
+        {
+            isGameOver = value;
+            _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
+        }
     }
     
     void Awake()
@@ -83,7 +88,7 @@ public class GameManager : MonoBehaviour
             circuit.ResetCounter();
         }
         
-        isGameOver = false;
+        IsGameOver = false;
         Time.timeScale = 1f;
         lastSayTime = Time.time;
         ManaPool.Instance.ResetManaPool();
@@ -103,7 +108,7 @@ public class GameManager : MonoBehaviour
         if (currentPlayingStage != null)
         {
             List<OutputCircuit> currentOutputCircuits = currentPlayingStage.GetComponentInChildren<StateManager>().OutputCircuits;
-            if (isGameOver || currentOutputCircuits.Count == 0) return;
+            if (IsGameOver || currentOutputCircuits.Count == 0) return;
             
             if (currentOutputCircuits.All(circuit => circuit.IsComplete()))
             {
@@ -138,6 +143,14 @@ public class GameManager : MonoBehaviour
         
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
+        
+        // Ui 및 그리드 활성화
+        _uiManager.ActivatePlayingCanvas(true);
+        _grid.ActivateGrid(true);
+
+        // stage 초기화
+        stateManager.ResetManaCircle();
+        stateManager.ResetDraggable();
     }
 
 
@@ -157,6 +170,9 @@ public class GameManager : MonoBehaviour
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
+        // UI 및 그리드 비활성화
+        _uiManager.ActivatePlayingCanvas(false);
+        _grid.ActivateGrid(false);
     }
 
     // TODO 클리어 여부에 따라 스테이지의 시각화를 변경
@@ -185,8 +201,8 @@ public class GameManager : MonoBehaviour
 
     void GameClear()
     {
-        if (isGameOver) return;
-        isGameOver = true;
+        if (IsGameOver) return;
+        IsGameOver = true;
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
@@ -215,7 +231,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        isGameOver = false;
+        IsGameOver = false;
         InitializeGame();
         ApplyStageVisualStates();
     }

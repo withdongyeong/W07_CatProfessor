@@ -65,7 +65,7 @@ public class DraggableObject : MonoBehaviour
             float snappedX = (float)Math.Round(objectWorldPosition.x);
             float snappedY = (float)Math.Round(objectWorldPosition.y);
             
-            _hintManager.OnCheckAnswerAction?.Invoke(_type, new Vector2(snappedX, snappedY));
+            _hintManager.OnCheckPositionAction?.Invoke(_type, new Vector2(snappedX, snappedY));
 
             if (IsPositionOccupied(snappedX, snappedY))
             {
