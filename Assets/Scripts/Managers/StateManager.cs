@@ -14,9 +14,7 @@ public class StateManager : MonoBehaviour
     private List<OutputCircuit> _outputCircuits = new List<OutputCircuit>();
     private List<NeutralCircuit> _neutralCircuits = new List<NeutralCircuit>();
     private List<AttributeCircuit> _draggables = new List<AttributeCircuit>();
-
-    // TODO 클리어 여부에 따라서, 자기 자신의 서클들의 색 표시, 회전을 할지 말지 결정함
-    // TODO 클릭 감지 콜라이더 필요함
+    
     // TODO 호버링도 감지할 필요성이 있을 것으로 예상됨
 
     private void Start()
@@ -120,16 +118,19 @@ public class StateManager : MonoBehaviour
                 case StageStatus.Locked:
                     circle.StopRotation();
                     circle.SetColor(lockedColor);
+                    circle.SetHighlight(false);
                     break;
 
                 case StageStatus.Available:
                     circle.StopRotation();
                     circle.SetDefaultColor();
+                    circle.SetHighlight(true);
                     break;
 
                 case StageStatus.Cleared:
                     circle.StartRotation();
                     circle.SetDefaultColor();
+                    circle.SetHighlight(false);
                     break;
             }
         }
