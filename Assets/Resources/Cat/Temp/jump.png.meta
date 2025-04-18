@@ -1,52 +1,43 @@
 fileFormatVersion: 2
-guid: 9fde1984a98fc304ea4dad8be0929f28
+guid: 3e021d845e7d8784b9d294e283325869
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8451926566866254080
-    second: "\uB9D0\uD558\uAE30_0"
+      213: 4281637774074219296
+    second: jump_0
   - first:
-      213: -1892020511144957074
-    second: "\uB9D0\uD558\uAE30_1"
+      213: -7862396843884538191
+    second: jump_1
   - first:
-      213: -6498528732310889501
-    second: "\uB9D0\uD558\uAE30_2"
+      213: 8276514422256456541
+    second: jump_2
   - first:
-      213: 1192254469973274277
-    second: "\uB9D0\uD558\uAE30_3"
+      213: -3697937850672776721
+    second: jump_3
   - first:
-      213: -3973840872206501994
-    second: "\uB9D0\uD558\uAE30_4"
+      213: 4987614716155920338
+    second: jump_4
   - first:
-      213: 6542541407617612103
-    second: "\uB9D0\uD558\uAE30_5"
+      213: -1184746109927277663
+    second: jump_5
   - first:
-      213: 4834961599272839258
-    second: "\uB9D0\uD558\uAE30_6"
+      213: -4845626741048118468
+    second: jump_6
   - first:
-      213: -1349108922348135698
-    second: "\uB9D0\uD558\uAE30_7"
+      213: 7014594740173477433
+    second: jump_7
   - first:
-      213: 6365361757918070716
-    second: "\uB9D0\uD558\uAE30_8"
+      213: 1578323387413840467
+    second: jump_8
   - first:
-      213: 4767779063380843025
-    second: "\uB9D0\uD558\uAE30_9"
+      213: 7655840988501763603
+    second: jump_9
   - first:
-      213: -1639333251817802654
-    second: "\uB9D0\uD558\uAE30_10"
+      213: -9197958414588387290
+    second: jump_10
   - first:
-      213: -2976214189937339768
-    second: "\uB9D0\uD558\uAE30_11"
-  - first:
-      213: -6965980478439057756
-    second: "\uB9D0\uD558\uAE30_12"
-  - first:
-      213: -3951474632383513638
-    second: "\uB9D0\uD558\uAE30_13"
-  - first:
-      213: -2950152734532110210
-    second: "\uB9D0\uD558\uAE30_14"
+      213: -5086767228222736262
+    second: jump_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_0"
+      name: jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -157,14 +148,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4df9b2d3df903ae4eb12ab325eb4f6b1
-      internalID: 775934330
+      spriteID: 6e7f79a9f426af449b249959ca96bafa
+      internalID: 558855400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_1"
+      name: jump_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -179,14 +170,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e93e6d1173ad8748bcd9d164d36bf49
-      internalID: -1180603667
+      spriteID: a69837ddac85b45468a40a56ea05c13b
+      internalID: 1684808728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_2"
+      name: jump_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -201,14 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a68dd337e17ace5439164ca78c99c5ea
-      internalID: -745830885
+      spriteID: 51beee6bea2e1c44bb9708f5f7f82c04
+      internalID: 1328483351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_3"
+      name: jump_3
       rect:
         serializedVersion: 2
         x: 0
@@ -223,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a890d5dfd80e96e478e29cda870e1416
-      internalID: 1095385868
+      spriteID: 983c322d550920b418ec89cef2b65925
+      internalID: 2062180866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_4"
+      name: jump_4
       rect:
         serializedVersion: 2
         x: 1800
@@ -245,8 +236,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f06e0398fcc56734b91e09418cf61426
-      internalID: 195373971
+      spriteID: 608507d06734e2c4d84deb1eb804a04d
+      internalID: -799451302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jump_5
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 0
+        width: 1800
+        height: 1800
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c5b587b909f94e49b2e73c9d6f90af0
+      internalID: -1470175858
       vertices: []
       indices: 
       edges: []
@@ -255,7 +268,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6be5539b4e9559e4a97a6b3bcb81d4bd
+    spriteID: e5cbf3435700f994db926ee3187320ac
     internalID: 0
     vertices: []
     indices: 
@@ -265,11 +278,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uB9D0\uD558\uAE30_0": 775934330
-      "\uB9D0\uD558\uAE30_1": -1180603667
-      "\uB9D0\uD558\uAE30_2": -745830885
-      "\uB9D0\uD558\uAE30_3": 1095385868
-      "\uB9D0\uD558\uAE30_4": 195373971
+      jump_0: 558855400
+      jump_1: 1684808728
+      jump_2: 1328483351
+      jump_3: 2062180866
+      jump_4: -799451302
+      jump_5: -1470175858
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

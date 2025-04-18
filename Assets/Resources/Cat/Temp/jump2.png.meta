@@ -1,61 +1,88 @@
 fileFormatVersion: 2
-guid: f11d6390a8a41a744b1954b37f07ae81
+guid: a70f16b3f0602364c8cd2060cbcaec96
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 185389936369324783
-    second: "\uAE30\uBCF8_0"
+      213: 6137212783605098422
+    second: jump2_0
   - first:
-      213: 1952328537697315952
-    second: "\uAE30\uBCF8_1"
+      213: 8524696747595839397
+    second: jump2_1
   - first:
-      213: -3133198025857689208
-    second: "\uAE30\uBCF8_2"
+      213: 5013776448495516898
+    second: jump2_2
   - first:
-      213: -8166643345457305425
-    second: "\uAE30\uBCF8_3"
+      213: 7621500908442980893
+    second: jump2_3
   - first:
-      213: 7928687334430969690
-    second: "\uAE30\uBCF8_4"
+      213: -3765515104855982772
+    second: jump2_4
   - first:
-      213: 7040724991540518217
-    second: "\uAE30\uBCF8_5"
+      213: 1791736231750286925
+    second: jump2_5
   - first:
-      213: 1143355115125920266
-    second: "\uAE30\uBCF8_6"
+      213: -4196215731946508028
+    second: jump2_6
   - first:
-      213: 2642303279329365332
-    second: "\uAE30\uBCF8_7"
+      213: -362621652055541611
+    second: jump2_7
   - first:
-      213: -7828987637562747798
-    second: "\uAE30\uBCF8_8"
+      213: -6106437532349503360
+    second: jump2_8
   - first:
-      213: -7981492493616100741
-    second: "\uAE30\uBCF8_9"
+      213: 7114087225486323565
+    second: jump2_9
   - first:
-      213: 4375726343255215174
-    second: "\uAE30\uBCF8_10"
+      213: -5663781559358622963
+    second: jump2_10
   - first:
-      213: -8893569616199907959
-    second: "\uAE30\uBCF8_11"
+      213: 6145748445319466753
+    second: jump2_11
   - first:
-      213: 8464708052599891402
-    second: "\uAE30\uBCF8_12"
+      213: -5369817570577354208
+    second: jump2_12
   - first:
-      213: -2822100870146284425
-    second: "\uAE30\uBCF8_13"
+      213: -3189885708343557346
+    second: jump2_13
   - first:
-      213: 2532776909373564210
-    second: "\uAE30\uBCF8_14"
+      213: 5277476965353322611
+    second: jump2_14
   - first:
-      213: -4033143340167005062
-    second: "\uAE30\uBCF8_15"
+      213: -814282271621196239
+    second: jump2_15
   - first:
-      213: -644589080116540340
-    second: "\uAE30\uBCF8_16"
+      213: 4006208653068007184
+    second: jump2_16
   - first:
-      213: -2883367809242095665
-    second: "\uAE30\uBCF8_17"
+      213: -4347019239246695358
+    second: jump2_17
+  - first:
+      213: -6014737075796007199
+    second: jump2_18
+  - first:
+      213: 8121019707240374808
+    second: jump2_19
+  - first:
+      213: -8171689493252014288
+    second: jump2_20
+  - first:
+      213: 4249303256350335172
+    second: jump2_21
+  - first:
+      213: 1088175137185271060
+    second: jump2_22
+  - first:
+      213: 8301618753237586789
+    second: jump2_23
+  - first:
+      213: -2916097724470673023
+    second: jump2_24
+  - first:
+      213: -3160767020953551452
+    second: jump2_25
+  - first:
+      213: -7935268084627287920
+    second: jump2_26
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,95 +178,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_0"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 5400
-        width: 1800
-        height: 1800
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5dba61551a772894a962d9f4e9932780
-      internalID: 1385536060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uAE30\uBCF8_1"
-      rect:
-        serializedVersion: 2
-        x: 1800
-        y: 5400
-        width: 1800
-        height: 1800
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2ff263240462c184a8ed9095b312968d
-      internalID: 450784339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uAE30\uBCF8_2"
-      rect:
-        serializedVersion: 2
-        x: 3600
-        y: 5400
-        width: 1800
-        height: 1800
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c82f7e56d913f8743ac27a661942f061
-      internalID: -1162463417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uAE30\uBCF8_3"
-      rect:
-        serializedVersion: 2
-        x: 5400
-        y: 5400
-        width: 1800
-        height: 1800
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed10e7a3c2da7c543b56e547798cff4f
-      internalID: -585756278
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uAE30\uBCF8_4"
+      name: jump2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -254,14 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62d3bfc4d86e6764499ff707616cc0e7
-      internalID: 804909665
+      spriteID: b20759184c3278841a76e9efe7edc15b
+      internalID: -2141747320
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_5"
+      name: jump2_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -276,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dac416b686284b4280710feb6d51165
-      internalID: -973487105
+      spriteID: c26c9d802f91ec849b830abf3eefcdae
+      internalID: -510754336
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_6"
+      name: jump2_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -298,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a36f79b81365e54e9f9d1e3391d5ea1
-      internalID: -873061431
+      spriteID: bede87d93dc506548b87eaa4b85c0275
+      internalID: 1861244207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_7"
+      name: jump2_3
       rect:
         serializedVersion: 2
         x: 5400
@@ -320,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca53dfe3592bcff40b6462befa2ada30
-      internalID: -872668722
+      spriteID: f314f718ae4ecd844b1747f2b055e8b5
+      internalID: -2048557450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_8"
+      name: jump2_4
       rect:
         serializedVersion: 2
         x: 0
@@ -342,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f23998f7bd26504a88fbc100516db5a
-      internalID: -1154435016
+      spriteID: 1d67520d5ead92c46863e39b851bed7b
+      internalID: 239228382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_9"
+      name: jump2_5
       rect:
         serializedVersion: 2
         x: 1800
@@ -364,14 +303,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0898940e926a044418fb37767da6bec2
-      internalID: 474009427
+      spriteID: 21e4b4b601c08c3459b90419afc0add9
+      internalID: 891714433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_10"
+      name: jump2_6
       rect:
         serializedVersion: 2
         x: 3600
@@ -386,14 +325,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d01cb9b6ca8e120418a6857cca5877db
-      internalID: -1432667284
+      spriteID: f1457f73c8b92154fb681b5057d2860d
+      internalID: 294877769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_11"
+      name: jump2_7
       rect:
         serializedVersion: 2
         x: 5400
@@ -408,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54c5df347aaab7c42ac529decd74f1f5
-      internalID: 1949273472
+      spriteID: 11120f39b55500c41ac6bb5f5acd7924
+      internalID: 1445648646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_12"
+      name: jump2_8
       rect:
         serializedVersion: 2
         x: 0
@@ -430,14 +369,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 981bb1b62e43de9449ae3438a0842dd7
-      internalID: -1648566983
+      spriteID: fb7acba08bebf754bb8274488d83b964
+      internalID: 1875988604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_13"
+      name: jump2_9
       rect:
         serializedVersion: 2
         x: 1800
@@ -452,14 +391,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b9f04a2913e26a4db4ea92396b3274b
-      internalID: 95367979
+      spriteID: eae2db777140e8f42879768973ea48ae
+      internalID: 1946210356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_14"
+      name: jump2_10
       rect:
         serializedVersion: 2
         x: 3600
@@ -474,8 +413,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6d61c7226d14684bb54c4b4fc1ecf2c
-      internalID: -1674890448
+      spriteID: 8654ac293f06e27468bf5077d34bad12
+      internalID: 155651992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jump2_11
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 1800
+        height: 1800
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f0cdac43cac32f4f89bd97d97196c83
+      internalID: -2123303178
       vertices: []
       indices: 
       edges: []
@@ -484,7 +445,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6f37aff972006a24cb2dad0d7ad74497
+    spriteID: 670898d07866bfb49bea4baea38f57de
     internalID: 0
     vertices: []
     indices: 
@@ -494,21 +455,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uAE30\uBCF8_0": 1385536060
-      "\uAE30\uBCF8_1": 450784339
-      "\uAE30\uBCF8_10": -1432667284
-      "\uAE30\uBCF8_11": 1949273472
-      "\uAE30\uBCF8_12": -1648566983
-      "\uAE30\uBCF8_13": 95367979
-      "\uAE30\uBCF8_14": -1674890448
-      "\uAE30\uBCF8_2": -1162463417
-      "\uAE30\uBCF8_3": -585756278
-      "\uAE30\uBCF8_4": 804909665
-      "\uAE30\uBCF8_5": -973487105
-      "\uAE30\uBCF8_6": -873061431
-      "\uAE30\uBCF8_7": -872668722
-      "\uAE30\uBCF8_8": -1154435016
-      "\uAE30\uBCF8_9": 474009427
+      jump2_0: -2141747320
+      jump2_1: -510754336
+      jump2_10: 155651992
+      jump2_11: -2123303178
+      jump2_2: 1861244207
+      jump2_3: -2048557450
+      jump2_4: 239228382
+      jump2_5: 891714433
+      jump2_6: 294877769
+      jump2_7: 1445648646
+      jump2_8: 1875988604
+      jump2_9: 1946210356
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

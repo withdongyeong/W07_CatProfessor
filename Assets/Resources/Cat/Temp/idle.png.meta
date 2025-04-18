@@ -1,61 +1,97 @@
 fileFormatVersion: 2
-guid: f11d6390a8a41a744b1954b37f07ae81
+guid: 26ac429e8ed292049bbf80c39011688d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 185389936369324783
-    second: "\uAE30\uBCF8_0"
+      213: 8793639957104055765
+    second: idle_0
   - first:
-      213: 1952328537697315952
-    second: "\uAE30\uBCF8_1"
+      213: 6084859605308855041
+    second: idle_1
   - first:
-      213: -3133198025857689208
-    second: "\uAE30\uBCF8_2"
+      213: 8603369663158992956
+    second: idle_2
   - first:
-      213: -8166643345457305425
-    second: "\uAE30\uBCF8_3"
+      213: -5906421172241655209
+    second: idle_3
   - first:
-      213: 7928687334430969690
-    second: "\uAE30\uBCF8_4"
+      213: 5704420531145803721
+    second: idle_4
   - first:
-      213: 7040724991540518217
-    second: "\uAE30\uBCF8_5"
+      213: -148617073940163930
+    second: idle_5
   - first:
-      213: 1143355115125920266
-    second: "\uAE30\uBCF8_6"
+      213: 4729606205655721961
+    second: idle_6
   - first:
-      213: 2642303279329365332
-    second: "\uAE30\uBCF8_7"
+      213: -2073685336235588006
+    second: idle_7
   - first:
-      213: -7828987637562747798
-    second: "\uAE30\uBCF8_8"
+      213: 512795395688303107
+    second: idle_8
   - first:
-      213: -7981492493616100741
-    second: "\uAE30\uBCF8_9"
+      213: 5667770778836351527
+    second: idle_9
   - first:
-      213: 4375726343255215174
-    second: "\uAE30\uBCF8_10"
+      213: -1480364998338425778
+    second: idle_10
   - first:
-      213: -8893569616199907959
-    second: "\uAE30\uBCF8_11"
+      213: -189419392851352084
+    second: idle_11
   - first:
-      213: 8464708052599891402
-    second: "\uAE30\uBCF8_12"
+      213: 2253685004373748758
+    second: idle_12
   - first:
-      213: -2822100870146284425
-    second: "\uAE30\uBCF8_13"
+      213: 275251749332817211
+    second: idle_13
   - first:
-      213: 2532776909373564210
-    second: "\uAE30\uBCF8_14"
+      213: -2717920588507469212
+    second: idle_14
   - first:
-      213: -4033143340167005062
-    second: "\uAE30\uBCF8_15"
+      213: -928564814986837825
+    second: idle_15
   - first:
-      213: -644589080116540340
-    second: "\uAE30\uBCF8_16"
+      213: 1047728824233847905
+    second: idle_16
   - first:
-      213: -2883367809242095665
-    second: "\uAE30\uBCF8_17"
+      213: -526835129060445694
+    second: idle_17
+  - first:
+      213: 5896261190451672117
+    second: idle_18
+  - first:
+      213: -8256383322693916834
+    second: idle_19
+  - first:
+      213: -8410472694813616623
+    second: idle_20
+  - first:
+      213: -3655621501393774895
+    second: idle_21
+  - first:
+      213: -3185995270805410201
+    second: idle_22
+  - first:
+      213: -6334799096112948352
+    second: idle_23
+  - first:
+      213: -2134340880611598165
+    second: idle_24
+  - first:
+      213: -2151818530499332596
+    second: idle_25
+  - first:
+      213: 3051071556821484571
+    second: idle_26
+  - first:
+      213: -5705869721440319331
+    second: idle_27
+  - first:
+      213: 7168834123846226226
+    second: idle_28
+  - first:
+      213: -5112156401277642946
+    second: idle_29
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,7 +187,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_0"
+      name: idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -166,14 +202,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dba61551a772894a962d9f4e9932780
-      internalID: 1385536060
+      spriteID: 6cf91711b4d9e6a40976fe681c8d908c
+      internalID: 1789505820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_1"
+      name: idle_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -188,14 +224,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ff263240462c184a8ed9095b312968d
-      internalID: 450784339
+      spriteID: 2b59d4c6a8542134581f6e3ba2721306
+      internalID: 258594283
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_2"
+      name: idle_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -210,14 +246,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c82f7e56d913f8743ac27a661942f061
-      internalID: -1162463417
+      spriteID: 22d93c91850c340419fb62299f6260b5
+      internalID: -1400683882
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_3"
+      name: idle_3
       rect:
         serializedVersion: 2
         x: 5400
@@ -232,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed10e7a3c2da7c543b56e547798cff4f
-      internalID: -585756278
+      spriteID: b648428a2fac30f4896ab116e7b810e8
+      internalID: -1064412141
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_4"
+      name: idle_4
       rect:
         serializedVersion: 2
         x: 0
@@ -254,14 +290,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62d3bfc4d86e6764499ff707616cc0e7
-      internalID: 804909665
+      spriteID: 6e9bea21505567f48846351d41c08cec
+      internalID: 88495087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_5"
+      name: idle_5
       rect:
         serializedVersion: 2
         x: 1800
@@ -276,14 +312,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dac416b686284b4280710feb6d51165
-      internalID: -973487105
+      spriteID: d70b9341b84690a479c581c61ef322f2
+      internalID: 471432952
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_6"
+      name: idle_6
       rect:
         serializedVersion: 2
         x: 3600
@@ -298,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a36f79b81365e54e9f9d1e3391d5ea1
-      internalID: -873061431
+      spriteID: 494db7e897f14c040957b1ac5531d129
+      internalID: -1215308320
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_7"
+      name: idle_7
       rect:
         serializedVersion: 2
         x: 5400
@@ -320,14 +356,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca53dfe3592bcff40b6462befa2ada30
-      internalID: -872668722
+      spriteID: 76b699345f278b24da89029853f5d709
+      internalID: -727259606
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_8"
+      name: idle_8
       rect:
         serializedVersion: 2
         x: 0
@@ -342,14 +378,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f23998f7bd26504a88fbc100516db5a
-      internalID: -1154435016
+      spriteID: 24982d8c7b0a2c74da179b6197b22cf8
+      internalID: 1346806189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_9"
+      name: idle_9
       rect:
         serializedVersion: 2
         x: 1800
@@ -364,14 +400,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0898940e926a044418fb37767da6bec2
-      internalID: 474009427
+      spriteID: 29c8ee24bf11f9c4b82ba74ebd4d6a00
+      internalID: -1594403195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_10"
+      name: idle_10
       rect:
         serializedVersion: 2
         x: 3600
@@ -386,14 +422,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d01cb9b6ca8e120418a6857cca5877db
-      internalID: -1432667284
+      spriteID: 0976de7d15a876147ba17c1693f3056c
+      internalID: -1667229749
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_11"
+      name: idle_11
       rect:
         serializedVersion: 2
         x: 5400
@@ -408,14 +444,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54c5df347aaab7c42ac529decd74f1f5
-      internalID: 1949273472
+      spriteID: 68352def7b66c924eb308614417f3f53
+      internalID: -245655861
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_12"
+      name: idle_12
       rect:
         serializedVersion: 2
         x: 0
@@ -430,14 +466,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 981bb1b62e43de9449ae3438a0842dd7
-      internalID: -1648566983
+      spriteID: 095f17c229cf9be47b807e105b48a48c
+      internalID: -1299903044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_13"
+      name: idle_13
       rect:
         serializedVersion: 2
         x: 1800
@@ -452,14 +488,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b9f04a2913e26a4db4ea92396b3274b
-      internalID: 95367979
+      spriteID: 8310ebd3f92bf234897ddfc451208ff8
+      internalID: -1488128718
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uAE30\uBCF8_14"
+      name: idle_14
       rect:
         serializedVersion: 2
         x: 3600
@@ -474,8 +510,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6d61c7226d14684bb54c4b4fc1ecf2c
-      internalID: -1674890448
+      spriteID: 44f36a1c88c269f4d8b3f683be0beb24
+      internalID: 717421862
       vertices: []
       indices: 
       edges: []
@@ -484,7 +520,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6f37aff972006a24cb2dad0d7ad74497
+    spriteID: 288fc415fc01c2c41949725615467ab5
     internalID: 0
     vertices: []
     indices: 
@@ -494,21 +530,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uAE30\uBCF8_0": 1385536060
-      "\uAE30\uBCF8_1": 450784339
-      "\uAE30\uBCF8_10": -1432667284
-      "\uAE30\uBCF8_11": 1949273472
-      "\uAE30\uBCF8_12": -1648566983
-      "\uAE30\uBCF8_13": 95367979
-      "\uAE30\uBCF8_14": -1674890448
-      "\uAE30\uBCF8_2": -1162463417
-      "\uAE30\uBCF8_3": -585756278
-      "\uAE30\uBCF8_4": 804909665
-      "\uAE30\uBCF8_5": -973487105
-      "\uAE30\uBCF8_6": -873061431
-      "\uAE30\uBCF8_7": -872668722
-      "\uAE30\uBCF8_8": -1154435016
-      "\uAE30\uBCF8_9": 474009427
+      idle_0: 1789505820
+      idle_1: 258594283
+      idle_10: -1667229749
+      idle_11: -245655861
+      idle_12: -1299903044
+      idle_13: -1488128718
+      idle_14: 717421862
+      idle_2: -1400683882
+      idle_3: -1064412141
+      idle_4: 88495087
+      idle_5: 471432952
+      idle_6: -1215308320
+      idle_7: -727259606
+      idle_8: 1346806189
+      idle_9: -1594403195
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

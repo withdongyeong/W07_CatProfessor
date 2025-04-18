@@ -1,52 +1,73 @@
 fileFormatVersion: 2
-guid: 9fde1984a98fc304ea4dad8be0929f28
+guid: 2fe370a036e643c43bc11691b6c06b37
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8451926566866254080
-    second: "\uB9D0\uD558\uAE30_0"
+      213: 6266176060360064
+    second: happy_0
   - first:
-      213: -1892020511144957074
-    second: "\uB9D0\uD558\uAE30_1"
+      213: 3193106209548952640
+    second: happy_1
   - first:
-      213: -6498528732310889501
-    second: "\uB9D0\uD558\uAE30_2"
+      213: 9007878228973910016
+    second: happy_2
   - first:
-      213: 1192254469973274277
-    second: "\uB9D0\uD558\uAE30_3"
+      213: -7609154811369545380
+    second: happy_3
   - first:
-      213: -3973840872206501994
-    second: "\uB9D0\uD558\uAE30_4"
+      213: -6712656766815208701
+    second: happy_4
   - first:
-      213: 6542541407617612103
-    second: "\uB9D0\uD558\uAE30_5"
+      213: -8040711958805771792
+    second: happy_5
   - first:
-      213: 4834961599272839258
-    second: "\uB9D0\uD558\uAE30_6"
+      213: -5778940713444667941
+    second: happy_6
   - first:
-      213: -1349108922348135698
-    second: "\uB9D0\uD558\uAE30_7"
+      213: -729891031834249776
+    second: happy_7
   - first:
-      213: 6365361757918070716
-    second: "\uB9D0\uD558\uAE30_8"
+      213: -1023249637084565850
+    second: happy_8
   - first:
-      213: 4767779063380843025
-    second: "\uB9D0\uD558\uAE30_9"
+      213: -2393240513285694997
+    second: happy_9
   - first:
-      213: -1639333251817802654
-    second: "\uB9D0\uD558\uAE30_10"
+      213: 3986295080230820885
+    second: happy_10
   - first:
-      213: -2976214189937339768
-    second: "\uB9D0\uD558\uAE30_11"
+      213: 8450939961874301933
+    second: happy_11
   - first:
-      213: -6965980478439057756
-    second: "\uB9D0\uD558\uAE30_12"
+      213: -4345366713707982264
+    second: happy_12
   - first:
-      213: -3951474632383513638
-    second: "\uB9D0\uD558\uAE30_13"
+      213: -752497300952621267
+    second: happy_13
   - first:
-      213: -2950152734532110210
-    second: "\uB9D0\uD558\uAE30_14"
+      213: -4668203024647421388
+    second: happy_14
+  - first:
+      213: 2148730909023357796
+    second: happy_15
+  - first:
+      213: -3621398926445456344
+    second: happy_16
+  - first:
+      213: -6619225282526579979
+    second: happy_17
+  - first:
+      213: 4937733872559295849
+    second: happy_18
+  - first:
+      213: -6046175371331240947
+    second: happy_19
+  - first:
+      213: -6226756898704806523
+    second: happy_20
+  - first:
+      213: 350918637738791271
+    second: happy_21
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,7 +163,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_0"
+      name: happy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -157,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4df9b2d3df903ae4eb12ab325eb4f6b1
-      internalID: 775934330
+      spriteID: 44bcf86f96732ae43a41c599f6b5e7c5
+      internalID: -1205071363
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_1"
+      name: happy_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -179,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e93e6d1173ad8748bcd9d164d36bf49
-      internalID: -1180603667
+      spriteID: 35cc0a0400303f24b9df3d161593b407
+      internalID: -252130751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_2"
+      name: happy_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -201,14 +222,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a68dd337e17ace5439164ca78c99c5ea
-      internalID: -745830885
+      spriteID: 41162fd918fa964498a0a90710314f92
+      internalID: 303782441
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_3"
+      name: happy_3
       rect:
         serializedVersion: 2
         x: 0
@@ -223,14 +244,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a890d5dfd80e96e478e29cda870e1416
-      internalID: 1095385868
+      spriteID: cabcdddd1b5cb50498f53281d330734b
+      internalID: 1553254429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_4"
+      name: happy_4
       rect:
         serializedVersion: 2
         x: 1800
@@ -245,8 +266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f06e0398fcc56734b91e09418cf61426
-      internalID: 195373971
+      spriteID: d472f6dc8371d34419a41137a0e7bade
+      internalID: 361736342
       vertices: []
       indices: 
       edges: []
@@ -255,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6be5539b4e9559e4a97a6b3bcb81d4bd
+    spriteID: 3aa9fb06f67d3ce4ea0af3402ea6e13c
     internalID: 0
     vertices: []
     indices: 
@@ -265,11 +286,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uB9D0\uD558\uAE30_0": 775934330
-      "\uB9D0\uD558\uAE30_1": -1180603667
-      "\uB9D0\uD558\uAE30_2": -745830885
-      "\uB9D0\uD558\uAE30_3": 1095385868
-      "\uB9D0\uD558\uAE30_4": 195373971
+      happy_0: -1205071363
+      happy_1: -252130751
+      happy_2: 303782441
+      happy_3: 1553254429
+      happy_4: 361736342
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
