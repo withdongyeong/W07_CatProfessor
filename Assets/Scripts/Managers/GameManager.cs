@@ -146,6 +146,11 @@ public class GameManager : MonoBehaviour
         StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
         int currentViewSize = Mathf.RoundToInt(stateManager.MainCircle.diameter / 2f);
 
+        // 하이라이트 끔
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            circle.SetHighlight(false); 
+        }
         // 회전 및 색상 복구
         foreach (var circle in stateManager.ManaCircles)
         {
@@ -249,7 +254,6 @@ public class GameManager : MonoBehaviour
     }
     
     // 드래그 가능한 속성 회로들을 HintManager의 정답 위치에 맞춰 재배치
-// 드래그 가능한 속성 회로들을 HintManager의 정답 위치에 맞춰 재배치
     private void ApplyAnswerDraggables(StateManager stateManager, HintManager hintManager)
     {
         // 1. 현재 스테이지의 드래그 가능한 속성 회로들을 속성 타입별로 그룹화
@@ -274,7 +278,8 @@ public class GameManager : MonoBehaviour
             // 해당 타입의 드래그 회로가 존재하지 않을 경우 스킵 (정답과 무관)
             if (!draggablesByType.ContainsKey(type))
             {
-                Debug.LogWarning($"[HintSync] 속성 {type}에 대한 드래그 가능한 회로가 존재하지 않습니다.");
+                string stageName = stateManager.GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
+                Debug.LogWarning($"[HintSync] {stageName}에서 속성 {type}에 대한 드래그 가능한 회로가 존재하지 않습니다.");
                 continue;
             }
 
@@ -283,7 +288,8 @@ public class GameManager : MonoBehaviour
             // 드래그 회로 수 ≠ 정답 회로 수 → 데이터가 불일치함을 경고
             if (dragList.Count != answerList.Count)
             {
-                Debug.LogWarning($"[HintSync] 속성 {type} 회로 개수 불일치: 정답 {answerList.Count}개 / 현재 {dragList.Count}개");
+                string stageName = stateManager.GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
+                Debug.LogWarning($"[HintSync] {stageName}에서 속성 {type} 회로 개수 불일치: 정답 {answerList.Count}개 / 현재 {dragList.Count}개");
                 continue;
             }
 
@@ -306,15 +312,22 @@ public class GameManager : MonoBehaviour
             // None 타입은 무효이므로 스킵
             if (answer.type == ManaProperties.ManaType.None) continue;
 
-            // 2. 해당 타입의 마나 서클을 전부 가져옴 (복수 가능)
+        // 2. 해당 타입의 마나 서클을 전부 가져옴 (복수 가능)
             var targets = stateManager.ManaCircles
                 .Where(c => c.manaType == answer.type)
                 .ToList();
-
+            
             if (targets.Count == 0)
             {
-                Debug.LogWarning($"[HintSync] 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
-                continue;
+                string stageName = stateManager.GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
+    
+                var allTypes = stateManager.ManaCircles
+                    .Select(c => c.manaType.ToString())
+                    .Distinct()
+                    .ToList();
+
+                Debug.LogWarning($"[HintSync] {stageName}에서 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
+                Debug.LogWarning($"→ 해당 스테이지의 모든 마나타입: {string.Join(", ", allTypes)}");
             }
 
             // 3. 해당 타입의 모든 마나 서클에 동일한 정답 개수 적용

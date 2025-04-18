@@ -35,10 +35,34 @@ public class HintManager : MonoBehaviour
             }
         }
         
+        ValidateAnswerData();
+        
         // Draggable의 OnMouseUp 시 액션 실행
         OnCheckPositionAction += CheckPosition;
         OnCheckCircleAction += CheckCircle;
     }
+    
+    private void ValidateAnswerData()
+    {
+        string stageName = GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
+
+        foreach (var answer in ManaCircleAnswsers)
+        {
+            if (answer.type == ManaProperties.ManaType.None)
+            {
+                Debug.LogWarning($"[HintManager] ({stageName}) None 타입의 마나서클 정답이 설정되어 있습니다.");
+            }
+        }
+
+        foreach (var circuit in AnswerCircuits)
+        {
+            if (circuit.AnswerType == ManaProperties.ManaType.None)
+            {
+                Debug.LogWarning($"[HintManager] ({stageName}) None 타입의 회로 정답이 설정되어 있습니다. ({circuit.name})");
+            }
+        }
+    }
+
 
     private void CheckPosition(ManaProperties.ManaType type, Vector2 position)
     {
