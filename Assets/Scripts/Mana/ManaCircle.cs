@@ -19,6 +19,7 @@ public class ManaCircle : MonoBehaviour
     private bool isRotating = true;
     
     private HintManager _hintManager;
+    private List<ManaCircle> _currentCircles;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class ManaCircle : MonoBehaviour
         SetupStageClickable();
         
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
+        _currentCircles = GetComponentInParent<StageRootMarker>().GetComponentInChildren<StateManager>().ManaCircles;
     }
 
     // 회전 제어
@@ -227,7 +229,7 @@ public class ManaCircle : MonoBehaviour
         {
             UpdateOrbitMotion();
         }
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -272,7 +274,14 @@ public class ManaCircle : MonoBehaviour
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying) return;
 
         var stateManager = GameManager.Instance.CurrentPlayingStage.GetComponentInChildren<StateManager>();
-
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            // 다른 스테이지의 circle 클릭 방지
+            if (this != circle)
+            {
+                return;
+            }
+        }
         ModifyCircuits(stateManager.AttributeCircuits, isReset);
         ModifyCircuits(stateManager.Draggables, isReset);
         
