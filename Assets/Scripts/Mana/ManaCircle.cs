@@ -22,9 +22,7 @@ public class ManaCircle : MonoBehaviour
     private float highlightIntensity = 0.4f;
     private Color baseColor;
 
-    
     private HintManager _hintManager;
-    private List<ManaCircle> _currentCircles;
 
     void Start()
     {
@@ -34,7 +32,6 @@ public class ManaCircle : MonoBehaviour
         SetupStageClickable();
         
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
-        _currentCircles = GetComponentInParent<StageRootMarker>().GetComponentInChildren<StateManager>().ManaCircles;
     }
 
     public void SetHighlight(bool highlight)
@@ -99,8 +96,6 @@ public class ManaCircle : MonoBehaviour
             clickableObject.SetActive(false);
         }
     }
-
-
 
     void SetupCircle()
     {
@@ -233,8 +228,8 @@ public class ManaCircle : MonoBehaviour
             }
         }
     }
-
-    void FixedUpdate()
+    
+    private void Update()
     {
         if (isHighlighted)
         {
@@ -253,7 +248,6 @@ public class ManaCircle : MonoBehaviour
             lineRenderer.startWidth = widthPulse;
             lineRenderer.endWidth = widthPulse;
         }
-
         
         if (isRotating)
         {
