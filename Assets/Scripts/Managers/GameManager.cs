@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [Header("기본 월드 카메라 설정")]
     public Vector3 worldViewPosition = Vector3.zero;
-    private int worldViewSize = 40;
+    private int worldViewSize = 110;
     
     public static GameManager Instance { get; private set; }
     
@@ -139,20 +139,45 @@ public class GameManager : MonoBehaviour
         StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
         int currentViewSize = Mathf.RoundToInt(stateManager.MainCircle.diameter / 2f);
 
+        // 회전 및 색상 복구
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            circle.StartRotation();
+            circle.SetDefaultColor();
+        }
+
+        void ApplyDefaultToCircuits<T>(List<T> list) where T : MonoBehaviour
+        {
+            foreach (var item in list)
+            {
+                if (item is IColorable colorable)
+                {
+                    colorable.SetDefaultColor();
+                }
+            }
+        }
+
+        ApplyDefaultToCircuits(stateManager.InputCircuits);
+        ApplyDefaultToCircuits(stateManager.OutputCircuits);
+        ApplyDefaultToCircuits(stateManager.AttributeCircuits);
+        ApplyDefaultToCircuits(stateManager.Draggables);
+        ApplyDefaultToCircuits(stateManager.NeutralCircuits);
+
         // 카메라 이동
         mainCamera.MoveToStage(stageRoot.transform.position, currentViewSize);
-        
+
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
-        
-        // Ui 및 그리드 활성화
+
+        // UI 및 그리드 활성화
         _uiManager.ActivatePlayingCanvas(true);
         _grid.ActivateGrid(true);
 
-        // stage 초기화
+        // 스테이지 초기화
         stateManager.ResetManaCircle();
         stateManager.ResetDraggable();
     }
+
 
 
     public void ExitStage()

@@ -110,13 +110,16 @@ public class StateManager : MonoBehaviour
 
     public void ApplyStageVisual(StageStatus status)
     {
+        Color lockedColor = Color.gray;
+
+        // 마나 서클 처리
         foreach (var circle in _manaCircles)
         {
             switch (status)
             {
                 case StageStatus.Locked:
                     circle.StopRotation();
-                    circle.SetColor(Color.gray); // 예시
+                    circle.SetColor(lockedColor);
                     break;
 
                 case StageStatus.Available:
@@ -130,7 +133,26 @@ public class StateManager : MonoBehaviour
                     break;
             }
         }
+
+        // 모든 회로 공통 처리
+        void ApplyColorToCircuits<T>(List<T> list) where T : MonoBehaviour
+        {
+            foreach (var item in list)
+            {
+                if (status == StageStatus.Locked && item is IColorable ic1)
+                    ic1.SetColor(lockedColor);
+                else if (item is IColorable ic2)
+                    ic2.SetDefaultColor();
+            }
+        }
+
+        ApplyColorToCircuits(_inputCircuits);
+        ApplyColorToCircuits(_outputCircuits);
+        ApplyColorToCircuits(_attributeCircuits);
+        ApplyColorToCircuits(_draggables);
+        ApplyColorToCircuits(_neutralCircuits);
     }
+
 
     // Getter
     public ManaCircle MainCircle => _mainManaCircle;

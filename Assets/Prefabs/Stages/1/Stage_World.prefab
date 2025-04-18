@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5139332834043009624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 128032064395419456, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: diameter
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 128032064395419456, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: manaType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 128032064395419456, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: isClickable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422520333789343715, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_Name
+      value: Stage_World
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850712057301948368, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.715
+      objectReference: {fileID: 0}
+    - target: {fileID: 5099050024119423107, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: targetType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173195178231661099, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173195178231661099, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8571980808815360659, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 8152649942982558199, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+    - {fileID: 2771500463472315594, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+    - {fileID: 2982279306500680794, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+    - {fileID: 7615784224564487773, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
