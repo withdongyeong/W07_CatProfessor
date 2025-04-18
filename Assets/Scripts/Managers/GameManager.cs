@@ -44,11 +44,7 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver
     {
         get => isGameOver;
-        set
-        {
-            isGameOver = value;
-            _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
-        }
+        set => isGameOver = value;
     }
     
     void Awake()
@@ -63,6 +59,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         currentGameState = gameState.StageSelecting;
     }
     
@@ -72,7 +70,6 @@ public class GameManager : MonoBehaviour
             mainCamera = Camera.main.GetComponent<CameraController>();
         
         _grid = mainCamera.GetComponentInChildren<GridManager>();
-        _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         
         IsGameOver = false;
         InitializeGame();
@@ -91,6 +88,8 @@ public class GameManager : MonoBehaviour
         }
         
         IsGameOver = false;
+        _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
+        
         Time.timeScale = 1f;
         lastSayTime = Time.time;
         ManaPool.Instance.ResetManaPool();
@@ -205,6 +204,7 @@ public class GameManager : MonoBehaviour
     {
         if (IsGameOver) return;
         IsGameOver = true;
+        _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
