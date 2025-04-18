@@ -24,7 +24,7 @@ public class ManaCircle : MonoBehaviour
     {
         SetupCircle();
         SetupCollider();
-        SetupOrbiters();
+        SetupOrbiters(activeOrbiters);
         SetupStageClickable();
         
         _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
@@ -153,9 +153,11 @@ public class ManaCircle : MonoBehaviour
         edgeCollider.points = colliderPoints;
     }
 
-    void SetupOrbiters()
+    public void SetupOrbiters(int activeOrbiterCount)
     {
         int beforeCount = transform.childCount;
+        activeOrbiters = activeOrbiterCount;
+        
         List<Transform> children = new List<Transform>();
 
         foreach (Transform child in transform)
@@ -174,9 +176,9 @@ public class ManaCircle : MonoBehaviour
 
 
         float radius = diameter / 2f;
-        float angleStep = 360f / activeOrbiters;
+        float angleStep = 360f / activeOrbiterCount;
 
-        for (int i = 0; i < activeOrbiters; i++)
+        for (int i = 0; i < activeOrbiterCount; i++)
         {
             GameObject orbiter = Instantiate(orbitingPrefab, transform);
             orbiter.hideFlags = HideFlags.DontSave;
@@ -281,7 +283,15 @@ public class ManaCircle : MonoBehaviour
         }
         
         if (activeOrbiters > 4) activeOrbiters = 2;
-        SetupOrbiters();
+
+        // 같은 타입의 ManaCircle 동기화
+        foreach (var circle in stateManager.ManaCircles)
+        {
+            if (circle.manaType == manaType)
+            {
+                circle.SetupOrbiters(activeOrbiters);
+            }
+        }
 
         // 정답 Circle 개수 체크 
         _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);
