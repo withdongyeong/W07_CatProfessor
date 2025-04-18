@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,12 @@ public class GameManager : MonoBehaviour
     private bool isGameOver = false;
     private float sayInterval = 60f;
     private float lastSayTime = 0f;
+    
+    // 리셋 카운트
+    [Tooltip("리셋 횟수")]
+    public int resetCount { get; private set; }
+
+    public event Action OnReset;
 
     [Header("기본 월드 카메라 설정")]
     public Vector3 worldViewPosition = Vector3.zero;
@@ -150,6 +157,9 @@ public class GameManager : MonoBehaviour
         // stage 초기화
         stateManager.ResetManaCircle();
         stateManager.ResetDraggable();
+        
+        // 스테이지 리셋 횟수 초기화
+        resetCount = 0;
     }
 
 
@@ -171,6 +181,9 @@ public class GameManager : MonoBehaviour
         // UI 및 그리드 비활성화
         _uiManager.ActivatePlayingCanvas(false);
         _grid.ActivateGrid(false);
+        
+        // 스테이지 리셋 횟수 초기화
+        resetCount = 0;
     }
 
     
@@ -210,5 +223,13 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
+    }    
+    
+    // 내부에서만 호출하도록
+    public void RegisterReset()
+    {
+        resetCount++;
+        OnReset?.Invoke();
+        Debug.Log("리셋 카운트: " + resetCount);
     }
 }
