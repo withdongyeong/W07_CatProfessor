@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecc7f05e6782c6b4d9b609b4b000e426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manaCircleAnswserList: []
 --- !u!1 &7395589891160277385
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +398,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttributeCircuit
       objectReference: {fileID: 0}
+    - target: {fileID: 8612225645001114235, guid: 9bad8e2d368384141b1c667652b67062, type: 3}
+      propertyPath: 'directionConfigs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c7c91e099633e046b8f468e60347d4b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
