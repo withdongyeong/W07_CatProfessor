@@ -1,52 +1,70 @@
 fileFormatVersion: 2
-guid: 9fde1984a98fc304ea4dad8be0929f28
+guid: e5d2c1406467e5a4dbe1feeb2fd7f1ec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8451926566866254080
-    second: "\uB9D0\uD558\uAE30_0"
+      213: -6146375626484895344
+    second: surprised_0
   - first:
-      213: -1892020511144957074
-    second: "\uB9D0\uD558\uAE30_1"
+      213: 2326814261735535604
+    second: surprised_1
   - first:
-      213: -6498528732310889501
-    second: "\uB9D0\uD558\uAE30_2"
+      213: -7356081551286392681
+    second: surprised_2
   - first:
-      213: 1192254469973274277
-    second: "\uB9D0\uD558\uAE30_3"
+      213: -3819781321525519729
+    second: surprised_3
   - first:
-      213: -3973840872206501994
-    second: "\uB9D0\uD558\uAE30_4"
+      213: 6912206542054046553
+    second: surprised_4
   - first:
-      213: 6542541407617612103
-    second: "\uB9D0\uD558\uAE30_5"
+      213: 6887350907165776403
+    second: surprised_5
   - first:
-      213: 4834961599272839258
-    second: "\uB9D0\uD558\uAE30_6"
+      213: 3193040372576412089
+    second: surprised_6
   - first:
-      213: -1349108922348135698
-    second: "\uB9D0\uD558\uAE30_7"
+      213: -4416755279331178477
+    second: surprised_7
   - first:
-      213: 6365361757918070716
-    second: "\uB9D0\uD558\uAE30_8"
+      213: -8955061979268675543
+    second: surprised_8
   - first:
-      213: 4767779063380843025
-    second: "\uB9D0\uD558\uAE30_9"
+      213: 1138454898423036359
+    second: surprised_9
   - first:
-      213: -1639333251817802654
-    second: "\uB9D0\uD558\uAE30_10"
+      213: -1449812207733859017
+    second: surprised_10
   - first:
-      213: -2976214189937339768
-    second: "\uB9D0\uD558\uAE30_11"
+      213: 7185393301642952735
+    second: surprised_11
   - first:
-      213: -6965980478439057756
-    second: "\uB9D0\uD558\uAE30_12"
+      213: 539657583656330148
+    second: surprised_12
   - first:
-      213: -3951474632383513638
-    second: "\uB9D0\uD558\uAE30_13"
+      213: -6250510225679202930
+    second: surprised_13
   - first:
-      213: -2950152734532110210
-    second: "\uB9D0\uD558\uAE30_14"
+      213: -7963751028379225634
+    second: surprised_14
+  - first:
+      213: -181728689175166717
+    second: surprised_15
+  - first:
+      213: 9061157814172860249
+    second: surprised_16
+  - first:
+      213: 751838379210601469
+    second: surprised_17
+  - first:
+      213: 7722505208432474621
+    second: surprised_18
+  - first:
+      213: 5221427161318010664
+    second: surprised_19
+  - first:
+      213: 6457019229244755527
+    second: surprised_20
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,7 +160,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_0"
+      name: surprised_0
       rect:
         serializedVersion: 2
         x: 0
@@ -157,14 +175,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4df9b2d3df903ae4eb12ab325eb4f6b1
-      internalID: 775934330
+      spriteID: f00f3b9645e4c6e49bc8e8d697bd8791
+      internalID: -1971829613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_1"
+      name: surprised_1
       rect:
         serializedVersion: 2
         x: 1800
@@ -179,14 +197,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e93e6d1173ad8748bcd9d164d36bf49
-      internalID: -1180603667
+      spriteID: 41c7df87ed281b549a723d5c1537fd01
+      internalID: -819211602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_2"
+      name: surprised_2
       rect:
         serializedVersion: 2
         x: 3600
@@ -201,14 +219,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a68dd337e17ace5439164ca78c99c5ea
-      internalID: -745830885
+      spriteID: a89059c7895f04f44bce950a705221e6
+      internalID: 169349929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_3"
+      name: surprised_3
       rect:
         serializedVersion: 2
         x: 0
@@ -223,14 +241,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a890d5dfd80e96e478e29cda870e1416
-      internalID: 1095385868
+      spriteID: 9b3425ecc12ec14469b2ebf3947d13cf
+      internalID: -1856215842
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB9D0\uD558\uAE30_4"
+      name: surprised_4
       rect:
         serializedVersion: 2
         x: 1800
@@ -245,8 +263,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f06e0398fcc56734b91e09418cf61426
-      internalID: 195373971
+      spriteID: f8b96783a087b31408434ae6d45f75d3
+      internalID: -827387780
       vertices: []
       indices: 
       edges: []
@@ -255,7 +273,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6be5539b4e9559e4a97a6b3bcb81d4bd
+    spriteID: ee82de203e9e4134bac9f0d6e58774bd
     internalID: 0
     vertices: []
     indices: 
@@ -265,11 +283,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uB9D0\uD558\uAE30_0": 775934330
-      "\uB9D0\uD558\uAE30_1": -1180603667
-      "\uB9D0\uD558\uAE30_2": -745830885
-      "\uB9D0\uD558\uAE30_3": 1095385868
-      "\uB9D0\uD558\uAE30_4": 195373971
+      surprised_0: -1971829613
+      surprised_1: -819211602
+      surprised_2: 169349929
+      surprised_3: -1856215842
+      surprised_4: -827387780
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
