@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,12 +28,18 @@ public class ManaPool : MonoBehaviour
         InitializePool();
         InvokeRepeating(nameof(TrimPool), poolCleanupInterval, poolCleanupInterval);
     }
-    
+
+    private void Start()
+    {
+        // 실행 주기때문에 Start()에서 호출
+        GameManager.Instance.OnReset += ResetManaPool;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ResetManaPool();
+            GameManager.Instance.RegisterReset(); // 리셋 기록
         }
     }
 
@@ -154,5 +161,11 @@ public class ManaPool : MonoBehaviour
                 Destroy(manaPool.Dequeue().gameObject);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        // 구독 해제
+        GameManager.Instance.OnReset -= ResetManaPool;
     }
 }
