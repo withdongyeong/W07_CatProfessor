@@ -139,7 +139,7 @@ MonoBehaviour:
   attributeType: 2
   isDragable: 0
   directionConfigs:
-  - {fileID: 11400000, guid: c7828e70b3ebb194bb4da4dcf3e56845, type: 2}
+  - {fileID: 11400000, guid: 1c7c91e099633e046b8f468e60347d4b, type: 2}
   - {fileID: 11400000, guid: 3424c6cf53d7cb6499e819bcb8c6db66, type: 2}
   - {fileID: 11400000, guid: da9b1b39242ce684ebec6797e20731cd, type: 2}
   patternConfigs:

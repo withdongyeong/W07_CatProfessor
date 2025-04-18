@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public static class ManaProperties
@@ -48,23 +48,23 @@ public static class ManaProperties
 
     private static readonly Dictionary<(ManaType, ManaType), ManaType> ManaCombinations = new Dictionary<(ManaType, ManaType), ManaType>
     {
-        { (ManaType.Flame, ManaType.Aqua), ManaType.Mist },
-        { (ManaType.Aqua, ManaType.Flame), ManaType.Mist },
+        { (ManaType.Flame, ManaType.Aqua), ManaType.Pulse },
+        { (ManaType.Aqua, ManaType.Flame), ManaType.Pulse },
 
-        { (ManaType.Flame, ManaType.Nature), ManaType.Ember },
-        { (ManaType.Nature, ManaType.Flame), ManaType.Ember },
+        //{ (ManaType.Flame, ManaType.Nature), ManaType.Ember },
+        //{ (ManaType.Nature, ManaType.Flame), ManaType.Ember },
 
-        { (ManaType.Flame, ManaType.Volt), ManaType.Pulse },
-        { (ManaType.Volt, ManaType.Flame), ManaType.Pulse },
+        { (ManaType.Flame, ManaType.Volt), ManaType.Mud },
+        { (ManaType.Volt, ManaType.Flame), ManaType.Mud },
 
-        { (ManaType.Aqua, ManaType.Nature), ManaType.Mud },
-        { (ManaType.Nature, ManaType.Aqua), ManaType.Mud },
+        //{ (ManaType.Aqua, ManaType.Nature), ManaType.Mud },
+        //{ (ManaType.Nature, ManaType.Aqua), ManaType.Mud },
 
-        { (ManaType.Aqua, ManaType.Volt), ManaType.Storm },
-        { (ManaType.Volt, ManaType.Aqua), ManaType.Storm },
+        { (ManaType.Aqua, ManaType.Volt), ManaType.Nature },
+        { (ManaType.Volt, ManaType.Aqua), ManaType.Nature },
 
-        { (ManaType.Nature, ManaType.Volt), ManaType.Bio },
-        { (ManaType.Volt, ManaType.Nature), ManaType.Bio },
+        //{ (ManaType.Nature, ManaType.Volt), ManaType.Bio },
+        //{ (ManaType.Volt, ManaType.Nature), ManaType.Bio },
 
         // ✅ 중립 속성 변환 규칙 추가
         { (ManaType.Neutral, ManaType.Flame), ManaType.Flame },
