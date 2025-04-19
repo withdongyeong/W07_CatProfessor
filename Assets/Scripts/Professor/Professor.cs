@@ -50,7 +50,7 @@ public class Professor : MonoBehaviour
     
     [Header("힌트 설정")]
     [Tooltip("깜빡임 총 시간 (초)")]
-    public float hintBlinkDuration = 3f;
+    public float hintBlinkDuration = 6f;
     [Tooltip("깜빡이는 속도 (사이클/초)")]
     public float blinkFrequency    = 2f;
     [Tooltip("테스트용 : 직접힌트 0 간접힌트 1")]
@@ -189,6 +189,12 @@ public class Professor : MonoBehaviour
                 // currentFrameRate = idleFrameRate;
                 animator.SetInteger("State", 0);
                 break;
+            case AnimationType.InSleep:
+                animator.SetInteger("State", 1);
+                break;
+            case AnimationType.Sleep:
+                animator.Play("Sleep");
+                break;
             case AnimationType.Talk:
                 // currentFrames = talkFrames;
                 // currentFrameRate = talkFrameRate;
@@ -198,15 +204,10 @@ public class Professor : MonoBehaviour
                 // currentFrames = victoryFrames;
                 // currentFrameRate = victoryFrameRate;
                 animator.Play("Happy");
+                animator.SetInteger("State", 3);
                 break;
             case AnimationType.Surprise:
                 animator.Play("Surprised");
-                break;
-            case AnimationType.InSleep:
-                animator.SetInteger("State", 1);
-                break;
-            case AnimationType.Sleep:
-                animator.Play("Sleep");
                 break;
         }
 
@@ -248,46 +249,47 @@ public class Professor : MonoBehaviour
             
             if (IsCurrentAnimation(AnimationType.Sleep))
             {
+                Debug.Log("교수님 클릭");
                 SetAnimation(AnimationType.Idle);
                 lastInputTime = Time.time;
-                Debug.Log("힌트 호출");
-            }
-            Debug.Log("교수님 클릭");
-            //스테이지 내부 아니면 취소
-            if (curStateManager == null || curhintManager == null) return;
+                
+                //스테이지 내부 아니면 취소
+                if (curStateManager == null || curhintManager == null) return;
+                
+                var draggables = curStateManager.Draggables;
+                var answers    = curhintManager.AnswerCircuits;
+                const float threshold = 0.1f;
 
-            var draggables = curStateManager.Draggables;
-            var answers    = curhintManager.AnswerCircuits;
-            const float threshold = 0.1f;
+                // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
+                var missing = answers
+                    .Where(ac => !draggables
+                        .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
+                    .ToList();
 
-            // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
-            var missing = answers
-                .Where(ac => !draggables
-                    .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
-                .ToList();
+                // 2) 먼저 모든 힌트 오브젝트를 끕니다.
+                foreach (var ac in answers)
+                {
+                    var sr = ac.GetComponentInChildren<SpriteRenderer>();
+                    if (sr != null) sr.enabled = false;
+                }
 
-            // 2) 먼저 모든 힌트 오브젝트를 끕니다.
-            foreach (var ac in answers)
-            {
-                var sr = ac.GetComponentInChildren<SpriteRenderer>();
-                if (sr != null) sr.enabled = false;
-            }
+                // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
+                if (missing.Count > 0)
+                {
+                    var pick = missing[0];
 
-            // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
-            if (missing.Count > 0)
-            {
-                var pick = missing[0];
+                    var sr = pick.GetComponentInChildren<SpriteRenderer>();
+                    if (sr != null)
+                        sr.enabled = true;
 
-                var sr = pick.GetComponentInChildren<SpriteRenderer>();
-                if (sr != null)
-                    sr.enabled = true;
-
-                // 이미 표시 중이면 멈추고 초기화
-                if (hintCoroutine != null)
-                    StopCoroutine(hintCoroutine);
+                    // 이미 표시 중이면 멈추고 초기화
+                    if (hintCoroutine != null)
+                        StopCoroutine(hintCoroutine);
             
-                hintCoroutine = StartCoroutine(BlinkHint(sr));
+                    hintCoroutine = StartCoroutine(BlinkHint(sr));
+                }
             }
+
         }
         else //간접 힌트
         {
@@ -324,7 +326,7 @@ public class Professor : MonoBehaviour
         Color baseCol  = sr.color;             // 원래 색(컬러+알파)
         while (elapsed < hintBlinkDuration)
         {
-            // 0~1 사이를 왔다갔다
+            // 0~0.5 사이를 왔다갔다
             float a = Mathf.PingPong(elapsed * blinkFrequency, 1f);
             sr.color = new Color(baseCol.r, baseCol.g, baseCol.b, a);
 
