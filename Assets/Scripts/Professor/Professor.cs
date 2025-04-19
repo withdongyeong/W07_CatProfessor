@@ -1,6 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Cinemachine;
+using Random = Unity.Mathematics.Random;
 
 public class Professor : MonoBehaviour
 {
@@ -28,6 +32,10 @@ public class Professor : MonoBehaviour
     // private AnimationType currentAnimation = AnimationType.Idle;
     // private float currentFrameRate;
     
+    [Header("스테이지 설정")]
+    private StateManager curStateManager;
+    private HintManager curhintManager;
+    
     [Header("카메라 설정")]
     [Tooltip("Viewport 좌표")]
     public Vector2 viewportPos = new Vector2(0.9f, 0.1f);
@@ -39,6 +47,15 @@ public class Professor : MonoBehaviour
     
     [Header("애니메이션 설정")]
     private Animator animator;
+    
+    [Header("힌트 설정")]
+    [Tooltip("깜빡임 총 시간 (초)")]
+    public float hintBlinkDuration = 3f;
+    [Tooltip("깜빡이는 속도 (사이클/초)")]
+    public float blinkFrequency    = 2f;
+
+    // 현재 실행 중인 힌트 코루틴
+    private Coroutine hintCoroutine;
     
     //마지막 입력 시간
     private float lastInputTime;
@@ -76,6 +93,8 @@ public class Professor : MonoBehaviour
             baseCamSize = mainCamera.orthographicSize;
             baseProfessorScale = transform.localScale;
         }
+        //시네머신 업데이트 이벤트 등록
+        CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
     }
     void Start()
     {
@@ -132,19 +151,20 @@ public class Professor : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    // Cinemachine이 카메라를 다 이동/블렌딩한 직후 호출됩니다.
+    void OnCameraUpdated(CinemachineBrain brain)
     {
-        // 카메라 줌 & 패닝에 맞춰 위치와 스케일 조정
-        if (mainCamera == null || !mainCamera.orthographic) return;
+        if (brain.OutputCamera != mainCamera || !mainCamera.orthographic)
+            return;
 
-        // 1) 화면(viewport) 좌표 → 월드 좌표
+        // 1) 화면(viewport) → 월드 좌표 변환
         Vector3 vp = new Vector3(viewportPos.x, viewportPos.y, zOffset);
         Vector3 worldPos = mainCamera.ViewportToWorldPoint(vp);
         transform.position = new Vector3(worldPos.x, worldPos.y, transform.position.z);
 
-        // 2) 카메라 사이즈 비율에 따라 스케일 조정
-        float scaleFactor = baseCamSize / mainCamera.orthographicSize; //줌인 되면 scaleFactor 커짐
-        transform.localScale = baseProfessorScale / scaleFactor; // 화면 스케일이 커지니까 캐릭터는 작아지게
+        // 2) 카메라 확대율에 맞춘 스케일 조정
+        float scaleFactor = baseCamSize / mainCamera.orthographicSize;
+        transform.localScale = baseProfessorScale / scaleFactor;
     }
 
     public void SetAnimation(AnimationType animationType)
@@ -213,6 +233,8 @@ public class Professor : MonoBehaviour
         TalkBox.Instance.Talk(message);
     }
 
+    
+    // 교수님 상호작용
     private void OnMouseDown()
     {
         if (IsCurrentAnimation(AnimationType.Sleep))
@@ -221,6 +243,76 @@ public class Professor : MonoBehaviour
             lastInputTime = Time.time;
             Debug.Log("힌트 호출");
         }
+        Debug.Log("교수님 클릭");
+        //스테이지 내부 아니면 취소
+        if (curStateManager == null || curhintManager == null) return;
+
+        var draggables = curStateManager.Draggables;
+        var answers    = curhintManager.AnswerCircuits;
+        const float threshold = 0.1f;
+
+        // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
+        var missing = answers
+            .Where(ac => !draggables
+                .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
+            .ToList();
+
+        // 2) 먼저 모든 힌트 오브젝트를 끕니다.
+        foreach (var ac in answers)
+        {
+            var sr = ac.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null) sr.enabled = false;
+        }
+
+        // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
+        if (missing.Count > 0)
+        {
+            var pick = missing[0];
+
+            var sr = pick.GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+                sr.enabled = true;
+
+            // 이미 표시 중이면 멈추고 초기화
+            if (hintCoroutine != null)
+                StopCoroutine(hintCoroutine);
+            
+            hintCoroutine = StartCoroutine(BlinkHint(sr));
+        }
+    }
+
+    private IEnumerator BlinkHint(SpriteRenderer sr)
+    {
+        float elapsed  = 0f;
+        Color baseCol  = sr.color;             // 원래 색(컬러+알파)
+        while (elapsed < hintBlinkDuration)
+        {
+            // 0~1 사이를 왔다갔다
+            float a = Mathf.PingPong(elapsed * blinkFrequency, 1f);
+            sr.color = new Color(baseCol.r, baseCol.g, baseCol.b, a);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // 끝나면 숨기고, 원래 알파 복원
+        sr.enabled   = false;
+        sr.color     = baseCol;
+        hintCoroutine = null;
+    }
+    
+    // 현재 스테이지 설정
+    public void SetCurrentStage(StateManager stateManager, HintManager hintManager)
+    {
+        curStateManager = stateManager;
+        curhintManager = hintManager;
+    }
+    
+    // 스테이지 초기화
+    public void ResetStage()
+    {
+        curStateManager = null;
+        curhintManager = null;
     }
     
     //현재 애니메이션 체크
@@ -247,5 +339,10 @@ public class Professor : MonoBehaviour
         }
 
         return false;
+    }
+
+    void OnDisable()
+    {
+        CinemachineCore.CameraUpdatedEvent.RemoveListener(OnCameraUpdated);
     }
 }
