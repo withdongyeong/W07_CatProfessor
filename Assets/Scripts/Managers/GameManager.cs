@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public CameraController mainCamera;
     private GridManager _grid;
     private OneSceneUIManager _uiManager;
+    private StageStateCheck _stagecheck;
 
     private bool isGameOver = false;
     private float sayInterval = 60f;
@@ -79,6 +80,8 @@ public class GameManager : MonoBehaviour
         
         _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         _uiManager.Init();
+
+        _stagecheck = FindAnyObjectByType<StageStateCheck>();
         
         CurrentGameState = gameState.Title;
     }
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
         IsGameOver = false;
         InitializeGame();
         ApplyStageVisualStates();
-        
+        _stagecheck.SetDesignCircleActive();
         
     }
 
@@ -227,6 +230,8 @@ public class GameManager : MonoBehaviour
         
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
+
+        _stagecheck.SetDesignCircleActive();
     }
 
     private void ApplyStageVisualStates()

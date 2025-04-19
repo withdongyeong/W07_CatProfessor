@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class StageUIController : MonoBehaviour
+public class StageStateCheck : MonoBehaviour
 {
     // 구간별 스테이지 매핑
     private readonly Dictionary<int, List<string>> stageSections = new Dictionary<int, List<string>>
@@ -145,7 +145,7 @@ public class StageUIController : MonoBehaviour
     }
 
 
-    public void StageZoomIn()
+    void StageZoomIn()
     {
         var cameraController = FindAnyObjectByType<CinemachineCameraController>();
         if (cameraController != null)
@@ -160,4 +160,111 @@ public class StageUIController : MonoBehaviour
             cameraController.MoveToActiveSection(50f);
         }
     }
+
+    bool CheckT1()
+    {
+        if (!stageSections.ContainsKey(0))
+            return false;
+
+        foreach (string stageName in stageSections[0])
+        {
+            if (StageDataManager.Instance.GetStageStatus(stageName) != StageStatus.Cleared)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
+
+    bool CheckT2()
+    {
+        if (!stageSections.ContainsKey(2))
+            return false;
+
+        foreach (string stageName in stageSections[2])
+        {
+            if (StageDataManager.Instance.GetStageStatus(stageName) != StageStatus.Cleared)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool CheckT3()
+    {
+        if (!stageSections.ContainsKey(4))
+            return false;
+
+        foreach (string stageName in stageSections[4])
+        {
+            if (StageDataManager.Instance.GetStageStatus(stageName) != StageStatus.Cleared)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    bool CheckM1()
+    {
+        if (!stageSections.ContainsKey(6))
+            return false;
+
+        foreach (string stageName in stageSections[6])
+        {
+            if (StageDataManager.Instance.GetStageStatus(stageName) != StageStatus.Cleared)
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+
+
+    bool CheckM2()
+    {
+        if (!stageSections.ContainsKey(7))
+            return false;
+
+        foreach (string stageName in stageSections[7])
+        {
+            if (StageDataManager.Instance.GetStageStatus(stageName) != StageStatus.Cleared)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public void SetDesignCircleActive()
+    {
+
+        GameObject designCircle = FindAnyObjectByType<DesignCircle>().gameObject;
+
+
+        List<GameObject> circles = new List<GameObject>();
+        foreach (Transform child in designCircle.transform)
+        {
+            circles.Add(child.gameObject);
+        }
+
+        circles[0].SetActive(CheckT1());
+        circles[1].SetActive(CheckT2());
+        circles[2].SetActive(CheckT3());
+        circles[3].SetActive(CheckM1());
+        circles[4].SetActive(CheckM2());
+
+    }
+
+
+
+
+}

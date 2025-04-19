@@ -37,7 +37,7 @@ public class CinemachineCameraController : MonoBehaviour
 
     // StageUIController 참조
     [SerializeField]
-    private StageUIController stageUIController;
+    private StageStateCheck stageUIController;
 
     void Awake()
     {
@@ -52,7 +52,7 @@ public class CinemachineCameraController : MonoBehaviour
 
         // StageUIController 자동으로 찾기
         if (stageUIController == null)
-            stageUIController = FindAnyObjectByType<StageUIController>();
+            stageUIController = FindAnyObjectByType<StageStateCheck>();
     }
 
     void Update()
