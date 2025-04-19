@@ -125,9 +125,10 @@ public class StageUIController : MonoBehaviour
 
 
 
+
     void Start()
     {
-        // 예시 1: 각 Available 스테이지의 구간 번호 출력
+        // 기존 디버그 로그
         var stageToSection = GetSectionForAvailableStages();
         foreach (var pair in stageToSection)
         {
@@ -140,5 +141,23 @@ public class StageUIController : MonoBehaviour
             Debug.Log($"구간 {kvp.Key}의 평균 위치: {kvp.Value}");
         }
 
+        // 카메라를 활성화된 구간으로 이동
+        var cameraController = FindAnyObjectByType<CinemachineCameraController>();
+        if (cameraController != null)
+        {
+            cameraController.MoveToActiveSection(50f); // zoomedOutSize는 필요에 따라 조정
+        }
+
+
+    }
+
+
+    public void StageZoomIn()
+    {
+        var cameraController = FindAnyObjectByType<CinemachineCameraController>();
+        if (cameraController != null)
+        {
+            cameraController.MoveToActiveSection(50f);
+        }
     }
 }
