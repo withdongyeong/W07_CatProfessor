@@ -7,24 +7,23 @@ public class Mana : MonoBehaviour
     public float speed = 5f;
     public float maxLifetime = 2f;
 
-    private SpriteRenderer spriteRenderer;
     private TrailRenderer trailRenderer;
     private bool canBeDetected = false;
     public float detectDelay = 0.2f;
     public int defaultOutput = 5;
     public int remainingOutput = 5;
     private Vector3 initialScale;
-
+    
     private ManaPool pool;
 
     public ShootPatternConfig currentPattern;
-
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         trailRenderer = GetComponent<TrailRenderer>();
-
-        initialScale = transform.localScale;
+        
+        initialScale = spriteRenderer.transform.localScale;
 
         SetColorByType();
         UpdateScaleByOutput();
@@ -79,7 +78,7 @@ public class Mana : MonoBehaviour
         float normalizedOutput = Mathf.Clamp01((float)remainingOutput / 5f);
         float scaleFactor = Mathf.Lerp(minScaleFactor, maxScaleFactor, normalizedOutput);
 
-        transform.localScale = Vector3.one * scaleFactor;
+        spriteRenderer.transform.localScale = Vector3.one * scaleFactor;
 
         if (trailRenderer != null)
         {
@@ -113,7 +112,7 @@ public class Mana : MonoBehaviour
     {
         remainingOutput = 5;
         canBeDetected = false;
-        transform.localScale = initialScale;
+        spriteRenderer.transform.localScale = initialScale;
         currentPattern = null;
         gameObject.SetActive(false);
 
