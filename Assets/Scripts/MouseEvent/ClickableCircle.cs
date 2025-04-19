@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class ClickableCircle : MonoBehaviour
 {
-    GameObject FindStageRoot()
+    StageRootMarker FindStageRoot()
     {
         var marker = GetComponentInParent<StageRootMarker>();
-        return marker != null ? marker.gameObject : null;
+        return marker != null ? marker : null;
     }
 
     private void Awake()
