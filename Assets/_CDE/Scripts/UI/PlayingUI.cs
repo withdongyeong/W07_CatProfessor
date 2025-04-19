@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class PlayingUI : MonoBehaviour
     [SerializeField] private Button backBtn;
     [SerializeField] private Button resetStageBtn;
     [SerializeField] private Button resetManaBtn;
+    [SerializeField] private TMP_Text stageNameText;
+    [SerializeField] private TMP_Text stageDescriptionText;
 
     private void Start()
     {
@@ -39,5 +42,11 @@ public class PlayingUI : MonoBehaviour
     {
         resetStageBtn.gameObject.SetActive(isActive);
         resetManaBtn.gameObject.SetActive(isActive);
+    }
+
+    public void ChangeStageInfo(StageRootMarker stage)
+    {
+        stageNameText.text = $"{stage.StageName}";
+        stageDescriptionText.text = $"{stage.StageDescription}";
     }
 }

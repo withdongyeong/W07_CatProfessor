@@ -147,9 +147,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void EnterStage(GameObject stageRoot)
+    public void EnterStage(StageRootMarker stageRoot)
     {
-        CurrentPlayingStage = stageRoot;
+        CurrentPlayingStage = stageRoot.gameObject;
         CurrentGameState = gameState.GamePlaying;
 
         StateManager stateManager = stageRoot.GetComponentInChildren<StateManager>();
@@ -196,8 +196,12 @@ public class GameManager : MonoBehaviour
         
         //교수님한테 현재 StateManager 전달
         Professor.Instance.SetCurrentStage(stateManager, hintManager: stageRoot.GetComponentInChildren<HintManager>());
+        
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
+        
+        // 스테이지 UI 변경
+        _uiManager.PlayingUI.ChangeStageInfo(stageRoot);
     }
 
 
@@ -307,8 +311,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     // 마나 서클의 활성 개수를 HintManager의 정답 개수에 맞춰 재설정 (동일 타입 서클 모두 적용)
     private void ApplyAnswerCircles(StateManager stateManager, HintManager hintManager)
     {
@@ -343,10 +345,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-
-
-
 
     void GameClear()
     {

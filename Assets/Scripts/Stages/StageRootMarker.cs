@@ -4,4 +4,6 @@ using UnityEngine;
 public class StageRootMarker : MonoBehaviour
 {
     // 빈 컴포넌트, 마커용
+    public string StageName;
+    public string StageDescription;
 }

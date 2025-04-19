@@ -602,6 +602,8 @@ MonoBehaviour:
   backBtn: {fileID: 3419215143715635007}
   resetStageBtn: {fileID: 2951701742396728565}
   resetManaBtn: {fileID: 1505661675462451061}
+  stageNameText: {fileID: 1169039130022930728}
+  stageDescriptionText: {fileID: 2354380915637123518}
 --- !u!223 &8414845263427120980
 Canvas:
   m_ObjectHideFlags: 0
@@ -1420,7 +1422,7 @@ GameObject:
   - component: {fileID: 3167662088199077774}
   - component: {fileID: 1169039130022930728}
   m_Layer: 5
-  m_Name: StageIndexText
+  m_Name: StageNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
