@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manaPrefab: {fileID: 1187343946098673215, guid: 56ef79ba3ba2a8749826dea03911df7a, type: 3}
-  fireRate: 0.3
+  fireRate: 0.25
   shootEffectDuration: 0.6
   attributeType: 0
   defaultShootPattern: {fileID: 11400000, guid: 8c5cc703fa63f7842ba1bb7e1d8556b8, type: 2}
