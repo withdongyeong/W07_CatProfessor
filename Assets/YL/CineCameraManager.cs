@@ -125,20 +125,32 @@ public class StageUIController : MonoBehaviour
 
 
 
+
     void Start()
     {
-        // 예시 1: 각 Available 스테이지의 구간 번호 출력
+        // 기존 디버그 로그
         var stageToSection = GetSectionForAvailableStages();
         foreach (var pair in stageToSection)
         {
-            Debug.Log($"스테이지 {pair.Key}는 구간 {pair.Value}에 속합니다.");
+            Debug.Log($"현재 Available 상태인 스테이지 {pair.Key}는 구간 {pair.Value}에 속합니다.");
         }
 
-        var averagePositions = GetAveragePositionBySection();
+/*        var averagePositions = GetAveragePositionBySection();
         foreach (var kvp in averagePositions)
         {
             Debug.Log($"구간 {kvp.Key}의 평균 위치: {kvp.Value}");
-        }
+        }*/
+        StageZoomIn();
 
+    }
+
+
+    public void StageZoomIn()
+    {
+        var cameraController = FindAnyObjectByType<CinemachineCameraController>();
+        if (cameraController != null)
+        {
+            cameraController.MoveToActiveSection(50f);
+        }
     }
 }

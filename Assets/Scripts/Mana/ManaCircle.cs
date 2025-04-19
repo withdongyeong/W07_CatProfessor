@@ -259,7 +259,7 @@ public class ManaCircle : MonoBehaviour
         // 3. 클릭 관련
         if (Input.GetMouseButtonDown(0))
         {
-            if (GameManager.Instance.CurrentGameState == GameManager.gameState.StageSelecting)
+            if (GameManager.Instance.CurrentGameState != GameManager.gameState.GamePlaying)
             {
                 return;
             }
@@ -364,7 +364,7 @@ public class ManaCircle : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         Mana mana = other.GetComponent<Mana>();
         if (mana != null)

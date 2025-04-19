@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public enum gameState
     {
         GamePlaying,
-        StageSelecting
+        StageSelecting,
+        Title,
     }
 
     private gameState currentGameState;
@@ -39,9 +40,14 @@ public class GameManager : MonoBehaviour
     public gameState CurrentGameState
     {
         get => currentGameState;
-        set => currentGameState = value;
+        set
+        {
+            currentGameState = value;
+            _uiManager.ChangeUI(currentGameState);
+            _grid.ActivateGrid(currentGameState == gameState.GamePlaying);
+        }
     }
-    
+
     public GameObject CurrentPlayingStage
     {
         get => currentPlayingStage;
@@ -67,20 +73,23 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         
+        if (mainCamera == null)
+            mainCamera = Camera.main.GetComponent<CameraController>();
+        _grid = mainCamera.GetComponentInChildren<GridManager>();
+        
         _uiManager = FindAnyObjectByType<OneSceneUIManager>();
-        currentGameState = gameState.StageSelecting;
+        _uiManager.Init();
+        
+        CurrentGameState = gameState.Title;
     }
     
     void Start()
     {
-        if (mainCamera == null)
-            mainCamera = Camera.main.GetComponent<CameraController>();
-        
-        _grid = mainCamera.GetComponentInChildren<GridManager>();
-        
         IsGameOver = false;
         InitializeGame();
         ApplyStageVisualStates();
+        
+        
     }
 
     void InitializeGame()
@@ -181,10 +190,6 @@ public class GameManager : MonoBehaviour
         // 클릭 collider 해제
         stateManager.MainCircle.GetComponentInChildren<ClickableCircle>().gameObject.SetActive(false);
 
-        // UI 및 그리드 활성화
-        _uiManager.ActivatePlayingCanvas(true);
-        _grid.ActivateGrid(true);
-
         // 스테이지 초기화
         stateManager.ResetManaCircle();
         stateManager.ResetDraggable();
@@ -212,10 +217,6 @@ public class GameManager : MonoBehaviour
 
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
-        
-        // UI 및 그리드 비활성화
-        _uiManager.ActivatePlayingCanvas(false);
-        _grid.ActivateGrid(false);
         
         // 교수님 스테이지 초기화
         Professor.Instance.ResetStage();
