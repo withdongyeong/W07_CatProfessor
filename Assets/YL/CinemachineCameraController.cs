@@ -15,12 +15,14 @@ public class CinemachineCameraController : MonoBehaviour
     CinemachineCamera virtualCamera;
     float moveSpeed = 5f; // 카메라 이동 속도
     float zoomSpeed = 5f; // 줌 속도
+    float playerZoomSpeed = 20;
 
     float zoomStep = 2f;
     float minZoom = 5f;
     float maxZoom = 120f;
 
     private Vector3 targetPosition;
+    private Vector3 initPosition;
     private float targetSize;
 
     private Transform virtualCamTransform;
@@ -43,7 +45,7 @@ public class CinemachineCameraController : MonoBehaviour
             virtualCamera = FindAnyObjectByType<CinemachineCamera>();
 
         virtualCamTransform = virtualCamera.transform;
-        targetPosition = virtualCamTransform.position;
+        initPosition = virtualCamTransform.position;
         targetSize = virtualCamera.Lens.OrthographicSize;
 
         maxCameraSize = virtualCamera.Lens.OrthographicSize;
@@ -56,7 +58,9 @@ public class CinemachineCameraController : MonoBehaviour
     void Update()
     {
         HandleZoom();
+        if (isDraggable)
         HandleDrag();
+
 
         // 위치 부드럽게 이동
         if (Vector3.Distance(virtualCamTransform.position, targetPosition) > 0.01f)
@@ -108,7 +112,7 @@ public class CinemachineCameraController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            targetSize -= scroll * zoomStep * zoomSpeed;
+            targetSize -= scroll * zoomStep * playerZoomSpeed;
             targetSize = Mathf.Clamp(targetSize, minZoom, maxZoom);
         }
     }
@@ -119,7 +123,7 @@ public class CinemachineCameraController : MonoBehaviour
         maxZoom = zoomedInSize;
         targetPosition = new Vector3(stageCenter.x, stageCenter.y, virtualCamTransform.position.z);
         targetSize = zoomedInSize;
-        zoomSpeed = 5f;
+        playerZoomSpeed = 5f;
     }
 
     public void MoveToWorld(Vector3 worldViewCenter, float zoomedOutSize)
@@ -128,6 +132,7 @@ public class CinemachineCameraController : MonoBehaviour
         isDraggable = true; // 드래그 허용
         targetPosition = new Vector3(worldViewCenter.x, worldViewCenter.y, virtualCamTransform.position.z);
         targetSize = zoomedOutSize;
+        playerZoomSpeed = 20f;
     }
 
     // 활성화된 구간으로 카메라 이동
@@ -193,8 +198,13 @@ public class CinemachineCameraController : MonoBehaviour
 
     Vector3 ClampPosition(Vector3 pos)
     {
-        float clampedX = Mathf.Clamp(pos.x, -maxCameraSize / 2, maxCameraSize / 2);
-        float clampedY = Mathf.Clamp(pos.y, -maxCameraSize / 2, maxCameraSize / 2);
+        float t = Mathf.InverseLerp(minZoom, maxZoom, targetSize);
+        float factor = Mathf.Lerp(1f, 2f, t);
+
+        float halfRange = maxCameraSize / factor;
+
+        float clampedX = Mathf.Clamp(pos.x, -halfRange, halfRange);
+        float clampedY = Mathf.Clamp(pos.y, -halfRange, halfRange);
         return new Vector3(clampedX, clampedY, pos.z);
     }
 }
