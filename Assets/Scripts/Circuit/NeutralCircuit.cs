@@ -20,9 +20,6 @@ public class NeutralCircuit : MonoBehaviour, IColorable
     private float lastFireTime = 0f;
     public float shootEffectDuration = 0.55f;
 
-    private bool isRotating = false;
-    private float rotateSpeed = 90f;
-
     void Start()
     {
         InitializeComponents();
@@ -93,12 +90,6 @@ public class NeutralCircuit : MonoBehaviour, IColorable
         if (shootEffectInstance != null && shootEffectInstance.activeSelf && Time.time - lastFireTime > shootEffectDuration)
         {
             shootEffectInstance.SetActive(false);
-            isRotating = false;
-        }
-
-        if (isRotating)
-        {
-            transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
         }
     }
 
@@ -124,8 +115,6 @@ public class NeutralCircuit : MonoBehaviour, IColorable
 
         ShootDirectionConfig directionConfig = directionConfigs[currentDirectionIndex];
         ShootPatternConfig patternConfig = patternConfigs[currentPatternIndex];
-
-        isRotating = true;
 
         foreach (Vector2 direction in directionConfig.GetShootDirections())
         {
