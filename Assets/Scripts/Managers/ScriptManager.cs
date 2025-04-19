@@ -20,9 +20,14 @@ public class ScriptManager : MonoBehaviour
         StageSelect_Ending,
         GameStart_Ending,
         GameWin_Ending,
-        Compliment
+        Compliment,
+        ProgressStage0, //  20% 미만
+        ProgressStage1, //  20% ~ 40% 미만
+        ProgressStage2, //  40% ~ 60% 미만
+        ProgressStage3, //  60% ~ 80% 미만
+        ProgressStage4, //  80% ~
     }
-
+    
     void Awake()
     {
         if (Instance == null)
@@ -97,6 +102,26 @@ public class ScriptManager : MonoBehaviour
             "자네, 재능있다냥!!",
             "자네의 끈질긴 탐구에 아낌없는 찬사를 보낸다냥!!",
             "탐구하는 자네가 너무나 사랑스럽다냥!!"
+        };
+        scriptDictionary[ScriptCategory.ProgressStage0] = new List<string> {
+            "어디부터 손대면 좋을까 고민 중이구나냥?",
+            "차근차근 생각해보는 것도 좋은 태도다냥."
+        };
+        scriptDictionary[ScriptCategory.ProgressStage1] = new List<string> {
+            "좋아, 한 걸음 내디뎠다냥!",
+            "첫 시도는 언제나 중요하다냥~"
+        };
+        scriptDictionary[ScriptCategory.ProgressStage2] = new List<string> {
+            "으흠, 뭔가 감을 잡은 것 같구나냥?",
+            "이제 슬슬 마법이 흐르기 시작하겠다냥~"
+        };
+        scriptDictionary[ScriptCategory.ProgressStage3] = new List<string> {
+            "잘하고 있다냥, 이제 거의 다 왔다냥!",
+            "이제 조~금만 더 집중해보자냥!"
+        };
+        scriptDictionary[ScriptCategory.ProgressStage4] = new List<string> {
+            "와아, 자네 정말 대단하구나냥!",
+            "이 정도면 나보다 더 잘하는 것 같다냥!"
         };
     }
 
