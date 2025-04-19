@@ -498,6 +498,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3750441424808134981, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
+      propertyPath: viewportPos.x
+      value: 0.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750441424808134981, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
+      propertyPath: viewportPos.y
+      value: 0.11
+      objectReference: {fileID: 0}
     - target: {fileID: 4191316149255343443, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -529,6 +537,14 @@ PrefabInstance:
     - target: {fileID: 4191316149255343443, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
       propertyPath: m_SizeDelta.y
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4191316149255343443, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4191316149255343443, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4191316149255343443, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -683,6 +699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 0}
+  stageUIController: {fileID: 0}
 --- !u!114 &467948986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2387,6 +2404,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5749054930852055476, guid: 63d41f8322802ee4eb721f2bc9bf8c60, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1040397577}
     - target: {fileID: 8745535057888292689, guid: 63d41f8322802ee4eb721f2bc9bf8c60, type: 3}
       propertyPath: m_Name
       value: UIManager
