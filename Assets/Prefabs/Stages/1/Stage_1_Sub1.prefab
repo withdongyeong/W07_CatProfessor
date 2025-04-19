@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -8
       objectReference: {fileID: 0}
+    - target: {fileID: 5611784059683719053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: StageName
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6714904499810559328, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: AnswerType
       value: 2

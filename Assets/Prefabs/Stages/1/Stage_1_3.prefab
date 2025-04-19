@@ -142,6 +142,15 @@ PrefabInstance:
       propertyPath: targetType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5611784059683719053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: StageName
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611784059683719053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: StageDescription
+      value: "\uC774\uB3D9 \uAC00\uB2A5 \uC18D\uC131 \uD68C\uB85C\uB97C \uB4DC\uB798\uADF8&\uB4DC\uB86D\uC73C\uB85C
+        \uBC30\uCE58\uD558\uC5EC \uCD9C\uB825 \uD68C\uB85C \uD65C\uC131\uD654"
+      objectReference: {fileID: 0}
     - target: {fileID: 6714904499810559328, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: AnswerType
       value: 1

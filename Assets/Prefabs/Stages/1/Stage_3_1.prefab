@@ -208,6 +208,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5611784059683719053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: StageName
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611784059683719053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: StageDescription
+      value: "\uB450\uAC00\uC9C0 \uC18D\uC131\uC758 \uCD9C\uB825 \uD68C\uB85C\uB97C
+        \uBAA8 \uD65C\uC131\uD654"
+      objectReference: {fileID: 0}
     - target: {fileID: 6714904499810559328, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: AnswerType
       value: 1
