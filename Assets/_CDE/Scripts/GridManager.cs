@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Material dotM;
     private SpriteRenderer _renderer;
     
-    private void Start()
+    private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
         transform.SetParent(Camera.main.transform);
