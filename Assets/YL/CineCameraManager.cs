@@ -132,22 +132,15 @@ public class StageUIController : MonoBehaviour
         var stageToSection = GetSectionForAvailableStages();
         foreach (var pair in stageToSection)
         {
-            Debug.Log($"스테이지 {pair.Key}는 구간 {pair.Value}에 속합니다.");
+            Debug.Log($"현재 Available 상태인 스테이지 {pair.Key}는 구간 {pair.Value}에 속합니다.");
         }
 
-        var averagePositions = GetAveragePositionBySection();
+/*        var averagePositions = GetAveragePositionBySection();
         foreach (var kvp in averagePositions)
         {
             Debug.Log($"구간 {kvp.Key}의 평균 위치: {kvp.Value}");
-        }
-
-        // 카메라를 활성화된 구간으로 이동
-        var cameraController = FindAnyObjectByType<CinemachineCameraController>();
-        if (cameraController != null)
-        {
-            cameraController.MoveToActiveSection(50f); // zoomedOutSize는 필요에 따라 조정
-        }
-
+        }*/
+        StageZoomIn();
 
     }
 

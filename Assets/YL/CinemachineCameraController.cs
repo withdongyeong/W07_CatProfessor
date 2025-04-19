@@ -173,6 +173,24 @@ public class CinemachineCameraController : MonoBehaviour
         }
     }
 
+    public void ZoomStage(int activeSection)
+    {
+        float zoomedOutSize = 50f;
+
+        var averagePositions = stageUIController.GetAveragePositionBySection();
+        if (averagePositions.ContainsKey(activeSection))
+        {
+            Vector3 sectionCenter = averagePositions[activeSection];
+            MoveToWorld(sectionCenter, zoomedOutSize);
+            Debug.Log($"카메라를 구간 {activeSection}의 중심 {sectionCenter}으로 이동");
+        }
+        else
+        {
+            Debug.LogWarning($"구간 {activeSection}의 유효한 위치를 찾을 수 없습니다.");
+        }
+    }
+
+
     Vector3 ClampPosition(Vector3 pos)
     {
         float clampedX = Mathf.Clamp(pos.x, -maxCameraSize / 2, maxCameraSize / 2);
