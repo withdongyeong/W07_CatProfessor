@@ -53,7 +53,11 @@ public class Professor : MonoBehaviour
     public float hintBlinkDuration = 3f;
     [Tooltip("깜빡이는 속도 (사이클/초)")]
     public float blinkFrequency    = 2f;
-
+    [Tooltip("테스트용 : 직접힌트 0 간접힌트 1")]
+    public bool hintType = false;
+    [Tooltip("간접힌트 : 진행도 체크 주기 (초)")]
+    [SerializeField] private float progressCheckInterval = 30f; // 30초마다 대사 출력
+    private Coroutine progressCoroutine; // 진행도 체크 코루틴
     // 현재 실행 중인 힌트 코루틴
     private Coroutine hintCoroutine;
     
@@ -108,6 +112,8 @@ public class Professor : MonoBehaviour
         {
             Debug.LogError("SpriteRenderer.sprite가 설정되지 않았습니다.");
         }
+        if (progressCoroutine == null && hintType == true)
+            progressCoroutine = StartCoroutine(CheckProgressRoutine());
     }
 
     void Update()
@@ -186,7 +192,7 @@ public class Professor : MonoBehaviour
             case AnimationType.Talk:
                 // currentFrames = talkFrames;
                 // currentFrameRate = talkFrameRate;
-                animator.Play("Talk");
+                animator.SetInteger("State", 2);
                 break;
             case AnimationType.Victory:
                 // currentFrames = victoryFrames;
@@ -237,47 +243,78 @@ public class Professor : MonoBehaviour
     // 교수님 상호작용
     private void OnMouseDown()
     {
-        if (IsCurrentAnimation(AnimationType.Sleep))
+        if (hintType == false) // 직접힌트
         {
-            SetAnimation(AnimationType.Idle);
-            lastInputTime = Time.time;
-            Debug.Log("힌트 호출");
-        }
-        Debug.Log("교수님 클릭");
-        //스테이지 내부 아니면 취소
-        if (curStateManager == null || curhintManager == null) return;
-
-        var draggables = curStateManager.Draggables;
-        var answers    = curhintManager.AnswerCircuits;
-        const float threshold = 0.1f;
-
-        // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
-        var missing = answers
-            .Where(ac => !draggables
-                .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
-            .ToList();
-
-        // 2) 먼저 모든 힌트 오브젝트를 끕니다.
-        foreach (var ac in answers)
-        {
-            var sr = ac.GetComponentInChildren<SpriteRenderer>();
-            if (sr != null) sr.enabled = false;
-        }
-
-        // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
-        if (missing.Count > 0)
-        {
-            var pick = missing[0];
-
-            var sr = pick.GetComponentInChildren<SpriteRenderer>();
-            if (sr != null)
-                sr.enabled = true;
-
-            // 이미 표시 중이면 멈추고 초기화
-            if (hintCoroutine != null)
-                StopCoroutine(hintCoroutine);
             
-            hintCoroutine = StartCoroutine(BlinkHint(sr));
+            if (IsCurrentAnimation(AnimationType.Sleep))
+            {
+                SetAnimation(AnimationType.Idle);
+                lastInputTime = Time.time;
+                Debug.Log("힌트 호출");
+            }
+            Debug.Log("교수님 클릭");
+            //스테이지 내부 아니면 취소
+            if (curStateManager == null || curhintManager == null) return;
+
+            var draggables = curStateManager.Draggables;
+            var answers    = curhintManager.AnswerCircuits;
+            const float threshold = 0.1f;
+
+            // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
+            var missing = answers
+                .Where(ac => !draggables
+                    .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
+                .ToList();
+
+            // 2) 먼저 모든 힌트 오브젝트를 끕니다.
+            foreach (var ac in answers)
+            {
+                var sr = ac.GetComponentInChildren<SpriteRenderer>();
+                if (sr != null) sr.enabled = false;
+            }
+
+            // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
+            if (missing.Count > 0)
+            {
+                var pick = missing[0];
+
+                var sr = pick.GetComponentInChildren<SpriteRenderer>();
+                if (sr != null)
+                    sr.enabled = true;
+
+                // 이미 표시 중이면 멈추고 초기화
+                if (hintCoroutine != null)
+                    StopCoroutine(hintCoroutine);
+            
+                hintCoroutine = StartCoroutine(BlinkHint(sr));
+            }
+        }
+        else //간접 힌트
+        {
+            if (curStateManager == null || curhintManager == null) return;
+
+            var draggables = curStateManager.Draggables;
+            var answers    = curhintManager.AnswerCircuits;
+            
+            const float threshold = 0.1f;
+
+            int correctCount = 0;
+            int totalAnswers = answers.Count;
+
+            foreach (var answer in answers)
+            {
+                bool matched = draggables
+                    .Any(d => Vector3.Distance(d.transform.position, answer.AnswerPos) < threshold);
+
+                if (matched)
+                    correctCount++;
+            }
+
+            // 퍼센트 (예: 60%)
+            float percent = (totalAnswers > 0) ? (correctCount / (float)totalAnswers) * 100f : 0f;
+
+            // 예시 출력
+            Debug.Log($"진행도: {correctCount}/{totalAnswers} ({percent:0.0}%)");
         }
     }
 
@@ -300,6 +337,47 @@ public class Professor : MonoBehaviour
         sr.color     = baseCol;
         hintCoroutine = null;
     }
+    
+    //간접힌트
+    private IEnumerator CheckProgressRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(progressCheckInterval);
+
+            //스테이지 내부 아니면 취소
+            if (curStateManager == null || curhintManager == null) continue;
+
+            var draggables = curStateManager.Draggables;
+            var answers = curhintManager.AnswerCircuits;
+            const float threshold = 0.1f;
+
+            int correctCount = answers.Count(ac =>
+                draggables.Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold));
+
+            float percent = (answers.Count > 0) ? (correctCount / (float)answers.Count) * 100f : 0f;
+
+            // 간접 대사 출력
+            ScriptManager.ScriptCategory category = GetProgressCategory(percent);
+            string message = ScriptManager.Instance.Get(category);
+            TalkBox.Instance.Talk(message);
+        }
+    }
+
+    private ScriptManager.ScriptCategory GetProgressCategory(float percent)
+    {
+        if (percent < 20f)
+            return ScriptManager.ScriptCategory.ProgressStage0;
+        else if (percent < 40f)
+            return ScriptManager.ScriptCategory.ProgressStage1; 
+        else if (percent < 60f)
+            return ScriptManager.ScriptCategory.ProgressStage2;
+        else if (percent < 80f)
+            return ScriptManager.ScriptCategory.ProgressStage3;
+        else
+            return ScriptManager.ScriptCategory.ProgressStage4;
+    }
+
     
     // 현재 스테이지 설정
     public void SetCurrentStage(StateManager stateManager, HintManager hintManager)
