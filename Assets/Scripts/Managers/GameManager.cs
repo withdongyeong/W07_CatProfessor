@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
         if (CurrentGameState == gameState.GamePlaying) checkGameClear();
         
         // 60초마다 교수님 대사 실행
-        if (Time.time - lastSayTime >= sayInterval)
+        if (Time.time - lastSayTime >= sayInterval && Professor.Instance.IsCurrentAnimation(Professor.AnimationType.Idle))
         {
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
             lastSayTime = Time.time;
@@ -357,17 +357,16 @@ public class GameManager : MonoBehaviour
         // UIManager.Instance.ShowRestartPanel();
         string stageName = GameManager.Instance.CurrentPlayingStage.name;
         StageDataManager.Instance.SetStageCleared(stageName);
-        // TODO 확인하고 다시 켜자
         // SoundManager.Instance.PlayClearMusic();
 
-        // if (StageDataManager.Instance.IsEnding())
-        // {
-        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
-        // }
-        // else
-        // {
-        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
-        // }
+        if (StageDataManager.Instance.IsEnding())
+        {
+            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
+        }
+        else
+        {
+            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
+        }
         Professor.Instance.SetAnimation(Professor.AnimationType.Victory);
     }
 
