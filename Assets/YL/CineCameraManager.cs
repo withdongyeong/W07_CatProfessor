@@ -150,7 +150,14 @@ public class StageUIController : MonoBehaviour
         var cameraController = FindAnyObjectByType<CinemachineCameraController>();
         if (cameraController != null)
         {
+            var available = GetAvailableStages();
+            if (available.Count == 0)
+            {
+                Debug.Log("모든 스테이지를 클리어했습니다. 줌인 동작을 수행하지 않습니다.");
+                return;
+            }
+
             cameraController.MoveToActiveSection(50f);
         }
     }
-}
+    }
