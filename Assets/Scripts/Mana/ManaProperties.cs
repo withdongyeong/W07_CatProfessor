@@ -10,12 +10,12 @@ public static class ManaProperties
         Aqua,
         Nature,
         Volt,
-        Mist,       // Flame + Aqua
-        Ember,      // Flame + Nature
+        DesginMist,       // Flame + Aqua
+        DesginEmber,      // Flame + Nature
         Pulse,      // Flame + Volt
         Mud,        // Aqua + Nature
-        Storm,      // Aqua + Volt
-        Bio,        // Nature + Volt
+        DesginStorm,      // Aqua + Volt
+        DesginBio,        // Nature + Volt
         Neutral     // 중립 속성
     }
 
@@ -28,12 +28,12 @@ public static class ManaProperties
         { ManaType.Volt, new Color(1f, 0.9f, 0.16f) },    // 🟡 강렬한 노란색
 
         // 합성 속성 색상 추가
-        { ManaType.Mist, new Color(0.7f, 0.7f, 1f) },  // 🔵🔘 연보라색
-        { ManaType.Ember, new Color(0.86f, 0.55f, 0f) },  // 🟠🔥 오렌지색
+        { ManaType.DesginMist, new Color(0.7f, 0.7f, 1f) },  // 🔵🔘 연보라색
+        { ManaType.DesginEmber, new Color(0.86f, 0.55f, 0f) },  // 🟠🔥 오렌지색
         { ManaType.Pulse, new Color(0.78f, 0.12f, 1f) },  // 💜 강렬한 보라
         { ManaType.Mud, new Color(0.47f, 0.33f, 0.2f) },  // 🟤 대비 증가한 갈색
-        { ManaType.Storm, new Color(0.12f, 0.78f, 0.78f) }, // 🔷 밝은 청록색
-        { ManaType.Bio, new Color(0.7f, 1f, 0.2f) },  // 🍏 더 상큼한 연두색 (노란빛 추가)
+        { ManaType.DesginStorm, new Color(0.12f, 0.78f, 0.78f) }, // 🔷 밝은 청록색
+        { ManaType.DesginBio, new Color(0.7f, 1f, 0.2f) },  // 🍏 더 상큼한 연두색 (노란빛 추가)
 
         // ✅ 중립 속성 색상 추가
         { ManaType.Neutral, new Color(1f, 1f, 1f) }

@@ -364,7 +364,7 @@ public class ManaCircle : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         Mana mana = other.GetComponent<Mana>();
         if (mana != null)
