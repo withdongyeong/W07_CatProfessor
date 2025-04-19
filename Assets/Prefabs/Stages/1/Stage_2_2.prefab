@@ -477,6 +477,10 @@ PrefabInstance:
       value: "\uB9C8\uB098\uB294 \uB9C8\uB098\uC11C\uD074\uC5D0 \uB2FF\uC73C\uBA74
         \uC0AC\uB77C\uC9C4\uB2E4"
       objectReference: {fileID: 0}
+    - target: {fileID: 7511516427195365356, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: attributeType
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7869850000621501053, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9

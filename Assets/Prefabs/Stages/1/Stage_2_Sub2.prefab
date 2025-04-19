@@ -1497,7 +1497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 449752307098711924, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: manaCircleAnswserList.Array.data[0].type
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 449752307098711924, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: manaCircleAnswserList.Array.data[0].answerCount
