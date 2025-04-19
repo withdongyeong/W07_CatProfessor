@@ -189,6 +189,8 @@ public class GameManager : MonoBehaviour
         stateManager.ResetManaCircle();
         stateManager.ResetDraggable();
         
+        //교수님한테 현재 StateManager 전달
+        Professor.Instance.SetCurrentStage(stateManager, hintManager: stageRoot.GetComponentInChildren<HintManager>());
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
     }
@@ -214,6 +216,9 @@ public class GameManager : MonoBehaviour
         // UI 및 그리드 비활성화
         _uiManager.ActivatePlayingCanvas(false);
         _grid.ActivateGrid(false);
+        
+        // 교수님 스테이지 초기화
+        Professor.Instance.ResetStage();
         
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
