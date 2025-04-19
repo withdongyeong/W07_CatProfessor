@@ -45,7 +45,7 @@ public class CinemachineCameraController : MonoBehaviour
             virtualCamera = FindAnyObjectByType<CinemachineCamera>();
 
         virtualCamTransform = virtualCamera.transform;
-        initPosition = virtualCamTransform.position;
+        targetPosition = virtualCamTransform.position;
         targetSize = virtualCamera.Lens.OrthographicSize;
 
         maxCameraSize = virtualCamera.Lens.OrthographicSize;
@@ -174,7 +174,7 @@ public class CinemachineCameraController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"구간 {activeSection}의 유효한 위치를 찾을 수 없습니다.");
+            MoveToWorld(Vector2.zero, 110);
         }
     }
 
