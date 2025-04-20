@@ -120,8 +120,8 @@ public class ScriptManager : MonoBehaviour
             "이제 조~금만 더 집중해보자냥!"
         };
         scriptDictionary[ScriptCategory.ProgressStage4] = new List<string> {
-            "와아, 자네 정말 대단하구나냥!",
-            "이 정도면 나보다 더 잘하는 것 같다냥!"
+            "좋아! 거의 다 왔다냥, 마지막 한 수만 남았다냥!",
+            "이제 중요한 한 조각이 남아있다냥. 끝까지 집중이다냥~"
         };
     }
 
