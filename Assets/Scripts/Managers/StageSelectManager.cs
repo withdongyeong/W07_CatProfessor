@@ -101,7 +101,9 @@ public class StageSelectManager : MonoBehaviour
         string sceneName = $"Stage_{stage:D2}_{level:D2}";
         if (SceneExists(sceneName))
         {
-            LogManager.Log(EventType.LevelStart,
+            
+            string hintType = Professor.Instance.hintType ? "B" : "A";
+            LogManager.Log(EventType.LevelStart, hintType,
                 new() { { "level", sceneName } });
             SceneManager.LoadScene(sceneName);
         }
