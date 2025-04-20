@@ -340,6 +340,8 @@ public class ManaCircle : MonoBehaviour
                 circle.SetupOrbiters(activeOrbiters);
             }
         }
+        //마나 서클 로그
+        GameManager.Instance.ClickedManaCircle(manaType.ToString(), activeOrbiters);
 
         // TODO Circle에서 hintManager 할당시 Null 오류 있어서 관련 코드 제거했는데, 문제없는듯?
         // 제거하면서 예상하기로는 circle의 모범답안 세팅 관련인것같은데, 
