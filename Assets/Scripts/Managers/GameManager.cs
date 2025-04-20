@@ -244,7 +244,8 @@ public class GameManager : MonoBehaviour
 
     private void ApplyStageVisualStates()
     {
-        var allStages = FindObjectsOfType<StageRootMarker>();
+        var allStages = FindObjectsByType<StageRootMarker>(FindObjectsSortMode.None);
+
 
         foreach (var stageMarker in allStages)
         {
