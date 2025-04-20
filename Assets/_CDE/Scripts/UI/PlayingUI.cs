@@ -23,6 +23,7 @@ public class PlayingUI : MonoBehaviour
 
     private void OnClickBackBtn()
     {
+        Professor.Instance.SetAnimation(Professor.AnimationType.Idle);
         _gameManager.ExitStage();
     }
     

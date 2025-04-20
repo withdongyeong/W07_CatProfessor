@@ -160,7 +160,7 @@ public class Professor : MonoBehaviour
         {
             return;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             lastInputTime = Time.time;
         }
@@ -205,6 +205,7 @@ public class Professor : MonoBehaviour
             case AnimationType.Idle:
                 // currentFrames = idleFrames;
                 // currentFrameRate = idleFrameRate;
+                leftMouseClickAnimation.SetActive(false);
                 animator.SetInteger("State", 0);
                 break;
             case AnimationType.InSleep:
@@ -222,11 +223,13 @@ public class Professor : MonoBehaviour
             case AnimationType.Victory:
                 // currentFrames = victoryFrames;
                 // currentFrameRate = victoryFrameRate;
+                leftMouseClickAnimation.SetActive(false);
                 animator.Play("Happy");
                 animator.SetInteger("State", 3);
                 break;
             case AnimationType.Surprise:
                 animator.Play("Surprised");
+                animator.SetInteger("State", 4);
                 break;
         }
 
@@ -255,6 +258,10 @@ public class Professor : MonoBehaviour
 
     public void SayRandom(ScriptManager.ScriptCategory category)
     {
+        if (!IsCurrentAnimation(AnimationType.Idle))
+        {
+            return;
+        }
         string message = ScriptManager.Instance.Get(category);
         TalkBox.Instance.Talk(message);
     }
@@ -270,7 +277,7 @@ public class Professor : MonoBehaviour
             {
                 Debug.Log("교수님 클릭");
                 leftMouseClickAnimation.SetActive(false);
-                SetAnimation(AnimationType.Idle);
+                SetAnimation(AnimationType.Surprise);
                 
                 //스테이지 내부 아니면 취소
                 if (curStateManager == null || curhintManager == null) return;
