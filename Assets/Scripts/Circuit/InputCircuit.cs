@@ -90,12 +90,16 @@ public class InputCircuit : MonoBehaviour, IColorable
             ShootMana();
             nextFireTime = Time.time + fireRate;
         }
+        //입력 회로 로그
+        GameManager.Instance.ClickedInputCircuitDown();
         ActivateShootEffect(attributeType);
     }
 
     void OnMouseUp()
     {
         isFiring = false;
+        //입력 회로 로그
+        GameManager.Instance.ClickedInputCircuitUp();
     }
 
     void OnMouseEnter()
