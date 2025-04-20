@@ -209,6 +209,9 @@ public class GameManager : MonoBehaviour
         //로그 기록
         logger = new StageLogger();
         logger.StartStage(CurrentPlayingStage.name);
+        
+        //스테이지 시작 로그
+        RegisterStageStart();
 
         levelPlayTime = Time.time;
         string hintType = Professor.Instance.hintType ? "B" : "A";
@@ -243,6 +246,8 @@ public class GameManager : MonoBehaviour
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
+        //스테이지 종료 로그
+        RegisterStageEnd();
         //로그 기록
         logger.FlushStage();
         
