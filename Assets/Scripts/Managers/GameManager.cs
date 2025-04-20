@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private StageStateCheck _stagecheck;
 
     private bool isGameOver = false;
-    private float sayInterval = 60f;
+    private float sayInterval = 20f;
     private float lastSayTime = 0f;
     
     // 로그 용
