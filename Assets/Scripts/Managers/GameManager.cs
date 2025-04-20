@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -94,9 +95,15 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
-        ApplyStageVisualStates();
+        StartCoroutine(DelayedStageVisualInit());
         _stagecheck.SetDesignCircleActive();
         
+    }
+    
+    private IEnumerator DelayedStageVisualInit()
+    {
+        yield return new WaitForSeconds(0.1f); // 다음 프레임까지 대기
+        ApplyStageVisualStates();
     }
 
     void InitializeGame()
@@ -415,8 +422,13 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
-        ApplyStageVisualStates();
+        StartCoroutine(WaitThenApplyStageVisuals());
     }    
+    private IEnumerator WaitThenApplyStageVisuals()
+    {
+        yield return null; // 다음 프레임까지 대기
+        ApplyStageVisualStates();
+    }
     
     /// <summary>
     /// 로그 관련 코드
