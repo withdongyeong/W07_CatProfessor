@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private GridManager _grid;
     private OneSceneUIManager _uiManager;
     private StageStateCheck _stagecheck;
+    private GuideText _guideText;
 
     private bool isGameOver = false;
     private float sayInterval = 20f;
@@ -87,7 +88,9 @@ public class GameManager : MonoBehaviour
         _uiManager.Init();
 
         _stagecheck = FindAnyObjectByType<StageStateCheck>();
-        
+
+        _guideText = FindAnyObjectByType<GuideText>();
+
         CurrentGameState = gameState.Title;
     }
     
@@ -226,6 +229,8 @@ public class GameManager : MonoBehaviour
         
         // 스테이지 UI 변경
         _uiManager.PlayingUI.ChangeStageInfo(stageRoot);
+
+        _guideText.ActiveTrue();
     }
 
 
@@ -258,6 +263,7 @@ public class GameManager : MonoBehaviour
         resetCount = 0;
 
         _stagecheck.SetDesignCircleActive();
+
     }
 
     private void ApplyStageVisualStates()
