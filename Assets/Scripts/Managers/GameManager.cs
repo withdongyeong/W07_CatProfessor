@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
     public Vector3 worldViewPosition = Vector3.zero;
     private int worldViewSize = 110;
     
+    
+    private int totalStateManagerCount = 0;
+    private int readyStateManagerCount = 0;
+    
     public static GameManager Instance { get; private set; }
     
     // Getter & Setter
@@ -72,7 +76,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -93,17 +96,25 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        IsGameOver = false;
-        InitializeGame();
-        StartCoroutine(DelayedStageVisualInit());
-        _stagecheck.SetDesignCircleActive();
+        var allStateManagers = FindObjectsByType<StateManager>(FindObjectsSortMode.None);
+        totalStateManagerCount = allStateManagers.Length;
+
+        Debug.Log($"총 {totalStateManagerCount}개의 StateManager가 준비될 때까지 대기");
         
+        _stagecheck.SetDesignCircleActive();
     }
     
-    private IEnumerator DelayedStageVisualInit()
+    
+
+    public void NotifyStateManagerReady()
     {
-        yield return new WaitForSeconds(0.1f); // 다음 프레임까지 대기
-        ApplyStageVisualStates();
+        readyStateManagerCount++;
+
+        if (readyStateManagerCount >= totalStateManagerCount)
+        {
+            Debug.Log("모든 StateManager 초기화 완료. ApplyStageVisualStates 호출!");
+            ApplyStageVisualStates();
+        }
     }
 
     void InitializeGame()
@@ -255,7 +266,7 @@ public class GameManager : MonoBehaviour
         _stagecheck.SetDesignCircleActive();
     }
 
-    private void ApplyStageVisualStates()
+    public void ApplyStageVisualStates()
     {
         var allStages = FindObjectsByType<StageRootMarker>(FindObjectsSortMode.None);
 
@@ -416,18 +427,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("RestartGame() 실행됨!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        IsGameOver = false;
-        InitializeGame();
-        StartCoroutine(WaitThenApplyStageVisuals());
-    }    
-    private IEnumerator WaitThenApplyStageVisuals()
-    {
-        yield return null; // 다음 프레임까지 대기
-        ApplyStageVisualStates();
     }
     
     /// <summary>
