@@ -166,7 +166,7 @@ public class Professor : MonoBehaviour
             Debug.Log(Time.time - GameManager.Instance.levelPlayTime);
         }
         // 시간지나고부터 힌트 시작
-        if (Time.time - GameManager.Instance.levelPlayTime > hintStartDelay && Time.time - lastInputTime >= noneInputTime && Time.time - lastHintTime >= hintCooldown)
+        if ( !hintType && Time.time - GameManager.Instance.levelPlayTime > hintStartDelay && Time.time - lastInputTime >= noneInputTime && Time.time - lastHintTime >= hintCooldown)
         {
             IsCurrentAnimation(AnimationType.Idle);
             {
