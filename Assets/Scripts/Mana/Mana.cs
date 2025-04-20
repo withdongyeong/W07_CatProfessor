@@ -145,4 +145,14 @@ public class Mana : MonoBehaviour
             otherMana.SetColorByType();
         }
     }
+    
+    private void OnDestroy()
+    {
+        // 만약 파괴되었다면 풀에서 참조 제거 (예: TrimPool에서 Destroy)
+        if (pool != null)
+        {
+            pool.UnregisterMana(this);
+        }
+    }
+
 }
