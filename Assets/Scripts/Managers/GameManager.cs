@@ -362,7 +362,7 @@ public class GameManager : MonoBehaviour
         // UIManager.Instance.ShowRestartPanel();
         string stageName = GameManager.Instance.CurrentPlayingStage.name;
         StageDataManager.Instance.SetStageCleared(stageName);
-        // SoundManager.Instance.PlayClearMusic();
+        SoundManager.Instance.PlayClearMusic();
 
         if (StageDataManager.Instance.IsEnding())
         {
