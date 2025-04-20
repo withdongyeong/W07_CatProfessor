@@ -736,6 +736,14 @@ PrefabInstance:
       propertyPath: manaCircleAnswserList.Array.data[1].type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 449752307098711924, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: manaCircleAnswserList.Array.data[0].answerCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 449752307098711924, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
+      propertyPath: manaCircleAnswserList.Array.data[1].answerCount
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2982279306500680794, guid: 4e11ddb43652d814e8f6242df08e9961, type: 3}
       propertyPath: m_Name
       value: Flame
