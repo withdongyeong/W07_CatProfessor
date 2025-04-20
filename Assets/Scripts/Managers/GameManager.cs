@@ -328,37 +328,45 @@ public class GameManager : MonoBehaviour
     // 마나 서클의 활성 개수를 HintManager의 정답 개수에 맞춰 재설정 (동일 타입 서클 모두 적용)
     private void ApplyAnswerCircles(StateManager stateManager, HintManager hintManager)
     {
-        // 1. HintManager에 정의된 정답 마나 서클 목록 순회
+        if (hintManager.ManaCircleAnswsers == null || hintManager.ManaCircleAnswsers.Count == 0)
+            return;
+
+        if (stateManager.ManaCircles == null || stateManager.ManaCircles.Count == 0)
+            return;
+
         foreach (var answer in hintManager.ManaCircleAnswsers)
         {
-            // None 타입은 무효이므로 스킵
-            if (answer.type == ManaProperties.ManaType.None) continue;
+            if (answer.type == ManaProperties.ManaType.None)
+                continue;
 
-        // 2. 해당 타입의 마나 서클을 전부 가져옴 (복수 가능)
             var targets = stateManager.ManaCircles
                 .Where(c => c.manaType == answer.type)
                 .ToList();
-            
+
             if (targets.Count == 0)
             {
                 string stageName = stateManager.GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
-    
+
                 var allTypes = stateManager.ManaCircles
                     .Select(c => c.manaType.ToString())
                     .Distinct()
                     .ToList();
 
-                Debug.LogWarning($"[HintSync] {stageName}에서 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
-                Debug.LogWarning($"→ 해당 스테이지의 모든 마나타입: {string.Join(", ", allTypes)}");
+                // 초기화 중인 상황에서는 디버그 생략
+                if (Application.isPlaying && hintManager.gameObject.activeInHierarchy)
+                {
+                    Debug.LogWarning($"[HintSync] {stageName}에서 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
+                    Debug.LogWarning($"→ 해당 스테이지의 모든 마나타입: {string.Join(", ", allTypes)}");
+                }
             }
 
-            // 3. 해당 타입의 모든 마나 서클에 동일한 정답 개수 적용
             foreach (var circle in targets)
             {
                 circle.ResetManaCircle(answer.answerCount);
             }
         }
     }
+
 
     void GameClear()
     {
