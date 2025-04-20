@@ -40,10 +40,6 @@ public class GameManager : MonoBehaviour
     public Vector3 worldViewPosition = Vector3.zero;
     private int worldViewSize = 110;
     
-    
-    private int totalStateManagerCount = 0;
-    private int readyStateManagerCount = 0;
-    
     public static GameManager Instance { get; private set; }
     
     // Getter & Setter
@@ -76,6 +72,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -96,25 +93,12 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        var allStateManagers = FindObjectsByType<StateManager>(FindObjectsSortMode.None);
-        totalStateManagerCount = allStateManagers.Length;
-
-        Debug.Log($"총 {totalStateManagerCount}개의 StateManager가 준비될 때까지 대기");
+        IsGameOver = false;
+        InitializeGame();
+        ApplyStageVisualStates();
         
         _stagecheck.SetDesignCircleActive();
-    }
-    
-    
-
-    public void NotifyStateManagerReady()
-    {
-        readyStateManagerCount++;
-
-        if (readyStateManagerCount >= totalStateManagerCount)
-        {
-            Debug.Log("모든 StateManager 초기화 완료. ApplyStageVisualStates 호출!");
-            ApplyStageVisualStates();
-        }
+        
     }
 
     void InitializeGame()
@@ -270,7 +254,7 @@ public class GameManager : MonoBehaviour
         _stagecheck.SetDesignCircleActive();
     }
 
-    public void ApplyStageVisualStates()
+    private void ApplyStageVisualStates()
     {
         var allStages = FindObjectsByType<StageRootMarker>(FindObjectsSortMode.None);
 
@@ -433,6 +417,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("RestartGame() 실행됨!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        IsGameOver = false;
+        InitializeGame();
+        ApplyStageVisualStates();
+    }    
     
     /// <summary>
     /// 로그 관련 코드
