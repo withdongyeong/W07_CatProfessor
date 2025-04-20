@@ -22,7 +22,7 @@ public class ManaCircle : MonoBehaviour
     private float highlightIntensity = 0.4f;
     private Color baseColor;
 
-    private HintManager _hintManager;
+    // private HintManager _hintManager;
     
     void Start()
     {
@@ -31,7 +31,7 @@ public class ManaCircle : MonoBehaviour
         SetupOrbiters(activeOrbiters);
         SetupStageClickable();
         
-        _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
+        // _hintManager = GetComponentInParent<StageRootMarker>().GetComponentInChildren<HintManager>();
     }
 
     public void SetHighlight(bool highlight)
@@ -341,8 +341,11 @@ public class ManaCircle : MonoBehaviour
             }
         }
 
-        // 정답 Circle 개수 체크 
-        _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);
+        // TODO Circle에서 hintManager 할당시 Null 오류 있어서 관련 코드 제거했는데, 문제없는듯?
+        // 제거하면서 예상하기로는 circle의 모범답안 세팅 관련인것같은데, 
+        // resetManaCircle 함수에 SetupOrbiters(activeOrbiters); 추가함으로써 모범답안 세팅도 되고, 이 코드 연관 코드는 삭제해도 문제없어보임.
+        // // 정답 Circle 개수 체크 
+        // _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);
     }
 
 
@@ -404,6 +407,7 @@ public class ManaCircle : MonoBehaviour
     public void ResetManaCircle(int orbitCount)
     {
         activeOrbiters = orbitCount;
+        SetupOrbiters(activeOrbiters);
         FindAndModifyAttributeCircuits(true);
     }
 }
