@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
@@ -101,6 +101,8 @@ public class StageSelectManager : MonoBehaviour
         string sceneName = $"Stage_{stage:D2}_{level:D2}";
         if (SceneExists(sceneName))
         {
+            LogManager.Log(EventType.LevelStart,
+                new() { { "level", sceneName } });
             SceneManager.LoadScene(sceneName);
         }
         else

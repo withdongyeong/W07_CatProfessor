@@ -57,7 +57,7 @@ public class Professor : MonoBehaviour
     [SerializeField] private float hintCooldown = 100f;
     private float lastHintTime  = -Mathf.Infinity; // 마지막 힌트 시간
     [Tooltip("깜빡임 총 시간 (초)")]
-    public float hintBlinkDuration = 3f;
+    public float hintBlinkDuration = 6f;
     [Tooltip("깜빡이는 속도 (사이클/초)")]
     public float blinkFrequency    = 2f;
     [Tooltip("테스트용 : 직접힌트 0 간접힌트 1")]
@@ -71,7 +71,8 @@ public class Professor : MonoBehaviour
     //마지막 입력 시간
     private float lastInputTime;
 
-
+    private GameObject leftMouseClickAnimation;
+    
     void Awake()
     {
         if (Instance == null)
@@ -106,11 +107,15 @@ public class Professor : MonoBehaviour
         }
         //시네머신 업데이트 이벤트 등록
         CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        
+        // 마우스 애니메이션 등록
+        leftMouseClickAnimation = transform.Find("LeftClick")?.gameObject;
     }
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         // currentFrames = idleFrames;
         // currentFrameRate = idleFrameRate;
         SetAnimation(AnimationType.Idle);
@@ -203,6 +208,13 @@ public class Professor : MonoBehaviour
                 // currentFrameRate = idleFrameRate;
                 animator.SetInteger("State", 0);
                 break;
+            case AnimationType.InSleep:
+                leftMouseClickAnimation.SetActive(true);
+                animator.SetInteger("State", 1);
+                break;
+            case AnimationType.Sleep:
+                animator.Play("Sleep");
+                break;
             case AnimationType.Talk:
                 // currentFrames = talkFrames;
                 // currentFrameRate = talkFrameRate;
@@ -212,15 +224,10 @@ public class Professor : MonoBehaviour
                 // currentFrames = victoryFrames;
                 // currentFrameRate = victoryFrameRate;
                 animator.Play("Happy");
+                animator.SetInteger("State", 3);
                 break;
             case AnimationType.Surprise:
                 animator.Play("Surprised");
-                break;
-            case AnimationType.InSleep:
-                animator.SetInteger("State", 1);
-                break;
-            case AnimationType.Sleep:
-                animator.Play("Sleep");
                 break;
         }
 
@@ -262,51 +269,48 @@ public class Professor : MonoBehaviour
             
             if (IsCurrentAnimation(AnimationType.Sleep))
             {
-<<<<<<< Updated upstream
-=======
                 Debug.Log("교수님 클릭");
                 leftMouseClickAnimation.SetActive(false);
->>>>>>> Stashed changes
                 SetAnimation(AnimationType.Idle);
                 lastInputTime = Time.time;
-                Debug.Log("힌트 호출");
-            }
-            Debug.Log("교수님 클릭");
-            //스테이지 내부 아니면 취소
-            if (curStateManager == null || curhintManager == null) return;
+                
+                //스테이지 내부 아니면 취소
+                if (curStateManager == null || curhintManager == null) return;
+                
+                var draggables = curStateManager.Draggables;
+                var answers    = curhintManager.AnswerCircuits;
+                const float threshold = 0.1f;
 
-            var draggables = curStateManager.Draggables;
-            var answers    = curhintManager.AnswerCircuits;
-            const float threshold = 0.1f;
+                // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
+                var missing = answers
+                    .Where(ac => !draggables
+                        .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
+                    .ToList();
 
-            // 1) 놓여 있지 않은(= 힌트가 필요한) AnswerCircuit만 뽑아서 리스트로 만듭니다.
-            var missing = answers
-                .Where(ac => !draggables
-                    .Any(d => Vector3.Distance(d.transform.position, ac.AnswerPos) < threshold))
-                .ToList();
+                // 2) 먼저 모든 힌트 오브젝트를 끕니다.
+                foreach (var ac in answers)
+                {
+                    var sr = ac.GetComponentInChildren<SpriteRenderer>();
+                    if (sr != null) sr.enabled = false;
+                }
 
-            // 2) 먼저 모든 힌트 오브젝트를 끕니다.
-            foreach (var ac in answers)
-            {
-                var sr = ac.GetComponentInChildren<SpriteRenderer>();
-                if (sr != null) sr.enabled = false;
-            }
+                // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
+                if (missing.Count > 0)
+                {
+                    var pick = missing[0];
 
-            // 3) missing이 비어있지 않다면, 그 중 하나만 골라 켭니다.
-            if (missing.Count > 0)
-            {
-                var pick = missing[0];
+                    var sr = pick.GetComponentInChildren<SpriteRenderer>();
+                    if (sr != null)
+                        sr.enabled = true;
 
-                var sr = pick.GetComponentInChildren<SpriteRenderer>();
-                if (sr != null)
-                    sr.enabled = true;
-
-                // 이미 표시 중이면 멈추고 초기화
-                if (hintCoroutine != null)
-                    StopCoroutine(hintCoroutine);
+                    // 이미 표시 중이면 멈추고 초기화
+                    if (hintCoroutine != null)
+                        StopCoroutine(hintCoroutine);
             
-                hintCoroutine = StartCoroutine(BlinkHint(sr));
+                    hintCoroutine = StartCoroutine(BlinkHint(sr));
+                }
             }
+
         }
         else //간접 힌트
         {
@@ -345,17 +349,11 @@ public class Professor : MonoBehaviour
 
         while (elapsed < hintBlinkDuration)
         {
-<<<<<<< Updated upstream
-            // 0~1 사이를 왔다갔다
-            float a = Mathf.PingPong(elapsed * blinkFrequency, 1f);
-=======
             // 1) PingPong(elapsed * blinkFrequency, 1f) 는 0~1 사이를 왔다갔다
             float raw = Mathf.PingPong(elapsed * blinkFrequency, 1f);
 
             // 2) raw 에 maxAlpha 를 곱해 0~0.3 구간만 깜빡이기
             float a = raw * maxAlpha;
-
->>>>>>> Stashed changes
             sr.color = new Color(baseCol.r, baseCol.g, baseCol.b, a);
 
             elapsed += Time.deltaTime;

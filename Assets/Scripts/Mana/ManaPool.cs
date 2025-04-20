@@ -7,23 +7,18 @@ public class ManaPool : MonoBehaviour
 {
     public static ManaPool Instance;
     public GameObject manaPrefab;
-    public int initialPoolSize = 10;
+    public int initialPoolSize = 30;
     public float poolCleanupInterval = 10f;
 
-    private Queue<Mana> manaPool = new Queue<Mana>();
+    private List<Mana> manaPool = new List<Mana>();
     private HashSet<Mana> activeManas = new HashSet<Mana>();
+
+    private float lastActivityTime;
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance == null) Instance = this;
+        else { Destroy(gameObject); return; }
 
         InitializePool();
         InvokeRepeating(nameof(TrimPool), poolCleanupInterval, poolCleanupInterval);
@@ -31,7 +26,6 @@ public class ManaPool : MonoBehaviour
 
     private void Start()
     {
-        // 실행 주기때문에 Start()에서 호출
         GameManager.Instance.OnReset += ResetManaPool;
     }
 
@@ -39,20 +33,20 @@ public class ManaPool : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameManager.Instance.RegisterReset(); // 리셋 기록
+            GameManager.Instance.RegisterReset();
         }
     }
 
     public void ResetManaPool()
     {
-        foreach (var mana in activeManas.ToArray())
+        foreach (var mana in activeManas
+                     .Where(m => m != null && m.gameObject != null)
+                     .ToArray())
         {
             mana.CancelInvoke(nameof(mana.ReturnToPool));
             mana.CancelInvoke(nameof(mana.EnableDetection));
-            
             mana.ReturnToPool();
         }
-
         TrimPool();
     }
 
@@ -64,58 +58,37 @@ public class ManaPool : MonoBehaviour
             if (mana != null)
             {
                 mana.gameObject.SetActive(false);
-                manaPool.Enqueue(mana);
-            }
-            else
-            {
-                Debug.LogError("ManaPool: 초기화 중 CreateNewMana()가 null을 반환함!");
+                manaPool.Add(mana);
             }
         }
     }
 
     private Mana CreateNewMana()
     {
-        if (manaPrefab == null)
-        {
-            return null;
-        }
+        if (manaPrefab == null) return null;
 
         GameObject manaObject = Instantiate(manaPrefab, transform);
-        if (manaObject == null)
-        {
-            return null;
-        }
-
         Mana mana = manaObject.GetComponent<Mana>();
-        if (mana == null)
-        {
-            return null;
-        }
+        if (mana == null) return null;
 
         mana.SetPool(this);
+        mana.gameObject.SetActive(false);
+        manaPool.Add(mana);
         return mana;
     }
 
     public Mana GetMana(Vector3 position, Vector2 direction, ManaProperties.ManaType type, int output = 5)
     {
-        Mana mana;
-
-        if (manaPool.Count == 0) 
-        {
-            mana = CreateNewMana();
-        }
-        else
-        {
-            mana = manaPool.Dequeue();
-            if (mana == null || mana.gameObject == null)
-            {
-                mana = CreateNewMana();
-            }
-        }
+        Mana mana = manaPool.FirstOrDefault(m => !m.gameObject.activeSelf);
 
         if (mana == null)
         {
-            return null;
+            mana = CreateNewMana();
+            if (mana == null)
+            {
+                Debug.LogError("Mana 생성 실패");
+                return null;
+            }
         }
 
         mana.transform.position = position;
@@ -126,6 +99,8 @@ public class ManaPool : MonoBehaviour
         mana.gameObject.SetActive(true);
         activeManas.Add(mana);
 
+        lastActivityTime = Time.time;
+
         mana.Invoke(nameof(mana.ReturnToPool), mana.maxLifetime);
         mana.Invoke(nameof(mana.EnableDetection), mana.detectDelay);
 
@@ -134,38 +109,50 @@ public class ManaPool : MonoBehaviour
 
     public void ReturnMana(Mana mana)
     {
-        if (mana == null)
-        {
+        if (mana == null || !mana.gameObject.activeSelf)
             return;
-        }
-
-        if (manaPool.Contains(mana)) 
-        {
-            return;
-        }
 
         mana.CancelInvoke(nameof(mana.ReturnToPool));
-
         mana.ResetMana();
-        manaPool.Enqueue(mana);
+        mana.gameObject.SetActive(false);
+
         activeManas.Remove(mana);
+        lastActivityTime = Time.time;
     }
 
     private void TrimPool()
     {
-        int excessManas = manaPool.Count - initialPoolSize;
-        for (int i = 0; i < excessManas; i++)
+        if (manaPool.Any(m => m.gameObject.activeSelf)) return;
+
+        if (Time.time - lastActivityTime < poolCleanupInterval) return;
+
+        int excess = manaPool.Count - initialPoolSize;
+        if (excess <= 0) return;
+
+        for (int i = 0; i < excess; i++)
         {
-            if (manaPool.Count > initialPoolSize)
+            Mana manaToRemove = manaPool.FirstOrDefault(m => !m.gameObject.activeSelf);
+            if (manaToRemove != null)
             {
-                Destroy(manaPool.Dequeue().gameObject);
+                manaPool.Remove(manaToRemove);
+                activeManas.Remove(manaToRemove);
+                Destroy(manaToRemove.gameObject);
             }
         }
     }
 
     private void OnDestroy()
     {
-        // 구독 해제
-        GameManager.Instance.OnReset -= ResetManaPool;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnReset -= ResetManaPool;
+        }
     }
+    
+    public void UnregisterMana(Mana mana)
+    {
+        manaPool.Remove(mana);
+        activeManas.Remove(mana);
+    }
+
 }

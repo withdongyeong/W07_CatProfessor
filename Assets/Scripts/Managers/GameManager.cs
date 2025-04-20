@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,18 +20,16 @@ public class GameManager : MonoBehaviour
     public CameraController mainCamera;
     private GridManager _grid;
     private OneSceneUIManager _uiManager;
+    private StageStateCheck _stagecheck;
 
     private bool isGameOver = false;
     private float sayInterval = 60f;
     private float lastSayTime = 0f;
     
-<<<<<<< Updated upstream
-=======
     // 로그 용
     private StageLogger logger;
     // 레벨 경과 시간
     public float levelPlayTime { get; private set; }
->>>>>>> Stashed changes
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }
@@ -86,6 +85,8 @@ public class GameManager : MonoBehaviour
         
         _uiManager = FindAnyObjectByType<OneSceneUIManager>();
         _uiManager.Init();
+
+        _stagecheck = FindAnyObjectByType<StageStateCheck>();
         
         CurrentGameState = gameState.Title;
     }
@@ -94,9 +95,15 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
+        StartCoroutine(DelayedStageVisualInit());
+        _stagecheck.SetDesignCircleActive();
+        
+    }
+    
+    private IEnumerator DelayedStageVisualInit()
+    {
+        yield return new WaitForSeconds(0.1f); // 다음 프레임까지 대기
         ApplyStageVisualStates();
-        
-        
     }
 
     void InitializeGame()
@@ -147,7 +154,7 @@ public class GameManager : MonoBehaviour
         if (CurrentGameState == gameState.GamePlaying) checkGameClear();
         
         // 60초마다 교수님 대사 실행
-        if (Time.time - lastSayTime >= sayInterval)
+        if (Time.time - lastSayTime >= sayInterval && Professor.Instance.IsCurrentAnimation(Professor.AnimationType.Idle))
         {
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.Compliment);
             lastSayTime = Time.time;
@@ -204,6 +211,17 @@ public class GameManager : MonoBehaviour
         //교수님한테 현재 StateManager 전달
         Professor.Instance.SetCurrentStage(stateManager, hintManager: stageRoot.GetComponentInChildren<HintManager>());
         
+        //로그 기록
+        logger = new StageLogger();
+        logger.StartStage(CurrentPlayingStage.name);
+
+        levelPlayTime = Time.time;
+        LogManager.Log(EventType.LevelStart, new Dictionary<string, object>
+        {
+            {"Level", CurrentPlayingStage.name}
+        }
+        );
+        
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
         
@@ -229,16 +247,22 @@ public class GameManager : MonoBehaviour
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
+        //로그 기록
+        logger.FlushStage();
+        
         // 교수님 스테이지 초기화
         Professor.Instance.ResetStage();
         
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
+
+        _stagecheck.SetDesignCircleActive();
     }
 
     private void ApplyStageVisualStates()
     {
-        var allStages = FindObjectsOfType<StageRootMarker>();
+        var allStages = FindObjectsByType<StageRootMarker>(FindObjectsSortMode.None);
+
 
         foreach (var stageMarker in allStages)
         {
@@ -321,37 +345,45 @@ public class GameManager : MonoBehaviour
     // 마나 서클의 활성 개수를 HintManager의 정답 개수에 맞춰 재설정 (동일 타입 서클 모두 적용)
     private void ApplyAnswerCircles(StateManager stateManager, HintManager hintManager)
     {
-        // 1. HintManager에 정의된 정답 마나 서클 목록 순회
+        if (hintManager.ManaCircleAnswsers == null || hintManager.ManaCircleAnswsers.Count == 0)
+            return;
+
+        if (stateManager.ManaCircles == null || stateManager.ManaCircles.Count == 0)
+            return;
+
         foreach (var answer in hintManager.ManaCircleAnswsers)
         {
-            // None 타입은 무효이므로 스킵
-            if (answer.type == ManaProperties.ManaType.None) continue;
+            if (answer.type == ManaProperties.ManaType.None)
+                continue;
 
-        // 2. 해당 타입의 마나 서클을 전부 가져옴 (복수 가능)
             var targets = stateManager.ManaCircles
                 .Where(c => c.manaType == answer.type)
                 .ToList();
-            
+
             if (targets.Count == 0)
             {
                 string stageName = stateManager.GetComponentInParent<StageRootMarker>()?.gameObject.name ?? "(알 수 없음)";
-    
+
                 var allTypes = stateManager.ManaCircles
                     .Select(c => c.manaType.ToString())
                     .Distinct()
                     .ToList();
 
-                Debug.LogWarning($"[HintSync] {stageName}에서 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
-                Debug.LogWarning($"→ 해당 스테이지의 모든 마나타입: {string.Join(", ", allTypes)}");
+                // 초기화 중인 상황에서는 디버그 생략
+                if (Application.isPlaying && hintManager.gameObject.activeInHierarchy)
+                {
+                    Debug.LogWarning($"[HintSync] {stageName}에서 타입 {answer.type}에 해당하는 마나 서클이 존재하지 않습니다.");
+                    Debug.LogWarning($"→ 해당 스테이지의 모든 마나타입: {string.Join(", ", allTypes)}");
+                }
             }
 
-            // 3. 해당 타입의 모든 마나 서클에 동일한 정답 개수 적용
             foreach (var circle in targets)
             {
                 circle.ResetManaCircle(answer.answerCount);
             }
         }
     }
+
 
     void GameClear()
     {
@@ -364,17 +396,24 @@ public class GameManager : MonoBehaviour
         // UIManager.Instance.ShowRestartPanel();
         string stageName = GameManager.Instance.CurrentPlayingStage.name;
         StageDataManager.Instance.SetStageCleared(stageName);
-        // TODO 확인하고 다시 켜자
-        // SoundManager.Instance.PlayClearMusic();
+        SoundManager.Instance.PlayClearMusic();
 
-        // if (StageDataManager.Instance.IsEnding())
-        // {
-        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
-        // }
-        // else
-        // {
-        //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
-        // }
+        if (StageDataManager.Instance.IsEnding())
+        {
+            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
+        }
+        else
+        {
+            Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
+        }
+        // 클리어 로그
+        levelPlayTime = Time.time - levelPlayTime;
+        LogManager.Log(EventType.LevelComplete, new Dictionary<string, object>
+        {
+            {"Level", CurrentPlayingStage.name},
+            {"ClearTime", levelPlayTime}
+        }
+        );
         Professor.Instance.SetAnimation(Professor.AnimationType.Victory);
     }
 
@@ -388,14 +427,88 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = false;
         InitializeGame();
-        ApplyStageVisualStates();
+        StartCoroutine(WaitThenApplyStageVisuals());
     }    
+    private IEnumerator WaitThenApplyStageVisuals()
+    {
+        yield return null; // 다음 프레임까지 대기
+        ApplyStageVisualStates();
+    }
     
-    // 내부에서만 호출하도록
+    /// <summary>
+    /// 로그 관련 코드
+    /// </summary>
+    
+    // 리셋 버튼 클릭
     public void RegisterReset()
     {
+        if (logger == null)
+        {
+            return;
+        }
         resetCount++;
+        logger.RecordEvent("ManaReset");
         OnReset?.Invoke();
         Debug.Log("리셋 카운트: " + resetCount);
+    }
+    
+    // 스테이지 초기화 버튼
+    public void ClickedStageReset()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("StageReset", new() {
+        });
+        Debug.Log("스테이지 초기화 버튼 클릭됨");
+    }
+    // 마나 서클 클릭
+    public void ClickedManaCircle(string type, int activeOrbiters)
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("ManaCircle", new() {
+            {"circleType", type},
+            {"activeOrbiters",         activeOrbiters}
+        });
+        Debug.Log("마나 서클 클릭됨: " + type + ", 활성화된 개수: " + activeOrbiters);
+    }
+    // 입력회로 클릭
+    public void ClickedInputCircuitDown()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("InputCircuitDown", new() {
+        });
+        Debug.Log("입력 회로 클릭됨");
+    }
+    public void ClickedInputCircuitUp()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("InputCircuitUp", new() {
+        });
+        Debug.Log("입력 회로 클릭 해제됨");
+    }
+    // 회로 배치
+    public void OnPlacementObject(string type, float x, float y)
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("Placement", new() {
+            {"circuitId", type},
+            {"x",         x},
+            {"y",         y}
+        });
+        Debug.Log("회로 배치됨: " + type + ", 위치: " + x + ", " + y);
     }
 }

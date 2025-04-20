@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +28,8 @@ public class PlayingUI : MonoBehaviour
     
     private void OnClickResetStageBtn()
     {
+        // 스테이지 리셋 로그
+        _gameManager.ClickedStageReset();
         _gameManager.CurrentPlayingStage.GetComponentInChildren<StateManager>().ResetDraggable();
         _gameManager.CurrentPlayingStage.GetComponentInChildren<StateManager>().ResetManaCircle();
         ManaPool.Instance.ResetManaPool();
