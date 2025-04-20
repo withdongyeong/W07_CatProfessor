@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     // 로그 용
     private StageLogger logger;
     // 레벨 경과 시간
-    private float levelPlayTime;
+    public float levelPlayTime { get; private set; }
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }
