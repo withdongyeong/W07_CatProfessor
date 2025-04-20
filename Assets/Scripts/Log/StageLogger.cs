@@ -10,7 +10,8 @@ public class StageLogger
         currentLog = new StageLog(
             stageName,
             LocalGuidManager.Guid,
-            SessionManager.Id
+            SessionManager.Id,
+            Professor.Instance.hintType ? "B" : "A"
         );
     }
 

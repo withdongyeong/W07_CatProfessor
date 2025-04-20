@@ -7,6 +7,7 @@ public class LogManager
 
     public static void Log(EventType type, Dictionary<string, object> payload = null, int attempt = 0)
     {
-        _svc.Log(new LogEntry(type, payload, attempt));
+        var hintType = Professor.Instance.hintType ? "B" : "A";
+        _svc.Log(new LogEntry(type, hintType , payload, attempt));
     }
 }
