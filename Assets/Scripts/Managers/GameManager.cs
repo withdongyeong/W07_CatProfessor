@@ -403,6 +403,10 @@ public class GameManager : MonoBehaviour
     // 리셋 버튼 클릭
     public void RegisterReset()
     {
+        if (logger == null)
+        {
+            return;
+        }
         resetCount++;
         logger.RecordEvent("ManaReset");
         OnReset?.Invoke();
@@ -410,15 +414,62 @@ public class GameManager : MonoBehaviour
     }
     
     // 스테이지 초기화 버튼
+    public void ClickedStageReset()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("StageReset", new() {
+        });
+        Debug.Log("스테이지 초기화 버튼 클릭됨");
+    }
     // 마나 서클 클릭
+    public void ClickedManaCircle(string type, int activeOrbiters)
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("ManaCircle", new() {
+            {"circleType", type},
+            {"activeOrbiters",         activeOrbiters}
+        });
+        Debug.Log("마나 서클 클릭됨: " + type + ", 활성화된 개수: " + activeOrbiters);
+    }
     // 입력회로 클릭
+    public void ClickedInputCircuitDown()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("InputCircuitDown", new() {
+        });
+        Debug.Log("입력 회로 클릭됨");
+    }
+    public void ClickedInputCircuitUp()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("InputCircuitUp", new() {
+        });
+        Debug.Log("입력 회로 클릭 해제됨");
+    }
     // 회로 배치
     public void OnPlacementObject(string type, float x, float y)
     {
+        if (logger == null)
+        {
+            return;
+        }
         logger.RecordEvent("Placement", new() {
             {"circuitId", type},
             {"x",         x},
             {"y",         y}
         });
+        Debug.Log("회로 배치됨: " + type + ", 위치: " + x + ", " + y);
     }
 }

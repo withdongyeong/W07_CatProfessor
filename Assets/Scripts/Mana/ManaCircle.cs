@@ -340,6 +340,8 @@ public class ManaCircle : MonoBehaviour
                 circle.SetupOrbiters(activeOrbiters);
             }
         }
+        //마나 서클 로그
+        GameManager.Instance.ClickedManaCircle(manaType.ToString(), activeOrbiters);
 
         // 정답 Circle 개수 체크 
         _hintManager.OnCheckCircleAction?.Invoke(manaType, activeOrbiters);
