@@ -92,9 +92,12 @@ public class StateManager : MonoBehaviour
 
     public void ResetDraggable()
     {
-        foreach (var draggable in _draggables)
+        if (_draggables.Count > 0)
         {
-            draggable.GetComponent<DraggableObject>().ResetPosition();
+            foreach (var draggable in _draggables)
+            {
+                draggable.GetComponent<DraggableObject>().ResetPosition();
+            }    
         }
     }
     
