@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     
     // 로그 용
     private StageLogger logger;
+    // 레벨 경과 시간
+    private float levelPlayTime;
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }
@@ -205,6 +207,10 @@ public class GameManager : MonoBehaviour
         //로그 기록
         logger = new StageLogger();
         logger.StartStage(CurrentPlayingStage.name);
+
+        levelPlayTime = Time.time;
+        LogManager.Log(EventType.LevelStart);
+        
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
         
@@ -389,6 +395,13 @@ public class GameManager : MonoBehaviour
         {
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
         }
+        // 클리어 로그
+        levelPlayTime = Time.time - levelPlayTime;
+        LogManager.Log(EventType.LevelComplete, new Dictionary<string, object>
+        {
+            {"ClearTime", levelPlayTime}
+        }
+        );
         Professor.Instance.SetAnimation(Professor.AnimationType.Victory);
     }
 
