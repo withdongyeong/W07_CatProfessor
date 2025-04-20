@@ -88,6 +88,8 @@ public class StateManager : MonoBehaviour
                 _mainManaCircle = _manaCircles.OrderByDescending(c => c.diameter).First();
             }
         }
+        
+        GameManager.Instance.NotifyStateManagerReady();
     }
 
     public void ResetDraggable()
