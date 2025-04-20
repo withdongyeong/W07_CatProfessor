@@ -74,6 +74,9 @@ public class DraggableObject : MonoBehaviour
             }
 
             StartCoroutine(SmoothMove(new Vector3(snappedX, snappedY, transform.position.z), 0.1f));
+            
+            //오브젝트 배치 로그
+            GameManager.Instance.OnPlacementObject(_type.ToString(), snappedX, snappedY);
         }
     }
 
