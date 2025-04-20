@@ -209,7 +209,11 @@ public class GameManager : MonoBehaviour
         logger.StartStage(CurrentPlayingStage.name);
 
         levelPlayTime = Time.time;
-        LogManager.Log(EventType.LevelStart);
+        LogManager.Log(EventType.LevelStart, new Dictionary<string, object>
+        {
+            {"Level", CurrentPlayingStage.name}
+        }
+        );
         
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
@@ -399,6 +403,7 @@ public class GameManager : MonoBehaviour
         levelPlayTime = Time.time - levelPlayTime;
         LogManager.Log(EventType.LevelComplete, new Dictionary<string, object>
         {
+            {"Level", CurrentPlayingStage.name},
             {"ClearTime", levelPlayTime}
         }
         );
