@@ -163,7 +163,6 @@ public class Professor : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             lastInputTime = Time.time;
-            Debug.Log(Time.time - GameManager.Instance.levelPlayTime);
         }
         // 시간지나고부터 힌트 시작
         if ( !hintType && Time.time - GameManager.Instance.levelPlayTime > hintStartDelay && Time.time - lastInputTime >= noneInputTime && Time.time - lastHintTime >= hintCooldown)
@@ -272,7 +271,6 @@ public class Professor : MonoBehaviour
                 Debug.Log("교수님 클릭");
                 leftMouseClickAnimation.SetActive(false);
                 SetAnimation(AnimationType.Idle);
-                lastInputTime = Time.time;
                 
                 //스테이지 내부 아니면 취소
                 if (curStateManager == null || curhintManager == null) return;
@@ -309,6 +307,9 @@ public class Professor : MonoBehaviour
             
                     hintCoroutine = StartCoroutine(BlinkHint(sr));
                 }
+                
+                //힌트 사용 체크
+                GameManager.Instance.OnHintUsed();
             }
 
         }

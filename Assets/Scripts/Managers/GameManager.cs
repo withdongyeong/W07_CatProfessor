@@ -211,7 +211,8 @@ public class GameManager : MonoBehaviour
         logger.StartStage(CurrentPlayingStage.name);
 
         levelPlayTime = Time.time;
-        LogManager.Log(EventType.LevelStart, new Dictionary<string, object>
+        string hintType = Professor.Instance.hintType ? "B" : "A";
+        LogManager.Log(EventType.LevelStart, hintType, new Dictionary<string, object>
         {
             {"Level", CurrentPlayingStage.name}
         }
@@ -403,7 +404,8 @@ public class GameManager : MonoBehaviour
         }
         // 클리어 로그
         levelPlayTime = Time.time - levelPlayTime;
-        LogManager.Log(EventType.LevelComplete, new Dictionary<string, object>
+        string hintType = Professor.Instance.hintType ? "B" : "A";
+        LogManager.Log(EventType.LevelComplete, hintType, new Dictionary<string, object>
         {
             {"Level", CurrentPlayingStage.name},
             {"ClearTime", levelPlayTime}
@@ -429,6 +431,31 @@ public class GameManager : MonoBehaviour
     /// 로그 관련 코드
     /// </summary>
     
+    // 스테이지 시작
+    public void RegisterStageStart()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("StageStart", new() {
+            {"stageName", CurrentPlayingStage.name}
+        });
+        Debug.Log("스테이지 시작됨: " + CurrentPlayingStage.name);
+    }
+    
+    // 스테이지 종료
+    public void RegisterStageEnd()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("StageEnd", new() {
+            {"stageName", CurrentPlayingStage.name}
+        });
+        Debug.Log("스테이지 종료됨: " + CurrentPlayingStage.name);
+    }
     // 리셋 버튼 클릭
     public void RegisterReset()
     {
@@ -500,5 +527,23 @@ public class GameManager : MonoBehaviour
             {"y",         y}
         });
         Debug.Log("회로 배치됨: " + type + ", 위치: " + x + ", " + y);
+    }
+    
+    //힌트 사용 횟수
+    public void OnHintUsed()
+    {
+        if (logger == null)
+        {
+            return;
+        }
+        logger.RecordEvent("HintUsed", new() {
+        });
+        string hintType = Professor.Instance.hintType ? "B" : "A";
+        LogManager.Log(EventType.HintUsed, hintType, new Dictionary<string, object>
+            {
+                {"Level", CurrentPlayingStage.name}
+            }
+        );
+        Debug.Log("힌트 사용됨");
     }
 }
