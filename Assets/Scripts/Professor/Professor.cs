@@ -64,7 +64,8 @@ public class Professor : MonoBehaviour
     //마지막 입력 시간
     private float lastInputTime;
 
-
+    private GameObject leftMouseClickAnimation;
+    
     void Awake()
     {
         if (Instance == null)
@@ -102,6 +103,9 @@ public class Professor : MonoBehaviour
         
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        
+        // 마우스 애니메이션 등록
+        leftMouseClickAnimation = transform.Find("LeftClick")?.gameObject;
     }
     void Start()
     {
@@ -191,6 +195,7 @@ public class Professor : MonoBehaviour
                 animator.SetInteger("State", 0);
                 break;
             case AnimationType.InSleep:
+                leftMouseClickAnimation.SetActive(true);
                 animator.SetInteger("State", 1);
                 break;
             case AnimationType.Sleep:
