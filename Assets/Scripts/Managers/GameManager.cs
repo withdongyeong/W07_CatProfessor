@@ -24,6 +24,13 @@ public class GameManager : MonoBehaviour
     private float sayInterval = 60f;
     private float lastSayTime = 0f;
     
+<<<<<<< Updated upstream
+=======
+    // 로그 용
+    private StageLogger logger;
+    // 레벨 경과 시간
+    public float levelPlayTime { get; private set; }
+>>>>>>> Stashed changes
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }

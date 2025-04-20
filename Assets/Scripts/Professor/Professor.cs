@@ -49,6 +49,13 @@ public class Professor : MonoBehaviour
     private Animator animator;
     
     [Header("힌트 설정")]
+    [Tooltip("직접힌트 시작 시간")]
+    [SerializeField] private float hintStartDelay = 60f;
+    [Tooltip("직접힌트 미입력 시간")]
+    [SerializeField] private float noneInputTime = 5f;
+    [Tooltip("직접 힌트쿨다운 (초)")]
+    [SerializeField] private float hintCooldown = 100f;
+    private float lastHintTime  = -Mathf.Infinity; // 마지막 힌트 시간
     [Tooltip("깜빡임 총 시간 (초)")]
     public float hintBlinkDuration = 3f;
     [Tooltip("깜빡이는 속도 (사이클/초)")]
@@ -143,17 +150,24 @@ public class Professor : MonoBehaviour
         //
         //     spriteRenderer.sprite = currentFrames[currentFrame];
         // }
+        // 게임중이 아니면 넘기기
+        if (curStateManager == null)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             lastInputTime = Time.time;
+            Debug.Log(Time.time - GameManager.Instance.levelPlayTime);
         }
-        // 10초간 입력이 없으면 애니메이션 변경
-        if (Time.time - lastInputTime > 10f && GameManager.Instance.resetCount >= 10)
+        // 시간지나고부터 힌트 시작
+        if (Time.time - GameManager.Instance.levelPlayTime > hintStartDelay && Time.time - lastInputTime >= noneInputTime && Time.time - lastHintTime >= hintCooldown)
         {
             IsCurrentAnimation(AnimationType.Idle);
             {
                 SetAnimation(AnimationType.InSleep);
             }
+            lastHintTime = Time.time;     // 쿨다운 시작
         }
     }
 
@@ -248,6 +262,11 @@ public class Professor : MonoBehaviour
             
             if (IsCurrentAnimation(AnimationType.Sleep))
             {
+<<<<<<< Updated upstream
+=======
+                Debug.Log("교수님 클릭");
+                leftMouseClickAnimation.SetActive(false);
+>>>>>>> Stashed changes
                 SetAnimation(AnimationType.Idle);
                 lastInputTime = Time.time;
                 Debug.Log("힌트 호출");
@@ -320,12 +339,23 @@ public class Professor : MonoBehaviour
 
     private IEnumerator BlinkHint(SpriteRenderer sr)
     {
-        float elapsed  = 0f;
-        Color baseCol  = sr.color;             // 원래 색(컬러+알파)
+        float elapsed = 0f;
+        Color baseCol = sr.color;               // 원래 색(컬러+알파)
+        const float maxAlpha = 0.1f;            // 최대 알파 10%
+
         while (elapsed < hintBlinkDuration)
         {
+<<<<<<< Updated upstream
             // 0~1 사이를 왔다갔다
             float a = Mathf.PingPong(elapsed * blinkFrequency, 1f);
+=======
+            // 1) PingPong(elapsed * blinkFrequency, 1f) 는 0~1 사이를 왔다갔다
+            float raw = Mathf.PingPong(elapsed * blinkFrequency, 1f);
+
+            // 2) raw 에 maxAlpha 를 곱해 0~0.3 구간만 깜빡이기
+            float a = raw * maxAlpha;
+
+>>>>>>> Stashed changes
             sr.color = new Color(baseCol.r, baseCol.g, baseCol.b, a);
 
             elapsed += Time.deltaTime;
@@ -333,9 +363,9 @@ public class Professor : MonoBehaviour
         }
 
         // 끝나면 숨기고, 원래 알파 복원
-        sr.enabled   = false;
-        sr.color     = baseCol;
-        hintCoroutine = null;
+        sr.enabled      = false;
+        sr.color        = baseCol;
+        hintCoroutine   = null;
     }
     
     //간접힌트
