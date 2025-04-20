@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private float sayInterval = 60f;
     private float lastSayTime = 0f;
     
+    // 로그 용
+    private StageLogger logger;
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }
@@ -88,8 +90,6 @@ public class GameManager : MonoBehaviour
         IsGameOver = false;
         InitializeGame();
         ApplyStageVisualStates();
-        
-        
     }
 
     void InitializeGame()
@@ -197,6 +197,9 @@ public class GameManager : MonoBehaviour
         //교수님한테 현재 StateManager 전달
         Professor.Instance.SetCurrentStage(stateManager, hintManager: stageRoot.GetComponentInChildren<HintManager>());
         
+        //로그 기록
+        logger = new StageLogger();
+        logger.StartStage(CurrentPlayingStage.name);
         // 스테이지 리셋 횟수 초기화
         resetCount = 0;
         
@@ -221,6 +224,9 @@ public class GameManager : MonoBehaviour
 
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
+        
+        //로그 기록
+        logger.FlushStage();
         
         // 교수님 스테이지 초기화
         Professor.Instance.ResetStage();
@@ -383,11 +389,29 @@ public class GameManager : MonoBehaviour
         ApplyStageVisualStates();
     }    
     
-    // 내부에서만 호출하도록
+    /// <summary>
+    /// 로그 관련 코드
+    /// </summary>
+    
+    // 리셋 버튼 클릭
     public void RegisterReset()
     {
         resetCount++;
+        logger.RecordEvent("ManaReset");
         OnReset?.Invoke();
         Debug.Log("리셋 카운트: " + resetCount);
+    }
+    
+    // 스테이지 초기화 버튼
+    // 마나 서클 클릭
+    // 입력회로 클릭
+    // 회로 배치
+    public void OnPlacementObject(string type, float x, float y)
+    {
+        logger.RecordEvent("Placement", new() {
+            {"circuitId", type},
+            {"x",         x},
+            {"y",         y}
+        });
     }
 }
