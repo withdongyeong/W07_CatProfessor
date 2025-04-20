@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629720fa6e61fb0458beb9e62d183979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StageName: 
+  StageDescription: 
 --- !u!1 &3622660589836978228
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,15 +542,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4450820540394981608, guid: 9bad8e2d368384141b1c667652b67062, type: 3}
       propertyPath: m_Color.b
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4450820540394981608, guid: 9bad8e2d368384141b1c667652b67062, type: 3}
       propertyPath: m_Color.g
-      value: 0.6
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4450820540394981608, guid: 9bad8e2d368384141b1c667652b67062, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8612225645001114235, guid: 9bad8e2d368384141b1c667652b67062, type: 3}
       propertyPath: isDragable

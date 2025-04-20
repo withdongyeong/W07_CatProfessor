@@ -99,11 +99,12 @@ public class Professor : MonoBehaviour
         }
         //시네머신 업데이트 이벤트 등록
         CinemachineCore.CameraUpdatedEvent.AddListener(OnCameraUpdated);
+        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         // currentFrames = idleFrames;
         // currentFrameRate = idleFrameRate;
         SetAnimation(AnimationType.Idle);

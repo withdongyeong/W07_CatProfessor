@@ -363,8 +363,8 @@ public class ManaCircle : MonoBehaviour
             UpdateCollider();
         }
     }
-
-    void OnTriggerStay2D(Collider2D other)
+    
+    void OnTriggerExit2D(Collider2D other)
     {
         Mana mana = other.GetComponent<Mana>();
         if (mana != null)
