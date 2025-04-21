@@ -179,4 +179,9 @@ public class InputCircuit : MonoBehaviour, IColorable
         UpdateShootEffectColor(attributeType);
     }
 
+    public void ActivateManaForSubmit(bool isActive)
+    {
+        isFiring = isActive;
+    }
+
 }

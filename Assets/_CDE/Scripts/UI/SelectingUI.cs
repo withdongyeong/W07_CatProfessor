@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class SelectingUI : MonoBehaviour
 {
     [SerializeField] private Button titleBtn;
+    [SerializeField] private Button submitBtn;
 
     public void Start()
     {
@@ -13,5 +14,10 @@ public class SelectingUI : MonoBehaviour
     private void OnClickTitleBtn()
     {
         GameManager.Instance.CurrentGameState = GameManager.gameState.Title;
+    }
+
+    public void ActivateSubmitBtn(bool isActive)
+    {
+        submitBtn.gameObject.SetActive(isActive);
     }
 }

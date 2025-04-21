@@ -308,7 +308,7 @@ public class ManaCircle : MonoBehaviour
 
             if (isReset)
                 // 리셋 시
-                circuit.CycleDirection(activeOrbiters + 1);
+                circuit.CycleDirection(activeOrbiters);
             else
                 // 클릭 시 
                 circuit.CycleDirection();
@@ -411,5 +411,20 @@ public class ManaCircle : MonoBehaviour
         activeOrbiters = orbitCount;
         SetupOrbiters(activeOrbiters);
         FindAndModifyAttributeCircuits(true);
+    }
+
+    public void ResetManaCircleInSelectState(StateManager stateManager, int orbitCount)
+    {
+        activeOrbiters = orbitCount;
+        SetupOrbiters(activeOrbiters);
+        ModifyCircuits(stateManager.AttributeCircuits, true);
+        ModifyCircuits(stateManager.Draggables, true);
+    }
+    
+    public void ActivateCircleForSubmit(bool isActive)
+    {
+        SetHighlight(isActive);
+        StartRotation();
+        SetDefaultColor();
     }
 }
