@@ -237,6 +237,9 @@ public class GameManager : MonoBehaviour
 
     public void ExitStage()
     {
+        //스테이지 종료 로그
+        RegisterStageEnd();
+        
         InitializeGame();
         if (CurrentPlayingStage != null)
         {
@@ -251,8 +254,6 @@ public class GameManager : MonoBehaviour
         ApplyStageVisualStates();
         mainCamera.MoveToWorld(worldViewPosition, worldViewSize);
         
-        //스테이지 종료 로그
-        RegisterStageEnd();
         //로그 기록
         logger.FlushStage();
         
@@ -462,8 +463,20 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
+        string isClear = IsGameOver ? "complete" : "fail";
+        float playTime = 0;
+        if (IsGameOver)
+        {
+            playTime = levelPlayTime;
+        }
+        else
+        {
+            playTime = Time.time - levelPlayTime;
+        }
         logger.RecordEvent("StageEnd", new() {
-            {"stageName", CurrentPlayingStage.name}
+            {"stageName", CurrentPlayingStage.name},
+            {"IsCleared", isClear},
+            {"PlayTime", playTime}
         });
         Debug.Log("스테이지 종료됨: " + CurrentPlayingStage.name);
     }
