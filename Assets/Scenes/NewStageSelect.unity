@@ -512,7 +512,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3750441424808134981, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
       propertyPath: hintType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3750441424808134981, guid: 665bf6954c0368b4cbf84b7f326c9dd9, type: 3}
       propertyPath: viewportPos.x
