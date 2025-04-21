@@ -237,7 +237,7 @@ public class ManaCircle : MonoBehaviour
             float pulse = Mathf.PingPong(Time.time * highlightPulseSpeed, 1f);
             float lerpFactor = Mathf.Lerp(0f, highlightIntensity, pulse);
 
-            Color pulseColor = Color.Lerp(baseColor, Color.cyan, lerpFactor);
+            Color pulseColor = Color.Lerp(baseColor, Color.white, lerpFactor);
             Color glowColor = Color.Lerp(pulseColor, Color.white, lerpFactor * 0.7f);
 
             lineRenderer.startColor = glowColor;
@@ -308,7 +308,7 @@ public class ManaCircle : MonoBehaviour
 
             if (isReset)
                 // 리셋 시
-                circuit.CycleDirection(activeOrbiters + 1);
+                circuit.CycleDirection(activeOrbiters);
             else
                 // 클릭 시 
                 circuit.CycleDirection();
@@ -411,5 +411,20 @@ public class ManaCircle : MonoBehaviour
         activeOrbiters = orbitCount;
         SetupOrbiters(activeOrbiters);
         FindAndModifyAttributeCircuits(true);
+    }
+
+    public void ResetManaCircleInSelectState(StateManager stateManager, int orbitCount)
+    {
+        activeOrbiters = orbitCount;
+        SetupOrbiters(activeOrbiters);
+        ModifyCircuits(stateManager.AttributeCircuits, true);
+        ModifyCircuits(stateManager.Draggables, true);
+    }
+    
+    public void ActivateCircleForSubmit(bool isActive)
+    {
+        SetHighlight(isActive);
+        StartRotation();
+        SetDefaultColor();
     }
 }

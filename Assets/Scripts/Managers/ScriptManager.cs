@@ -26,6 +26,7 @@ public class ScriptManager : MonoBehaviour
         ProgressStage2, //  40% ~ 60% 미만
         ProgressStage3, //  60% ~ 80% 미만
         ProgressStage4, //  80% ~
+        AfterEnding,
     }
     
     void Awake()
@@ -122,6 +123,10 @@ public class ScriptManager : MonoBehaviour
         scriptDictionary[ScriptCategory.ProgressStage4] = new List<string> {
             "좋아! 거의 다 왔다냥, 마지막 한 수만 남았다냥!",
             "이제 중요한 한 조각이 남아있다냥. 끝까지 집중이다냥~"
+        };
+        scriptDictionary[ScriptCategory.AfterEnding] = new List<string> {
+            "정말 놀라운 솜씨다냥! 자네는 이제 진정한 마법사라 할 수 있다냥!",
+            "내가 본 마법 중에 가장 완벽한 마법이다냥~! 대학원 생각 없다냥?"
         };
     }
 

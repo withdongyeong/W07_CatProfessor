@@ -35,6 +35,9 @@ public class GameManager : MonoBehaviour
     // 리셋 카운트
     [Tooltip("리셋 횟수")]
     public int resetCount { get; private set; }
+    
+    private List<InputCircuit> _inputCircuitList = new List<InputCircuit>();
+    private List<ManaCircle> _manaCircleList = new List<ManaCircle>();
 
     public event Action OnReset;
 
@@ -104,6 +107,8 @@ public class GameManager : MonoBehaviour
         
         _stagecheck.SetDesignCircleActive();
         
+        // 제출버튼 활성화
+        _uiManager.SelectingUI.ActivateSubmitBtn(StageDataManager.Instance.IsEnding());
     }
 
     void InitializeGame()
@@ -132,6 +137,9 @@ public class GameManager : MonoBehaviour
         // {
         //     Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameStart);
         // }
+
+        StageDataManager.Instance.UpdateEndingStatus();
+        _uiManager.SelectingUI.ActivateSubmitBtn(StageDataManager.Instance.IsEnding());
     }
 
     private void checkGameClear()
@@ -394,7 +402,7 @@ public class GameManager : MonoBehaviour
 
             foreach (var circle in targets)
             {
-                circle.ResetManaCircle(answer.answerCount);
+                circle.ResetManaCircleInSelectState(stateManager, answer.answerCount);
             }
         }
     }
@@ -415,12 +423,15 @@ public class GameManager : MonoBehaviour
         StageDataManager.Instance.SetStageCleared(stageName);
         SoundManager.Instance.PlayClearMusic();
 
+        
         if (StageDataManager.Instance.IsEnding())
         {
+            _uiManager.SelectingUI.ActivateSubmitBtn(true);
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin_Ending);
         }
         else
         {
+            _uiManager.SelectingUI.ActivateSubmitBtn(false);
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.GameWin);
         }
         // 클리어 로그
@@ -446,7 +457,26 @@ public class GameManager : MonoBehaviour
         IsGameOver = false;
         InitializeGame();
         ApplyStageVisualStates();
-    }    
+    }
+    
+    public void Submit(bool isSubmit)
+    {
+        InputCircuit[] inputCircuits = FindObjectsByType<InputCircuit>(FindObjectsSortMode.None);
+        ManaCircle[] manaCircles = FindObjectsByType<ManaCircle>(FindObjectsSortMode.None);
+        
+        _inputCircuitList = new List<InputCircuit>(inputCircuits);
+        _manaCircleList = new List<ManaCircle>(manaCircles);
+
+        foreach (var input in _inputCircuitList)
+        {
+            input.ActivateManaForSubmit(isSubmit);            
+        }
+
+        foreach (var circle in _manaCircleList)
+        {
+            circle.ActivateCircleForSubmit(isSubmit);
+        }
+    }
     
     /// <summary>
     /// 로그 관련 코드

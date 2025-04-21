@@ -10,7 +10,7 @@ public class Professor : MonoBehaviour
 {
     public static Professor Instance { get; private set; }
 
-    public enum AnimationType { Idle, Talk, Victory, Surprise, InSleep, Sleep}
+    public enum AnimationType { Idle, Talk, Victory, Surprise, InSleep, Sleep, AfterEnding, BeforeEnding}
 
     // [Header("애니메이션 프레임")]
     // public List<Sprite> idleFrames;
@@ -231,6 +231,16 @@ public class Professor : MonoBehaviour
                 animator.Play("Surprised");
                 animator.SetInteger("State", 4);
                 break;
+            case AnimationType.AfterEnding:
+                leftMouseClickAnimation.SetActive(false);
+                animator.Play("Happy");
+                animator.SetInteger("State", 3);
+                break;
+            case AnimationType.BeforeEnding:
+                leftMouseClickAnimation.SetActive(false);
+                animator.SetInteger("State", 0);
+                break;
+            
         }
 
         // if (currentFrames == null || currentFrames.Count == 0)

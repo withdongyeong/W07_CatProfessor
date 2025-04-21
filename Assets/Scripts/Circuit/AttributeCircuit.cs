@@ -150,7 +150,7 @@ public class AttributeCircuit : MonoBehaviour, IColorable
     
     public void CycleDirection(int count)
     {
-        currentDirectionIndex = (count) % directionConfigs.Count;
+        currentDirectionIndex = (count + 1) % directionConfigs.Count;
     }
 
     public void CyclePattern()

@@ -29,6 +29,8 @@ public class ClickableCircle : MonoBehaviour
     void OnMouseDown()
     {
         if (GameManager.Instance.CurrentGameState != GameManager.gameState.StageSelecting) return;
+        if (FindAnyObjectByType<Mana>()) return;
+            
 
         var stageRoot = FindStageRoot();
         if (stageRoot == null)
