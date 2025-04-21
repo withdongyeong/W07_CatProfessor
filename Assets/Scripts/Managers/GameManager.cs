@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private GridManager _grid;
     private OneSceneUIManager _uiManager;
     private StageStateCheck _stagecheck;
-    private GuideText _guideText;
+    private GuideText[] _guideText;
 
     private bool isGameOver = false;
     private float sayInterval = 20f;
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         _stagecheck = FindAnyObjectByType<StageStateCheck>();
 
-        _guideText = FindAnyObjectByType<GuideText>();
+        _guideText = FindObjectsOfType<GuideText>();
 
         CurrentGameState = gameState.Title;
     }
@@ -230,7 +230,10 @@ public class GameManager : MonoBehaviour
         // 스테이지 UI 변경
         _uiManager.PlayingUI.ChangeStageInfo(stageRoot);
 
-        _guideText.ActiveTrue();
+        foreach (GuideText script in _guideText)
+        {
+            script.ActiveTrue();
+        }
     }
 
 
