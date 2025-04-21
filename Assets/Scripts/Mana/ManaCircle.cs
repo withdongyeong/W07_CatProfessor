@@ -237,7 +237,7 @@ public class ManaCircle : MonoBehaviour
             float pulse = Mathf.PingPong(Time.time * highlightPulseSpeed, 1f);
             float lerpFactor = Mathf.Lerp(0f, highlightIntensity, pulse);
 
-            Color pulseColor = Color.Lerp(baseColor, Color.cyan, lerpFactor);
+            Color pulseColor = Color.Lerp(baseColor, Color.white, lerpFactor);
             Color glowColor = Color.Lerp(pulseColor, Color.white, lerpFactor * 0.7f);
 
             lineRenderer.startColor = glowColor;
