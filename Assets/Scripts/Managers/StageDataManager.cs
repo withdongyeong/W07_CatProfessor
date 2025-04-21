@@ -36,7 +36,7 @@ public class StageDataManager : MonoBehaviour
     public static StageDataManager Instance { get; private set; }
     private static string savePath;
 
-    private int endingThreshold = 10;
+    private int endingThreshold = 21;
     private StageClearData stageData;
     private bool isEndingCached = false; // 캐싱된 isEnding 값
     private bool isFirstCheck = true; // 최초 체크 여부
