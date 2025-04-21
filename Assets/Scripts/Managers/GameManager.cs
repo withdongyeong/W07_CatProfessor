@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     private GridManager _grid;
     private OneSceneUIManager _uiManager;
     private StageStateCheck _stagecheck;
-    private GuideText _guideText;
+    private GuideText[] _guideText;
+    private ShowStageClear _showStageClear;
 
     private bool isGameOver = false;
     private float sayInterval = 20f;
@@ -92,7 +93,8 @@ public class GameManager : MonoBehaviour
 
         _stagecheck = FindAnyObjectByType<StageStateCheck>();
 
-        _guideText = FindAnyObjectByType<GuideText>();
+        _guideText = FindObjectsOfType<GuideText>();
+        _showStageClear = FindAnyObjectByType<ShowStageClear>();
 
         CurrentGameState = gameState.Title;
     }
@@ -238,7 +240,10 @@ public class GameManager : MonoBehaviour
         // 스테이지 UI 변경
         _uiManager.PlayingUI.ChangeStageInfo(stageRoot);
 
-        _guideText.ActiveTrue();
+        foreach (GuideText script in _guideText)
+        {
+            script.ActiveTrue();
+        }
     }
 
 
@@ -272,6 +277,8 @@ public class GameManager : MonoBehaviour
         resetCount = 0;
 
         _stagecheck.SetDesignCircleActive();
+
+        _showStageClear.HideClear();
 
     }
 
@@ -406,6 +413,8 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) return;
         IsGameOver = true;
         _uiManager.PlayingUI.ActivateResetBtns(!isGameOver);
+
+        _showStageClear.ShowClear();
 
         Debug.Log("게임 클리어! 모든 출력 회로가 충족됨.");
         Time.timeScale = 0f;
