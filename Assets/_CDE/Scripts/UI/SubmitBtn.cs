@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,6 +7,13 @@ public class SubmitBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private bool _isHolding = false;
     private bool _previousIsHolding = false;
     [SerializeField] private GameObject mouseImg;
+    private List<DesignLine> _designLineList = new List<DesignLine>();
+
+    private void Start()
+    {
+        DesignLine[] designLines = FindObjectsByType<DesignLine>(FindObjectsSortMode.None);
+        _designLineList = new List<DesignLine>(designLines);
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -29,10 +37,20 @@ public class SubmitBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             Professor.Instance.SetAnimation(Professor.AnimationType.AfterEnding);
             Professor.Instance.SayRandom(ScriptManager.ScriptCategory.AfterEnding);
+            ActivateDesignLines(true);
         }
         else
         {
             Professor.Instance.SetAnimation(Professor.AnimationType.Idle);
+            ActivateDesignLines(false);
+        }
+    }
+
+    private void ActivateDesignLines(bool isActive)
+    {
+        foreach (var line in _designLineList)
+        {
+            line.SetHighlight(isActive);
         }
     }
 }
