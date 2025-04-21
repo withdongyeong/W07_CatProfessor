@@ -9,6 +9,7 @@ public class FirebaseLogService : ILogService
 
     public void Log(LogEntry entry)
     {
+        return;
         string folder = DateTime.UtcNow.ToString("yyyy-MM-dd");
         _root.Document(folder)
             .Collection("events")
