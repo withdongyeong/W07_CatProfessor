@@ -7,6 +7,7 @@ public class LogManager
 
     public static void Log(EventType type, string hintType, Dictionary<string, object> payload = null, int attempt = 0)
     {
+        return;
         _svc.Log(new LogEntry(type, hintType , payload, attempt));
     }
 }

@@ -17,12 +17,14 @@ public class StageLogger
 
     public void RecordEvent(string type, Dictionary<string, object> data = null)
     {
+        return;
         if (currentLog == null) return;
         currentLog.Events.Add(new LogEvent(type, data));
     }
 
     public async void FlushStage()
     {
+        return;
         if (currentLog == null || currentLog.Events.Count == 0) return;
 
         // 1) Firestore에 문서 하나로 저장
